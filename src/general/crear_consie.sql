@@ -61,6 +61,8 @@ create table personal (
 	s_apellido_personal varchar(20),
 	genero_personal varchar(10) not null,
 	id_cargo int not null,
+        direccion_pesonal varchar(200) not null,
+        telf_personal varchar(12) not null,
 	foreign key (id_cargo) references cargo (id_cargo)
 );
 

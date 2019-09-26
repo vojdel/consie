@@ -1,5 +1,6 @@
 package vista;
 
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -43,39 +44,39 @@ public class VPersonal extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new ButtonGroup();
+        btnGrpGenero = new ButtonGroup();
         jLabel3 = new JLabel();
         jSeparator1 = new JSeparator();
         jScrollPane3 = new JScrollPane();
         jPanel5 = new JPanel();
         jLabel4 = new JLabel();
-        jComboBox2 = new JComboBox<>();
-        jTextField1 = new JTextField();
+        cbxCedula = new JComboBox<>();
+        txtCedula = new JTextField();
         jLabel2 = new JLabel();
-        jTextField2 = new JTextField();
+        txtPNombre = new JTextField();
         jLabel1 = new JLabel();
-        jTextField5 = new JTextField();
+        txtSNombre = new JTextField();
         jLabel5 = new JLabel();
-        jTextField3 = new JTextField();
+        txtPApellido = new JTextField();
         jLabel7 = new JLabel();
-        jTextField6 = new JTextField();
+        txtSApellido = new JTextField();
         jLabel10 = new JLabel();
-        jRadioButton1 = new JRadioButton();
-        jRadioButton2 = new JRadioButton();
+        radBtnMasculino = new JRadioButton();
+        radBtnFemenino = new JRadioButton();
         jLabel6 = new JLabel();
-        jComboBox1 = new JComboBox<>();
-        jTextField4 = new JTextField();
+        cbxTelefono = new JComboBox<>();
+        txtTelefono = new JTextField();
         jLabel9 = new JLabel();
-        jComboBox3 = new JComboBox<>();
+        cbxCargo = new JComboBox<>();
         jLabel8 = new JLabel();
         jScrollPane2 = new JScrollPane();
-        jTextArea1 = new JTextArea();
+        txtDireccion = new JTextArea();
         btnNuevo = new JButton();
         btnAgregar = new JButton();
         btnModificar = new JButton();
         btnEliminar = new JButton();
         jScrollPane1 = new JScrollPane();
-        jTable1 = new JTable();
+        tabla = new JTable();
 
         setBackground(new Color(255, 255, 255));
 
@@ -97,69 +98,71 @@ public class VPersonal extends javax.swing.JPanel {
         jLabel4.setHorizontalTextPosition(SwingConstants.CENTER);
         jLabel4.setName("jLabel4"); // NOI18N
 
-        jComboBox2.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox2.setModel(new DefaultComboBoxModel<>(new String[] { "V", "E" }));
-        jComboBox2.setName("jComboBox2"); // NOI18N
+        cbxCedula.setFont(new Font("Tahoma", 0, 12)); // NOI18N
+        cbxCedula.setModel(new DefaultComboBoxModel<>(new String[] { "V", "E" }));
+        cbxCedula.setName("cbxCedula"); // NOI18N
 
-        jTextField1.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-        jTextField1.setName("jTextField1"); // NOI18N
+        txtCedula.setFont(new Font("Tahoma", 0, 12)); // NOI18N
+        txtCedula.setName("txtCedula"); // NOI18N
 
         jLabel2.setFont(new Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Primer Nombre:");
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jTextField2.setFont(new Font("Corbel", 0, 12)); // NOI18N
-        jTextField2.setName("jTextField2"); // NOI18N
+        txtPNombre.setFont(new Font("Corbel", 0, 12)); // NOI18N
+        txtPNombre.setName("txtPNombre"); // NOI18N
 
         jLabel1.setFont(new Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Segundo Nombre:");
         jLabel1.setName("jLabel1"); // NOI18N
 
-        jTextField5.setName("jTextField5"); // NOI18N
+        txtSNombre.setName("txtSNombre"); // NOI18N
 
         jLabel5.setFont(new Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Primer Apellido:");
         jLabel5.setName("jLabel5"); // NOI18N
 
-        jTextField3.setFont(new Font("Corbel", 0, 12)); // NOI18N
-        jTextField3.setName("jTextField3"); // NOI18N
+        txtPApellido.setFont(new Font("Corbel", 0, 12)); // NOI18N
+        txtPApellido.setName("txtPApellido"); // NOI18N
 
         jLabel7.setFont(new Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText("Segundo Apellido:");
         jLabel7.setName("jLabel7"); // NOI18N
 
-        jTextField6.setName("jTextField6"); // NOI18N
+        txtSApellido.setName("txtSApellido"); // NOI18N
 
         jLabel10.setFont(new Font("Tahoma", 0, 12)); // NOI18N
         jLabel10.setText("Género:");
         jLabel10.setName("jLabel10"); // NOI18N
 
-        jRadioButton1.setBackground(new Color(255, 255, 255));
-        jRadioButton1.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton1.setText("Masculino");
-        jRadioButton1.setName("jRadioButton1"); // NOI18N
+        radBtnMasculino.setBackground(new Color(255, 255, 255));
+        btnGrpGenero.add(radBtnMasculino);
+        radBtnMasculino.setFont(new Font("Tahoma", 0, 12)); // NOI18N
+        radBtnMasculino.setText("Masculino");
+        radBtnMasculino.setName("radBtnMasculino"); // NOI18N
 
-        jRadioButton2.setBackground(new Color(255, 255, 255));
-        jRadioButton2.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton2.setText("Femenino");
-        jRadioButton2.setName("jRadioButton2"); // NOI18N
+        radBtnFemenino.setBackground(new Color(255, 255, 255));
+        btnGrpGenero.add(radBtnFemenino);
+        radBtnFemenino.setFont(new Font("Tahoma", 0, 12)); // NOI18N
+        radBtnFemenino.setText("Femenino");
+        radBtnFemenino.setName("radBtnFemenino"); // NOI18N
 
         jLabel6.setFont(new Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Teléfono:");
         jLabel6.setName("jLabel6"); // NOI18N
 
-        jComboBox1.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox1.setModel(new DefaultComboBoxModel<>(new String[] { "----", "0412", "0414", "0424", "0416", "0426", "0254" }));
-        jComboBox1.setName("jComboBox1"); // NOI18N
+        cbxTelefono.setFont(new Font("Tahoma", 0, 12)); // NOI18N
+        cbxTelefono.setModel(new DefaultComboBoxModel<>(new String[] { "----", "0412", "0414", "0424", "0416", "0426", "0254" }));
+        cbxTelefono.setName("cbxTelefono"); // NOI18N
 
-        jTextField4.setName("jTextField4"); // NOI18N
+        txtTelefono.setName("txtTelefono"); // NOI18N
 
         jLabel9.setFont(new Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText("Cargo:");
         jLabel9.setName("jLabel9"); // NOI18N
 
-        jComboBox3.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox3.setName("jComboBox3"); // NOI18N
+        cbxCargo.setFont(new Font("Tahoma", 0, 12)); // NOI18N
+        cbxCargo.setName("cbxCargo"); // NOI18N
 
         jLabel8.setFont(new Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setText("Dirección:");
@@ -170,11 +173,11 @@ public class VPersonal extends javax.swing.JPanel {
         jScrollPane2.setPreferredSize(new Dimension(100, 50));
         jScrollPane2.setRequestFocusEnabled(false);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(3);
-        jTextArea1.setName("jTextArea1"); // NOI18N
-        jScrollPane2.setViewportView(jTextArea1);
+        txtDireccion.setColumns(20);
+        txtDireccion.setLineWrap(true);
+        txtDireccion.setRows(3);
+        txtDireccion.setName("txtDireccion"); // NOI18N
+        jScrollPane2.setViewportView(txtDireccion);
 
         btnNuevo.setBackground(new Color(238, 24, 24));
         btnNuevo.setFont(new Font("Tahoma", 0, 12)); // NOI18N
@@ -228,14 +231,14 @@ public class VPersonal extends javax.swing.JPanel {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jComboBox2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxCedula, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtCedula, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTextField6, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                                .addComponent(jTextField3, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                                .addComponent(jTextField5, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                                .addComponent(jTextField2, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)))
+                                .addComponent(txtSApellido, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                .addComponent(txtPApellido, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                .addComponent(txtSNombre, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                .addComponent(txtPNombre, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)))
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
@@ -245,14 +248,14 @@ public class VPersonal extends javax.swing.JPanel {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jComboBox1, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxTelefono, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField4, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtTelefono, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jRadioButton1)
+                                .addComponent(radBtnMasculino)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButton2))
-                            .addComponent(jComboBox3, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(radBtnFemenino))
+                            .addComponent(cbxCargo, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -264,24 +267,24 @@ public class VPersonal extends javax.swing.JPanel {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jComboBox2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbxCedula, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCedula, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtPNombre, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jTextField5, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtSNombre, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jTextField3, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtPApellido, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(jTextField6, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtSApellido, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(btnNuevo, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
@@ -293,17 +296,17 @@ public class VPersonal extends javax.swing.JPanel {
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(radBtnMasculino)
+                    .addComponent(radBtnFemenino))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jComboBox1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxTelefono, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTelefono, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jComboBox3, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxCargo, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
@@ -315,7 +318,7 @@ public class VPersonal extends javax.swing.JPanel {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTable1.setModel(new DefaultTableModel(
+        tabla.setModel(new DefaultTableModel(
             new Object [][] {
 
             },
@@ -323,8 +326,8 @@ public class VPersonal extends javax.swing.JPanel {
 
             }
         ));
-        jTable1.setName("jTable1"); // NOI18N
-        jScrollPane1.setViewportView(jTable1);
+        tabla.setName("tabla"); // NOI18N
+        jScrollPane1.setViewportView(tabla);
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
@@ -358,10 +361,10 @@ public class VPersonal extends javax.swing.JPanel {
     public JButton btnEliminar;
     public JButton btnModificar;
     public JButton btnNuevo;
-    public ButtonGroup buttonGroup1;
-    public JComboBox<String> jComboBox1;
-    public JComboBox<String> jComboBox2;
-    public JComboBox<String> jComboBox3;
+    public ButtonGroup btnGrpGenero;
+    public JComboBox<String> cbxCargo;
+    public JComboBox<String> cbxCedula;
+    public JComboBox<String> cbxTelefono;
     public JLabel jLabel1;
     public JLabel jLabel10;
     public JLabel jLabel2;
@@ -373,23 +376,95 @@ public class VPersonal extends javax.swing.JPanel {
     public JLabel jLabel8;
     public JLabel jLabel9;
     public JPanel jPanel5;
-    public JRadioButton jRadioButton1;
-    public JRadioButton jRadioButton2;
     public JScrollPane jScrollPane1;
     public JScrollPane jScrollPane2;
     public JScrollPane jScrollPane3;
     public JSeparator jSeparator1;
-    public JTable jTable1;
-    public JTextArea jTextArea1;
-    public JTextField jTextField1;
-    public JTextField jTextField2;
-    public JTextField jTextField3;
-    public JTextField jTextField4;
-    public JTextField jTextField5;
-    public JTextField jTextField6;
+    public JRadioButton radBtnFemenino;
+    public JRadioButton radBtnMasculino;
+    public JTable tabla;
+    public JTextField txtCedula;
+    public JTextArea txtDireccion;
+    public JTextField txtPApellido;
+    public JTextField txtPNombre;
+    public JTextField txtSApellido;
+    public JTextField txtSNombre;
+    public JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 
     public JButton getBtnNuevo() {
         return btnNuevo;
+    }
+
+    public JTable getTabla() {
+        return tabla;
+    }
+
+    public JButton getBtnAgregar() {
+        return btnAgregar;
+    }
+
+    public JButton getBtnEliminar() {
+        return btnEliminar;
+    }
+
+    public ButtonGroup getBtnGrpGenero() {
+        return btnGrpGenero;
+    }
+
+    public JButton getBtnModificar() {
+        return btnModificar;
+    }
+
+    public JComboBox<String> getCbxCedula() {
+        return cbxCedula;
+    }
+
+    public JRadioButton getRadBtnFemenino() {
+        return radBtnFemenino;
+    }
+
+    public JRadioButton getRadBtnMasculino() {
+        return radBtnMasculino;
+    }
+
+    public JTextField getTxtCedula() {
+        return txtCedula;
+    }
+
+    public JTextArea getTxtDireccion() {
+        return txtDireccion;
+    }
+
+    public JComboBox<String> getCbxTelefono() {
+        return cbxTelefono;
+    }
+
+    public JTextField getTxtTelefono() {
+        return txtTelefono;
+    }
+    
+    public JTextField getTxtPApellido() {
+        return txtPApellido;
+    }
+
+    public JTextField getTxtPNombre() {
+        return txtPNombre;
+    }
+
+    public JTextField getTxtSApellido() {
+        return txtSApellido;
+    }
+
+    public JTextField getTxtSNombre() {
+        return txtSNombre;
+    }
+
+   /* public JDateChooser getDateChooserFNacimiento() {
+        return dateChooserFNacimiento;
+    }*/
+
+    public JComboBox<String> getCbxCargo() {
+        return cbxCargo;
     }
 }
