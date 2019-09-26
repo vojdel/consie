@@ -1,0 +1,6 @@
+// Librerias
+
+*commons-codec-1.12
+*edisoncorSX
+*jcalendar-1.3.3
+*postgresql-9.2-1002.jdbc4
