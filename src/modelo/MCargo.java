@@ -24,6 +24,10 @@ public class MCargo {
         this.id = id;
     }
 
+    public MCargo(String nombre) {
+        this.nombre = nombre;
+    }
+    
     public MCargo(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;

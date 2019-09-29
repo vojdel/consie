@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import modelo.MCargo;
 import modelo.MPersonal;
 import vista.VPersonal;
 
@@ -25,28 +26,42 @@ import vista.VPersonal;
  */
 public class CPersonal implements ActionListener, MouseListener, KeyListener, ItemListener {
 
-    VPersonal vista;
+    final VPersonal vista;
+
+    MCargo modeloCargo;
+    MCargo datosCargo[];
     MPersonal modelo;
     DefaultTableModel modeloTabla;
 
-    Funciones funciones = new Funciones();
+    final Funciones funciones;
 
     public CPersonal() {
         vista = new VPersonal();
         modelo = new MPersonal();
+        modeloCargo = new MCargo();
+        funciones = new Funciones();
 
         ventana.setTitle("Personal");
         marco.remove(panelPrincipal);
         vista.setBounds(290, 70, 670, 590);
         marco.add(vista);
-        
-          try {
+
+        // Datos del Combobox Cargo
+        try {
+            datosCargo = modeloCargo.selectTodo();
+            crearComboBoxCargo(modeloCargo.selectTodo());
+        } catch (SQLException ex) {
+            Logger.getLogger(CEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // Datos de la Tabla
+        try {
             actualizarTabla(modelo.selectTodo());
             System.out.println("Tabla actualizada");
         } catch (SQLException ex) {
             Logger.getLogger(CEstudiante.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         panelPrincipal = vista;
         ventana.repaint();
         ventana.validate();
@@ -71,16 +86,30 @@ public class CPersonal implements ActionListener, MouseListener, KeyListener, It
         modeloTabla.addColumn("Primer Apellido");
         modeloTabla.addColumn("Segundo Apellido");
         modeloTabla.addColumn("Género");
-        modeloTabla.addColumn("Telefono");
         modeloTabla.addColumn("Dirección");
+        modeloTabla.addColumn("Telefono");
+        modeloTabla.addColumn("cargo");
 
         vista.getTabla().setModel(modeloTabla);
 
         if (datos != null) {
             for (MPersonal datosX : datos) {
                 modelo = datosX;
-                modeloTabla.addRow(new Object[]{modelo.getCedula(), modelo.getPrimerNombre(), modelo.getSegundoNombre(), modelo.getPrimerApellido(), modelo.getSegundoApellido(), modelo.getGenero(), modelo.getTelefono(), modelo.getDireccion()});
+                modeloTabla.addRow(new Object[]{modelo.getCedula(), modelo.getPrimerNombre(), modelo.getSegundoNombre(), modelo.getPrimerApellido(), modelo.getSegundoApellido(), modelo.getGenero(), modelo.getTelefono(), modelo.getDireccion(), modelo.getCargo().getNombre()});
             }
+        }
+    }
+
+    private void crearComboBoxCargo(MCargo[] datos) {
+        vista.getCbxCargo().addItem("Seleccione...");
+
+        if (datos != null) {
+            for (MCargo datosX : datos) {
+                modeloCargo = datosX;
+                vista.getCbxCargo().addItem(modeloCargo.getNombre());
+            }
+
+            System.out.println("ComboBox Cargo creado");
         }
     }
 
@@ -91,11 +120,10 @@ public class CPersonal implements ActionListener, MouseListener, KeyListener, It
         vista.getTxtPApellido().setText("");
         vista.getTxtSApellido().setText("");
         vista.getBtnGrpGenero().clearSelection();
-        //vista.getDateChooserFNacimiento().cleanup();
-        //vista.getTxtEdad().setText("");
         vista.getTxtTelefono().setText("");
         vista.getTxtDireccion().setText("");
-        //vista.getCbxCargo().setSelectedIndex(0);
+        vista.getCbxCargo().setSelectedIndex(0);
+        vista.getCbxTelefono().setSelectedIndex(0);
     }
 
     private void agregar() {
@@ -104,12 +132,10 @@ public class CPersonal implements ActionListener, MouseListener, KeyListener, It
         modelo.setSegundoNombre(vista.getTxtSNombre().getText());
         modelo.setPrimerApellido(vista.getTxtPApellido().getText());
         modelo.setSegundoApellido(vista.getTxtSApellido().getText());
-        //modelo.setFechaNacimiento(vista.getDateChooserFNacimiento().getDate());
-        //modelo.setGenero(vista.getBtnGrpGenero());
         modelo.setDireccion(vista.getTxtDireccion().getText());
         modelo.setTelefono(vista.getCbxTelefono().getSelectedItem().toString() + "-" + vista.getTxtTelefono().getText());
-        //int indice = vista.getCbxEscuela().getSelectedIndex() - 1;
-        //modelo.setEscuela(datosEscuela[indice]);
+        int indice = vista.getCbxCargo().getSelectedIndex() - 1;
+        modelo.setCargo(datosCargo[indice]);
         modelo.insert();
 
         try {
@@ -125,9 +151,10 @@ public class CPersonal implements ActionListener, MouseListener, KeyListener, It
         vista.getTxtPApellido().setText("");
         vista.getTxtSApellido().setText("");
         vista.getBtnGrpGenero().clearSelection();
-        //vista.getDateChooserFNacimiento().cleanup();
+        vista.getCbxTelefono().setSelectedIndex(0);
         vista.getTxtTelefono().setText("");
         vista.getTxtDireccion().setText("");
+        vista.getCbxCargo().setSelectedIndex(0);
     }
 
     private void modificar() {
@@ -136,11 +163,10 @@ public class CPersonal implements ActionListener, MouseListener, KeyListener, It
         modelo.setSegundoNombre(vista.getTxtSNombre().getText());
         modelo.setPrimerApellido(vista.getTxtPApellido().getText());
         modelo.setSegundoApellido(vista.getTxtSApellido().getText());
-        //modelo.setFechaNacimiento(vista.getDateChooserFNacimiento().getDate());
         modelo.setDireccion(vista.getTxtDireccion().getText());
         modelo.setTelefono(vista.getCbxTelefono().getSelectedItem().toString() + "-" + vista.getTxtTelefono().getText());
-        //int indice = vista.getCbxEscuela().getSelectedIndex() - 1;
-        //modelo.setEscuela(datosEscuela[indice]);
+        int indice = vista.getCbxCargo().getSelectedIndex() - 1;
+        modelo.setCargo(datosCargo[indice]);
         modelo.update();
 
         try {
@@ -195,6 +221,9 @@ public class CPersonal implements ActionListener, MouseListener, KeyListener, It
             vista.getTxtSNombre().setText(modelo.getSegundoNombre());
             vista.getTxtPApellido().setText(modelo.getPrimerApellido());
             vista.getTxtSApellido().setText(modelo.getSegundoApellido());
+            String tlf[] = modelo.getTelefono().split("-");
+            vista.getCbxTelefono().setSelectedItem(tlf[0]);
+            vista.getTxtTelefono().setText(tlf[1]);
 
             if (null != modelo.getGenero()) {
                 switch (modelo.getGenero()) {
@@ -209,18 +238,17 @@ public class CPersonal implements ActionListener, MouseListener, KeyListener, It
                 }
             }
 
-            // vista.getDateChooserFNacimiento().setDate(modelo.getFechaNacimiento());
             vista.getTxtDireccion().setText(modelo.getDireccion());
 
-            /*int indice;
+            int indice;
 
-            for (int i = 0; i < datosEscuela.length; i++) {
-                if (modelo.getEscuela().getId() == datosEscuela[i].getId()) {
+            for (int i = 0; i < datosCargo.length; i++) {
+                if (modelo.getCargo().getId() == datosCargo[i].getId()) {
                     indice = i + 1;
-                    vista.getCbxEscuela().setSelectedIndex(indice);
+                    vista.getCbxCargo().setSelectedIndex(indice);
                     break;
                 }
-            }*/
+            }
             vista.getBtnAgregar().setEnabled(false);
             vista.getBtnModificar().setEnabled(true);
             vista.getBtnEliminar().setEnabled(true);
@@ -230,6 +258,14 @@ public class CPersonal implements ActionListener, MouseListener, KeyListener, It
     @Override
     public void itemStateChanged(ItemEvent ie) {
         if (ie.getStateChange() == ItemEvent.SELECTED) {
+            if (ie.getSource() == vista.getRadBtnMasculino()) {
+                modelo.setGenero(vista.getRadBtnMasculino().getText());
+            }
+
+            if (ie.getSource() == vista.getRadBtnFemenino()) {
+                modelo.setGenero(vista.getRadBtnFemenino().getText());
+            }
+
             if (ie.getSource() == vista.getRadBtnMasculino()) {
                 modelo.setGenero(vista.getRadBtnMasculino().getText());
             }

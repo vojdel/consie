@@ -32,7 +32,7 @@ public class MRepresentante extends MPersona {
     }
 
     public MRepresentante[] selectTodo() throws SQLException {
-        sql = "SELECT * FROM representante ORDER BY nombre_representante;";
+        sql = "SELECT * FROM representante ORDER BY p_nombre_representante;";
         con.conectar();
         rs = con.consultarBD();
 
@@ -77,7 +77,7 @@ public class MRepresentante extends MPersona {
     }
 
     public MRepresentante[] buscar(String textoBuscar) throws SQLException {
-        sql = "SELECT * FROM representante WHERE nombre_representante LIKE '%" + textoBuscar + "%' ORDER BY nombre_representante";
+        sql = "SELECT * FROM representante WHERE nombre_representante LIKE '%" + textoBuscar + "%' ORDER BY p_nombre_representante";
         con.conectar();
         rs = con.consultarBD();
 
