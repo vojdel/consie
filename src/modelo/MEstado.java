@@ -30,7 +30,7 @@ public class MEstado {
     }
 
     public MEstado[] selectTodo() throws SQLException {
-        sql = "SELECT * FROM estado ORDER BY nombre_estado;";
+        sql = "SELECT * FROM estado ORDER BY estado;";
         con.conectar();
         rs = con.consultarBD();
 
@@ -43,7 +43,7 @@ public class MEstado {
 
             for (int i = 0; i < contFilas; i++) {
                 rs.next();
-                datos[i] = new MEstado(rs.getInt("id_estado"), rs.getString("nombre_estado"));
+                datos[i] = new MEstado(rs.getInt("id_estado"), rs.getString("estado"));
             }
 
             con.desconectar();
@@ -62,13 +62,13 @@ public class MEstado {
         if (rs != null) {
             rs.next();
             this.id = rs.getInt("id_estado");
-            this.nombre = rs.getString("nombre_estado");
+            this.nombre = rs.getString("estado");
             con.desconectar();
         }
     }
 
     public MEstado[] buscar(String textoBuscar) throws SQLException {
-        sql = "SELECT * FROM estado WHERE nombre_estado LIKE '%" + textoBuscar + "%' ORDER BY nombre_estado";
+        sql = "SELECT * FROM estado WHERE estado LIKE '%" + textoBuscar + "%' ORDER BY estado";
         con.conectar();
         rs = con.consultarBD();
 
@@ -81,7 +81,7 @@ public class MEstado {
 
             for (int i = 0; i < contFilas; i++) {
                 rs.next();
-                datos[i] = new MEstado(rs.getInt("id_estado"), rs.getString("nombre_estado"));
+                datos[i] = new MEstado(rs.getInt("id_estado"), rs.getString("estado"));
             }
             
             con.desconectar();
@@ -93,7 +93,7 @@ public class MEstado {
     }
 
     public void insert() {
-        sql = "INSERT INTO estado(nombre_estado) "
+        sql = "INSERT INTO estado(estado) "
                 + "VALUES('" + nombre + "');";
         con.conectar();
         con.actualizarBD();
@@ -101,7 +101,7 @@ public class MEstado {
     }
 
     public void update() {
-        sql = "UPDATE estado SET nombre_estado='" + nombre + "' WHERE id_estado='" + id + "';";
+        sql = "UPDATE estado SET estado='" + nombre + "' WHERE id_estado='" + id + "';";
         con.conectar();
         con.actualizarBD();
         con.desconectar();

@@ -1,16 +1,17 @@
 package general;
 
 import static consie.Consie.app;
-import static consie.Consie.usuario;
+import static consie.Consie.usuarioX;
 import controlador.CAdminAsistencia;
 import controlador.CAdminEscuela;
+import controlador.CAnioEscolar;
 import controlador.CCargo;
 import controlador.CEscuela;
 import controlador.CEstado;
 import controlador.CEstudiante;
 import controlador.CFuncionario;
 import controlador.CGrado;
-import controlador.CVentana;
+import controlador.CIndicador;
 import controlador.CInicioSesion;
 import controlador.CMunicipio;
 import controlador.CNivelPedagogico;
@@ -21,6 +22,7 @@ import controlador.CRepresentante;
 import controlador.CSeccion;
 import controlador.CSeguimientoPersonal;
 import controlador.CUsuario;
+import controlador.CVentana;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
@@ -44,6 +46,7 @@ public class MenuDinam implements MouseListener {
     private JLabel menuEstudiante;
     private JLabel menuFuncionario;
     private JLabel menuGrado;
+    private JLabel menuIndicador;
     private JLabel menuMunicipio;
     private JLabel menuParroquia;
     private JLabel menuPersonal;
@@ -54,9 +57,11 @@ public class MenuDinam implements MouseListener {
     private JLabel menuPedagogico;
     private JLabel menuAdminPersonal;
     private JLabel menuAdminEscuela;
+    private JLabel menuAnioEscolar;
     private JLabel menuEstadistica;
     private JLabel menuCerrarSesion;
 
+    private Icon iconoAnioEscolar;
     private Icon iconoInicio;
     private Icon iconoCargo;
     private Icon iconoEscuela;
@@ -64,6 +69,7 @@ public class MenuDinam implements MouseListener {
     private Icon iconoEstudiante;
     private Icon iconoFuncionario;
     private Icon iconoGrado;
+    private Icon iconoIndicador;
     private Icon iconoMunicipio;
     private Icon iconoParroquia;
     private Icon iconoPersonal;
@@ -75,6 +81,7 @@ public class MenuDinam implements MouseListener {
     private MFuncion[] funciones;
 
     public MenuDinam() {
+        iconoAnioEscolar = new ImageIcon("img/icons8_calendar_plus_30px.png");
         iconoInicio = new ImageIcon("img/icons8_home_30px.png");
         iconoCargo = new ImageIcon("img/icons8_work_30px.png");
         iconoEscuela = new ImageIcon("img/icons8_school_building_30px.png");
@@ -82,6 +89,7 @@ public class MenuDinam implements MouseListener {
         iconoEstudiante = new ImageIcon("img/icons8_students_30px_2.png");
         iconoFuncionario = new ImageIcon("img/icons8_administrator_female_30px_1.png");
         iconoGrado = new ImageIcon("img/icons8_graduation_cap_30px.png");
+        iconoIndicador = new ImageIcon("src/img/icons8_checked_checkbox_30px.png");
         iconoMunicipio = new ImageIcon("img/icons8_map_marker_30px.png");
         iconoParroquia = new ImageIcon("img/icons8_map_marker_30px.png");
         iconoPersonal = new ImageIcon("img/icons8_contract_job_30px.png");
@@ -89,6 +97,11 @@ public class MenuDinam implements MouseListener {
         iconoRepresentante = new ImageIcon("img/icons8_family_30px.png");
         iconoSeccion = new ImageIcon("img/icons8_class_30px.png");
         iconoUsuario = new ImageIcon("img/icons8_user_30px.png");
+        
+        menuAnioEscolar = new JLabel("Año escolar");
+        menuAnioEscolar.setFont(new Font("Tahoma", 0, 18));
+        menuAnioEscolar.setForeground(new Color(255, 255, 255));
+        menuAnioEscolar.setIcon(iconoAnioEscolar);
         
         menuInicio = new JLabel("Inicio");
         menuInicio.setFont(new Font("Tahoma", 0, 18));
@@ -124,6 +137,11 @@ public class MenuDinam implements MouseListener {
         menuGrado.setFont(new Font("Tahoma", 0, 18));
         menuGrado.setForeground(new Color(255, 255, 255));
         menuGrado.setIcon(iconoGrado);
+        
+        menuIndicador = new JLabel("Indicador");
+        menuIndicador.setFont(new Font("Tahoma", 0, 18));
+        menuIndicador.setForeground(new Color(255, 255, 255));
+        menuIndicador.setIcon(iconoIndicador);
 
         menuMunicipio = new JLabel("Municipio");
         menuMunicipio.setFont(new Font("Tahoma", 0, 18));
@@ -150,7 +168,7 @@ public class MenuDinam implements MouseListener {
         menuRepresentante.setForeground(new Color(255, 255, 255));
         menuRepresentante.setIcon(iconoRepresentante);
 
-        menuSeccion = new JLabel("Seccion");
+        menuSeccion = new JLabel("Sección");
         menuSeccion.setFont(new Font("Tahoma", 0, 18));
         menuSeccion.setForeground(new Color(255, 255, 255));
         menuSeccion.setIcon(iconoSeccion);
@@ -176,7 +194,7 @@ public class MenuDinam implements MouseListener {
         y = 20;
         w = 200;
         h = 30;
-        funciones = usuario.getFunciones();
+        funciones = usuarioX.getFunciones();
         panelMenu.add(menuInicio);
         menuInicio.setBounds(x, y, w, h);
 
@@ -206,6 +224,10 @@ public class MenuDinam implements MouseListener {
                     panelMenu.add(menuGrado);
                     menuGrado.setBounds(x, y += 30, w, h);
                 }
+                if ("indicador".equals(funcionesX.getNombre())) {
+                    panelMenu.add(menuIndicador);
+                    menuIndicador.setBounds(x, y += 30, w, h);
+                }
                 if ("municipio".equals(funcionesX.getNombre())) {
                     panelMenu.add(menuMunicipio);
                     menuMunicipio.setBounds(x, y += 30, w, h);
@@ -234,6 +256,10 @@ public class MenuDinam implements MouseListener {
                     panelMenu.add(menuUsuario);
                     menuUsuario.setBounds(x, y += 30, w, h);
                 }
+                if ("anio escolar".equals(funcionesX.getNombre())) {
+                    panelMenu.add(menuAnioEscolar);
+                    menuAnioEscolar.setBounds(x, y += 30, w, h);
+                }
             }
         }
     }
@@ -241,12 +267,14 @@ public class MenuDinam implements MouseListener {
     private void addListener() {
         menuInicio.addMouseListener(this);
 
+        menuAnioEscolar.addMouseListener(this);
         menuCargo.addMouseListener(this);
         menuEscuela.addMouseListener(this);
         menuEstado.addMouseListener(this);
         menuEstudiante.addMouseListener(this);
         menuFuncionario.addMouseListener(this);
         menuGrado.addMouseListener(this);
+        menuIndicador.addMouseListener(this);
         menuMunicipio.addMouseListener(this);
         menuParroquia.addMouseListener(this);
         menuPersonal.addMouseListener(this);
@@ -269,6 +297,8 @@ public class MenuDinam implements MouseListener {
             app = new CVentana();
         } else if (me.getSource() == menuCargo) {
             app = new CCargo();
+        } else if (me.getSource() == menuAnioEscolar) {
+            app = new CAnioEscolar();
         } else if (me.getSource() == menuEscuela) {
             app = new CEscuela();
         } else if (me.getSource() == menuEstado) {
@@ -279,6 +309,8 @@ public class MenuDinam implements MouseListener {
             app = new CFuncionario();
         } else if (me.getSource() == menuGrado) {
             app = new CGrado();
+        } else if (me.getSource() == menuIndicador) {
+            app = new CIndicador();
         } else if (me.getSource() == menuMunicipio) {
             app = new CMunicipio();
         } else if (me.getSource() == menuParroquia) {

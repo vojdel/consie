@@ -63,7 +63,7 @@ public class VInicioSesion extends javax.swing.JPanel {
         jPanel3.setName("jPanel3"); // NOI18N
         jPanel3.setPreferredSize(new Dimension(827, 50));
 
-        labelCerrar.setIcon(new ImageIcon(getClass().getResource("/vista/img/icons8_cancel_30px.png"))); // NOI18N
+        labelCerrar.setIcon(new ImageIcon(getClass().getResource("/img/icons8_exit_30px_1.png"))); // NOI18N
         labelCerrar.setName("labelCerrar"); // NOI18N
 
         jLabel1.setFont(new Font("Tahoma", 0, 18)); // NOI18N
@@ -110,14 +110,14 @@ public class VInicioSesion extends javax.swing.JPanel {
         jPanel1.setBackground(new Color(255, 255, 255));
         jPanel1.setName("jPanel1"); // NOI18N
 
-        jLabel8.setIcon(new ImageIcon(getClass().getResource("/vista/img/ios7-contact-outline.png"))); // NOI18N
+        jLabel8.setIcon(new ImageIcon(getClass().getResource("/img/icons8_user_50px_1.png"))); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
 
         jLabel9.setFont(new Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText("  Usuario");
         jLabel9.setName("jLabel9"); // NOI18N
 
-        jLabel10.setIcon(new ImageIcon(getClass().getResource("/vista/img/ios7-locked-outline.png"))); // NOI18N
+        jLabel10.setIcon(new ImageIcon(getClass().getResource("/img/icons8_password_50px.png"))); // NOI18N
         jLabel10.setName("jLabel10"); // NOI18N
 
         jLabel11.setFont(new Font("Tahoma", 0, 12)); // NOI18N

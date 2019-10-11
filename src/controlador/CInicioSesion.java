@@ -1,7 +1,7 @@
 package controlador;
 
 import static consie.Consie.app;
-import static consie.Consie.usuario;
+import static consie.Consie.usuarioX;
 import static consie.Consie.ventana;
 import general.Funciones;
 import java.awt.event.ActionEvent;
@@ -22,27 +22,27 @@ import vista.VSesion;
 public class CInicioSesion implements ActionListener, MouseListener {
 
     VSesion vista;
-    MUsuario usu;
     Funciones f = new Funciones();
 
     public CInicioSesion() {
         System.out.println("Iniciando CInicioSesion");
         vista = new VSesion();
-        usuario = new MUsuario();
-        usu = new MUsuario();
+        usuarioX = new MUsuario();
 
-        ventana.setSize(800, 600);
+        ventana.setSize(444, 442);
+        ventana.getContentPane().removeAll();
         ventana.setTitle("Iniciar Sesión");
-        vista.setBounds(0, 0, 800, 600);
+        vista.setBounds(0, 0, 444, 442);
         ventana.getContentPane().add(vista);
+        ventana.setLocationRelativeTo(null);
         addListener();
     }
 
     private void addListener() {
-        vista.getLabelCerrar().addMouseListener(this);
         vista.getTxtUsuario().addActionListener(this);
         vista.getTxtClave().addActionListener(this);
         vista.getBtnIniciarSesion().addActionListener(this);
+        vista.getLabelCerrar().addMouseListener(this);
     }
 
     @Override
@@ -85,11 +85,11 @@ public class CInicioSesion implements ActionListener, MouseListener {
             String msj = "";
 
             if (vista.getTxtUsuario().getText().isEmpty()) {
-                msj += "CAMPO USUARIO VACIO \n";
+                msj += "CAMPO USUARIO VACÍO \n";
             }
 
             if (vista.getTxtClave().getText().isEmpty()) {
-                msj += "CAMPO CONTRASEÑA VACIO \n";
+                msj += "CAMPO CONTRASEÑA VACÍO \n";
             }
 
             JOptionPane.showMessageDialog(null, msj, "ERROR!", JOptionPane.ERROR_MESSAGE);
@@ -98,18 +98,17 @@ public class CInicioSesion implements ActionListener, MouseListener {
             String clave = f.encriptar(vista.getTxtClave().getText());
 
             try {
-                respuesta = usuario.iniciarSesion(nombreUsuario, clave);
+                respuesta = usuarioX.iniciarSesion(nombreUsuario, clave);
 
-                // Si la contraseña o el usuario son incorrectos
                 if (respuesta != false) {
                     try {
-                        usu.permisos(vista.getTxtUsuario().getText());
-                        usuario.selectPermisos();
+                        usuarioX.selectPermisos();
                         app = new CVentana();
                     } catch (SQLException ex) {
                         Logger.getLogger(CInicioSesion.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
+                    // Si la contraseña o el usuarioX son incorrectos
                     JOptionPane.showMessageDialog(null, "¡USUARIO (" + vista.getTxtUsuario().getText() + ") O CONTERASEÑA INCORRECTA!", "ERROR!", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (SQLException ex) {
