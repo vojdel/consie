@@ -52,32 +52,6 @@ public class CEstado implements ActionListener, MouseListener, KeyListener {
         addListener();
     }
 
-    private void actualizarTabla(MEstado[] datos) {
-        modeloTabla = new DefaultTableModel();
-        modeloTabla.addColumn("Id");
-        modeloTabla.addColumn("Nombre");
-
-        vista.getTabla().setModel(modeloTabla);
-
-        if (datos != null) {
-            for (MEstado datosX : datos) {
-                modelo = datosX;
-                modeloTabla.addRow(new Object[]{modelo.getId(), modelo.getNombre()});
-            }
-            
-            funciones.ocultarColumnas(vista.getTabla(), new int[]{0});
-            System.out.println("Tabla actualizada");
-        }
-    }
-
-    private void addListener() {
-        vista.getBtnNuevo().addActionListener(this);
-        vista.getBtnAgregar().addActionListener(this);
-        vista.getBtnModificar().addActionListener(this);
-        vista.getBtnEliminar().addActionListener(this);
-        vista.getTabla().addMouseListener(this);
-    }
-
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == vista.getBtnNuevo()) {
@@ -86,74 +60,18 @@ public class CEstado implements ActionListener, MouseListener, KeyListener {
             vista.getBtnModificar().setEnabled(false);
             vista.getBtnEliminar().setEnabled(false);
         } else if (ae.getSource() == vista.getBtnAgregar()) {
-            modelo.setNombre(vista.getTxtNombre().getText());
-            modelo.insert();
-
-            try {
-                actualizarTabla(modelo.selectTodo());
-            } catch (SQLException ex) {
-                Logger.getLogger(CEstado.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            vista.getTxtNombre().setText("");
-            vista.getBtnModificar().setEnabled(false);
-            vista.getBtnEliminar().setEnabled(false);
+            agregar();
         } else if (ae.getSource() == vista.getBtnModificar()) {
-            modelo.setNombre(vista.getTxtNombre().getText());
-            modelo.update();
-
-            try {
-                actualizarTabla(modelo.selectTodo());
-            } catch (SQLException ex) {
-                Logger.getLogger(CEstado.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            vista.getTxtNombre().setText("");
-            vista.getBtnModificar().setEnabled(false);
-            vista.getBtnEliminar().setEnabled(false);
+            modificar();
         } else if (ae.getSource() == vista.getBtnEliminar()) {
-            int filaSeleccionada = vista.getTabla().getSelectedRow();
-
-            if (filaSeleccionada >= 0) {
-                int id;
-                id = Integer.parseInt(vista.getTabla().getValueAt(vista.getTabla().getSelectedRow(), 0).toString());
-                modelo.setId(id);
-                modelo.delete();
-
-                try {
-                    actualizarTabla(modelo.selectTodo());
-                } catch (SQLException ex) {
-                    Logger.getLogger(CEstado.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                vista.getTxtNombre().setText("");
-                vista.getBtnAgregar().setEnabled(true);
-                vista.getBtnModificar().setEnabled(false);
-                vista.getBtnEliminar().setEnabled(false);
-            }
+            eliminar();
         }
     }
 
     @Override
     public void mouseClicked(MouseEvent me) {
         if (me.getSource() == vista.getTabla()) {
-            int filaSeleccionada = vista.getTabla().getSelectedRow();
-
-            if (filaSeleccionada >= 0) {
-                int id;
-                id = Integer.parseInt(vista.getTabla().getValueAt(filaSeleccionada, 0).toString());
-
-                try {
-                    modelo.select(id);
-                } catch (SQLException ex) {
-                    Logger.getLogger(CEstado.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                vista.getTxtNombre().setText(modelo.getNombre());
-                vista.getBtnAgregar().setEnabled(false);
-                vista.getBtnModificar().setEnabled(true);
-                vista.getBtnEliminar().setEnabled(true);
-            }
+            llenarFormulario();
         }
     }
 
@@ -184,5 +102,109 @@ public class CEstado implements ActionListener, MouseListener, KeyListener {
     @Override
     public void keyReleased(KeyEvent ke) {
     }
-    
+
+    private void actualizarTabla(MEstado[] datos) {
+        modeloTabla = new DefaultTableModel();
+        modeloTabla.addColumn("Id");
+        modeloTabla.addColumn("Nombre");
+
+        vista.getTabla().setModel(modeloTabla);
+
+        if (datos != null) {
+            for (MEstado datosX : datos) {
+                modelo = datosX;
+                modeloTabla.addRow(new Object[]{modelo.getId(), modelo.getNombre()});
+            }
+
+            System.out.println("Tabla actualizada");
+        }
+
+        funciones.ocultarColumnas(vista.getTabla(), new int[]{0});
+    }
+
+    private void addListener() {
+        vista.getBtnNuevo().addActionListener(this);
+        vista.getBtnAgregar().addActionListener(this);
+        vista.getBtnModificar().addActionListener(this);
+        vista.getBtnEliminar().addActionListener(this);
+        vista.getTabla().addMouseListener(this);
+    }
+
+    private void limpiarFormulario() {
+        vista.getTxtNombre().setText("");
+    }
+
+    private void agregar() {
+        modelo.setNombre(vista.getTxtNombre().getText());
+        modelo.insert();
+
+        try {
+            actualizarTabla(modelo.selectTodo());
+        } catch (SQLException ex) {
+            Logger.getLogger(CEstado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        limpiarFormulario();
+        vista.getBtnModificar().setEnabled(false);
+        vista.getBtnEliminar().setEnabled(false);
+    }
+
+    private void modificar() {
+        modelo.setNombre(vista.getTxtNombre().getText());
+        modelo.update();
+
+        try {
+            actualizarTabla(modelo.selectTodo());
+        } catch (SQLException ex) {
+            Logger.getLogger(CEstado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        limpiarFormulario();
+        vista.getBtnAgregar().setEnabled(true);
+        vista.getBtnModificar().setEnabled(false);
+        vista.getBtnEliminar().setEnabled(false);
+    }
+
+    private void eliminar() {
+        int filaSeleccionada = vista.getTabla().getSelectedRow();
+
+        if (filaSeleccionada >= 0) {
+            int id;
+            id = Integer.parseInt(vista.getTabla().getValueAt(vista.getTabla().getSelectedRow(), 0).toString());
+            modelo.setId(id);
+            modelo.delete();
+
+            try {
+                actualizarTabla(modelo.selectTodo());
+            } catch (SQLException ex) {
+                Logger.getLogger(CEstado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            limpiarFormulario();
+            vista.getBtnAgregar().setEnabled(true);
+            vista.getBtnModificar().setEnabled(false);
+            vista.getBtnEliminar().setEnabled(false);
+        }
+    }
+
+    private void llenarFormulario() {
+        int filaSeleccionada = vista.getTabla().getSelectedRow();
+
+        if (filaSeleccionada >= 0) {
+            int id;
+            id = Integer.parseInt(vista.getTabla().getValueAt(filaSeleccionada, 0).toString());
+
+            try {
+                modelo.select(id);
+            } catch (SQLException ex) {
+                Logger.getLogger(CEstado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            vista.getTxtNombre().setText(modelo.getNombre());
+            vista.getBtnAgregar().setEnabled(false);
+            vista.getBtnModificar().setEnabled(true);
+            vista.getBtnEliminar().setEnabled(true);
+        }
+    }
+
 }

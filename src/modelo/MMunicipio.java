@@ -28,11 +28,11 @@ public class MMunicipio {
     }
 
     public MMunicipio[] selectTodo() throws SQLException {
-        sql = "SELECT municipio.id_municipio, municipio.nombre_municipio, estado.id_estado, estado.nombre_estado "
+        sql = "SELECT municipio.id_municipio, municipio.municipio, estado.id_estado, estado.estado "
                 + "FROM municipio "
                 + "INNER JOIN estado "
                 + "ON municipio.id_estado=estado.id_estado "
-                + "ORDER BY nombre_estado;";
+                + "ORDER BY estado;";
         System.out.println(sql);
         con.conectar();
         rs = con.consultarBD();
@@ -46,7 +46,7 @@ public class MMunicipio {
 
             for (int i = 0; i < contFilas; i++) {
                 rs.next();
-                datos[i] = new MMunicipio(rs.getInt("id_municipio"), rs.getString("nombre_municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("nombre_estado")));
+                datos[i] = new MMunicipio(rs.getInt("id_municipio"), rs.getString("municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("estado")));
             }
 
             con.desconectar();
@@ -58,7 +58,7 @@ public class MMunicipio {
     }
 
     public void select(int id) throws SQLException {
-        sql = "SELECT municipio.id_municipio, municipio.nombre_municipio, estado.id_estado, estado.nombre_estado "
+        sql = "SELECT municipio.id_municipio, municipio.municipio, estado.id_estado, estado.estado "
                 + "FROM municipio "
                 + "INNER JOIN estado "
                 + "ON municipio.id_estado=estado.id_estado "
@@ -70,14 +70,14 @@ public class MMunicipio {
         if (rs != null) {
             rs.next();
             this.id = rs.getInt("id_municipio");
-            this.nombre = rs.getString("nombre_municipio");
-            this.estado = new MEstado(rs.getInt("id_estado"), rs.getString("nombre_estado"));
+            this.nombre = rs.getString("municipio");
+            this.estado = new MEstado(rs.getInt("id_estado"), rs.getString("estado"));
             con.desconectar();
         }
     }
 
     public MMunicipio[] selectPorEstado(int idEstado) throws SQLException {
-        sql = "SELECT municipio.id_municipio, municipio.nombre_municipio, estado.id_estado, estado.nombre_estado "
+        sql = "SELECT municipio.id_municipio, municipio.municipio, estado.id_estado, estado.estado "
                 + "FROM municipio "
                 + "INNER JOIN estado "
                 + "ON municipio.id_estado=estado.id_estado "
@@ -95,7 +95,7 @@ public class MMunicipio {
 
             for (int i = 0; i < contFilas; i++) {
                 rs.next();
-                datos[i] = new MMunicipio(rs.getInt("id_municipio"), rs.getString("nombre_municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("nombre_estado")));
+                datos[i] = new MMunicipio(rs.getInt("id_municipio"), rs.getString("municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("estado")));
             }
 
             con.desconectar();
@@ -107,12 +107,12 @@ public class MMunicipio {
     }
 
     public MMunicipio[] buscar(String textoBuscar) throws SQLException {
-        sql = "SELECT municipio.id_municipio, municipio.nombre_municipio, estado.id_estado, estado.nombre_estado "
+        sql = "SELECT municipio.id_municipio, municipio.municipio, estado.id_estado, estado.estado "
                 + "FROM municipio "
                 + "INNER JOIN estado "
                 + "ON municipio.id_estado=estado.id_estado "
-                + "WHERE nombre_municipio LIKE '%" + textoBuscar + "%' "
-                + "ORDER BY nombre_estado";
+                + "WHERE municipio LIKE '%" + textoBuscar + "%' "
+                + "ORDER BY estado";
         System.out.println(sql);
         con.conectar();
         rs = con.consultarBD();
@@ -126,7 +126,7 @@ public class MMunicipio {
 
             for (int i = 0; i < contFilas; i++) {
                 rs.next();
-                datos[i] = new MMunicipio(rs.getInt("id_municipio"), rs.getString("nombre_municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("nombre_estado")));
+                datos[i] = new MMunicipio(rs.getInt("id_municipio"), rs.getString("municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("estado")));
             }
 
             con.desconectar();
@@ -138,7 +138,7 @@ public class MMunicipio {
     }
 
     public void insert() {
-        sql = "INSERT INTO municipio (nombre_municipio, id_estado) VALUES ('" + nombre + "', '" + estado.getId() + "');";
+        sql = "INSERT INTO municipio (municipio, id_estado) VALUES ('" + nombre + "', '" + estado.getId() + "');";
         System.out.println(sql);
         con.conectar();
         con.actualizarBD();
@@ -146,7 +146,7 @@ public class MMunicipio {
     }
 
     public void update() {
-        sql = "UPDATE municipio SET nombre_municipio='" + nombre + "', id_estado ='" + estado.getId() + "' WHERE id_municipio='" + id + "';";
+        sql = "UPDATE municipio SET municipio='" + nombre + "', id_estado ='" + estado.getId() + "' WHERE id_municipio='" + id + "';";
         System.out.println(sql);
         con.conectar();
         con.actualizarBD();

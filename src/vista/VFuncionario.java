@@ -1,10 +1,12 @@
 package vista;
 
 import com.toedter.calendar.JDateChooser;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
@@ -18,7 +20,7 @@ public class VFuncionario extends javax.swing.JPanel {
      */
     public VFuncionario() {
         initComponents();
-        this.ComBoxCargo.removeAllItems();
+        this.cbxCargo.removeAllItems();
     }
 
     /**
@@ -51,7 +53,7 @@ public class VFuncionario extends javax.swing.JPanel {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        ComBoxCargo = new javax.swing.JComboBox<>();
+        cbxCargo = new javax.swing.JComboBox<>();
         raBtnM = new javax.swing.JRadioButton();
         raBtnF = new javax.swing.JRadioButton();
         txtPApellido = new javax.swing.JTextField();
@@ -62,7 +64,7 @@ public class VFuncionario extends javax.swing.JPanel {
         txtFNacimiento = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtDireccion = new javax.swing.JTextArea();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -134,14 +136,14 @@ public class VFuncionario extends javax.swing.JPanel {
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel17.setText("Cargo:");
 
-        ComBoxCargo.addItemListener(new java.awt.event.ItemListener() {
+        cbxCargo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ComBoxCargoItemStateChanged(evt);
+                cbxCargoItemStateChanged(evt);
             }
         });
-        ComBoxCargo.addActionListener(new java.awt.event.ActionListener() {
+        cbxCargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComBoxCargoActionPerformed(evt);
+                cbxCargoActionPerformed(evt);
             }
         });
 
@@ -162,9 +164,9 @@ public class VFuncionario extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Dirección:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(3);
-        jScrollPane3.setViewportView(jTextArea1);
+        txtDireccion.setColumns(20);
+        txtDireccion.setRows(3);
+        jScrollPane3.setViewportView(txtDireccion);
 
         javax.swing.GroupLayout panelFormularioLayout = new javax.swing.GroupLayout(panelFormulario);
         panelFormulario.setLayout(panelFormularioLayout);
@@ -209,7 +211,7 @@ public class VFuncionario extends javax.swing.JPanel {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                                 .addComponent(txtFNacimiento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
-                            .addComponent(ComBoxCargo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbxCargo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -259,7 +261,7 @@ public class VFuncionario extends javax.swing.JPanel {
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ComBoxCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17))
                 .addContainerGap())
         );
@@ -294,13 +296,13 @@ public class VFuncionario extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ComBoxCargoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComBoxCargoItemStateChanged
+    private void cbxCargoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxCargoItemStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_ComBoxCargoItemStateChanged
+    }//GEN-LAST:event_cbxCargoItemStateChanged
 
-    private void ComBoxCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComBoxCargoActionPerformed
+    private void cbxCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCargoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ComBoxCargoActionPerformed
+    }//GEN-LAST:event_cbxCargoActionPerformed
 
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
         // TODO add your handling code here:
@@ -308,12 +310,12 @@ public class VFuncionario extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ComBoxCargo;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.ButtonGroup btnGrpGenero;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JComboBox<String> cbxCargo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -329,12 +331,12 @@ public class VFuncionario extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel panelFormulario;
     private javax.swing.JRadioButton raBtnF;
     private javax.swing.JRadioButton raBtnM;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField txtCedula;
+    private javax.swing.JTextArea txtDireccion;
     private com.toedter.calendar.JDateChooser txtFNacimiento;
     private javax.swing.JTextField txtPApellido;
     private javax.swing.JTextField txtPNombre;
@@ -343,8 +345,8 @@ public class VFuncionario extends javax.swing.JPanel {
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 
-    public JComboBox<String> getComBoxCargo() {
-        return ComBoxCargo;
+    public JComboBox<String> getCbxCargo() {
+        return cbxCargo;
     }
 
     public JButton getBtnAgregar() {
@@ -407,4 +409,12 @@ public class VFuncionario extends javax.swing.JPanel {
         return txtTelefono;
     }
 
+    public ButtonGroup getBtnGrpGenero() {
+        return btnGrpGenero;
+    }
+
+    public JTextArea getTxtDireccion() {
+        return txtDireccion;
+    }
+    
 }

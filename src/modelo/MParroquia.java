@@ -28,13 +28,13 @@ public class MParroquia {
     }
 
     public MParroquia[] selectTodo() throws SQLException {
-        sql = "SELECT parroquia.id_parroquia, parroquia.nombre_parroquia, municipio.id_municipio, municipio.nombre_municipio, estado.id_estado, estado.nombre_estado "
+        sql = "SELECT parroquia.id_parroquia, parroquia.parroquia, municipio.id_municipio, municipio.municipio, estado.id_estado, estado.estado "
                 + "FROM parroquia "
                 + "INNER JOIN municipio "
                 + "ON parroquia.id_municipio = municipio.id_municipio "
                 + "INNER JOIN estado "
                 + "ON municipio.id_estado = estado.id_estado "
-                + "ORDER BY nombre_estado;";
+                + "ORDER BY estado;";
         System.out.println(sql);
         con.conectar();
         rs = con.consultarBD();
@@ -48,7 +48,7 @@ public class MParroquia {
 
             for (int i = 0; i < contFilas; i++) {
                 rs.next();
-                datos[i] = new MParroquia(rs.getInt("id_parroquia"), rs.getString("nombre_parroquia"), new MMunicipio(rs.getInt("id_municipio"), rs.getString("nombre_municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("nombre_estado"))));
+                datos[i] = new MParroquia(rs.getInt("id_parroquia"), rs.getString("parroquia"), new MMunicipio(rs.getInt("id_municipio"), rs.getString("municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("estado"))));
             }
 
             con.desconectar();
@@ -60,7 +60,7 @@ public class MParroquia {
     }
 
     public void select(int id) throws SQLException {
-        sql = "SELECT parroquia.id_parroquia, parroquia.nombre_parroquia, municipio.id_municipio, municipio.nombre_municipio, estado.id_estado, estado.nombre_estado "
+        sql = "SELECT parroquia.id_parroquia, parroquia.parroquia, municipio.id_municipio, municipio.municipio, estado.id_estado, estado.estado "
                 + "FROM parroquia "
                 + "INNER JOIN municipio "
                 + "ON parroquia.id_municipio = municipio.id_municipio "
@@ -74,14 +74,14 @@ public class MParroquia {
         if (rs != null) {
             rs.next();
             this.id = rs.getInt("id_parroquia");
-            this.nombre = rs.getString("nombre_parroquia");
-            this.municipio = new MMunicipio(rs.getInt("id_municipio"), rs.getString("nombre_municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("nombre_estado")));
+            this.nombre = rs.getString("parroquia");
+            this.municipio = new MMunicipio(rs.getInt("id_municipio"), rs.getString("municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("estado")));
             con.desconectar();
         }
     }
 
     public MParroquia[] selectPorMunicipio(int idMunicipio) throws SQLException {
-        sql = "SELECT parroquia.id_parroquia, parroquia.nombre_parroquia, municipio.id_municipio, municipio.nombre_municipio, estado.id_estado, estado.nombre_estado "
+        sql = "SELECT parroquia.id_parroquia, parroquia.parroquia, municipio.id_municipio, municipio.municipio, estado.id_estado, estado.estado "
                 + "FROM parroquia "
                 + "INNER JOIN municipio "
                 + "ON parroquia.id_municipio=municipio.id_municipio "
@@ -101,7 +101,7 @@ public class MParroquia {
 
             for (int i = 0; i < contFilas; i++) {
                 rs.next();
-                datos[i] = new MParroquia(rs.getInt("id_parroquia"), rs.getString("nombre_parroquia"), new MMunicipio(rs.getInt("id_municipio"), rs.getString("nombre_municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("nombre_estado"))));
+                datos[i] = new MParroquia(rs.getInt("id_parroquia"), rs.getString("parroquia"), new MMunicipio(rs.getInt("id_municipio"), rs.getString("municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("estado"))));
             }
 
             con.desconectar();
@@ -113,14 +113,14 @@ public class MParroquia {
     }
 
     public MParroquia[] buscar(String textoBuscar) throws SQLException {
-        sql = "SELECT parroquia.id_parroquia, parroquia.nombre_parroquia, municipio.id_municipio, municipio.nombre_municipio, estado.id_estado, estado.nombre_estado "
+        sql = "SELECT parroquia.id_parroquia, parroquia.parroquia, municipio.id_municipio, municipio.municipio, estado.id_estado, estado.estado "
                 + "FROM parroquia "
                 + "INNER JOIN municipio "
                 + "ON parroquia.id_municipio = municipio.id_municipio "
                 + "INNER JOIN estado "
                 + "ON municipio.id_estado = estado.id_estado "
-                + "WHERE nombre_parroquia LIKE '%" + textoBuscar + "%' "
-                + "ORDER BY nombre_estado";
+                + "WHERE parroquia LIKE '%" + textoBuscar + "%' "
+                + "ORDER BY estado";
         System.out.println(sql);
         con.conectar();
         rs = con.consultarBD();
@@ -134,7 +134,7 @@ public class MParroquia {
 
             for (int i = 0; i < contFilas; i++) {
                 rs.next();
-                datos[i] = new MParroquia(rs.getInt("id_parroquia"), rs.getString("nombre_parroquia"), new MMunicipio(rs.getInt("id_municipio"), rs.getString("nombre_municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("nombre_estado"))));
+                datos[i] = new MParroquia(rs.getInt("id_parroquia"), rs.getString("parroquia"), new MMunicipio(rs.getInt("id_municipio"), rs.getString("municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("estado"))));
             }
             
             con.desconectar();
@@ -146,7 +146,7 @@ public class MParroquia {
     }
     
     public void insert() {
-        sql = "INSERT INTO parroquia (nombre_parroquia, id_municipio) "
+        sql = "INSERT INTO parroquia (parroquia, id_municipio) "
                 + "VALUES('" + nombre + "','" + municipio.getId() + "');";
         System.out.println(sql);
         con.conectar();
@@ -156,7 +156,7 @@ public class MParroquia {
 
     public void update() {
         sql = "UPDATE parroquia SET "
-                + "nombre_parroquia='" + nombre + "', "
+                + "parroquia='" + nombre + "', "
                 + "id_municipio='" + municipio.getId() + "' "
                 + "WHERE id_parroquia='" + id + "';";
         System.out.println(sql);

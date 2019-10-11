@@ -37,7 +37,7 @@ public class CMunicipio implements ActionListener, MouseListener, KeyListener {
     public CMunicipio() {
         vista = new VMunicipio();
         modelo = new MMunicipio();
-        
+
         modeloEstado = new MEstado();
 
         try {
@@ -93,9 +93,10 @@ public class CMunicipio implements ActionListener, MouseListener, KeyListener {
                 modeloTabla.addRow(new Object[]{modelo.getId(), modelo.getEstado().getNombre(), modelo.getNombre()});
             }
 
-            funciones.ocultarColumnas(vista.getTabla(), new int[]{0});
             System.out.println("Tabla actualizada");
         }
+
+        funciones.ocultarColumnas(vista.getTabla(), new int[]{0});
     }
 
     private void addListener() {
@@ -233,5 +234,5 @@ public class CMunicipio implements ActionListener, MouseListener, KeyListener {
     @Override
     public void keyReleased(KeyEvent ke) {
     }
-    
+
 }

@@ -1,7 +1,13 @@
 package vista;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.LayoutStyle;
 
 /**
  *
@@ -25,56 +31,64 @@ public class VVentana extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        labelCerrar = new javax.swing.JLabel();
-        nonUsuario = new javax.swing.JLabel();
-        panelMenu = new javax.swing.JPanel();
+        jPanel1 = new JPanel();
+        jLabel1 = new JLabel();
+        labelCerrar = new JLabel();
+        nonUsuario = new JLabel();
+        labelLogout = new JLabel();
+        panelMenu = new JPanel();
 
-        setBackground(new java.awt.Color(0, 72, 181));
-        setPreferredSize(new java.awt.Dimension(1000, 700));
+        setBackground(new Color(0, 72, 181));
+        setPreferredSize(new Dimension(1000, 700));
         setLayout(null);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new Color(255, 255, 255));
         jPanel1.setName("jPanel1"); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setFont(new Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Consie");
         jLabel1.setName("jLabel1"); // NOI18N
 
-        labelCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_cancel_30px.png"))); // NOI18N
+        labelCerrar.setIcon(new ImageIcon(getClass().getResource("/img/icons8_close_window_30px.png"))); // NOI18N
         labelCerrar.setName("labelCerrar"); // NOI18N
 
-        nonUsuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        nonUsuario.setFont(new Font("Tahoma", 0, 12)); // NOI18N
         nonUsuario.setText("<Usuario>");
         nonUsuario.setName("nonUsuario"); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        labelLogout.setIcon(new ImageIcon(getClass().getResource("/img/icons8_exit_30px_1.png"))); // NOI18N
+        labelLogout.setName("labelLogout"); // NOI18N
+
+        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 789, Short.MAX_VALUE)
                 .addComponent(nonUsuario)
                 .addGap(18, 18, 18)
+                .addComponent(labelLogout)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelCerrar))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelCerrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(nonUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelCerrar, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nonUsuario, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelLogout, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(0, 0, 0))
         );
 
         add(jPanel1);
         jPanel1.setBounds(0, 0, 1000, 30);
 
-        panelMenu.setBackground(new java.awt.Color(0, 36, 92));
+        panelMenu.setBackground(new Color(0, 36, 92));
         panelMenu.setName("panelMenu"); // NOI18N
         panelMenu.setLayout(null);
         add(panelMenu);
@@ -83,11 +97,12 @@ public class VVentana extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel labelCerrar;
-    private javax.swing.JLabel nonUsuario;
-    private javax.swing.JPanel panelMenu;
+    private JLabel jLabel1;
+    private JPanel jPanel1;
+    private JLabel labelCerrar;
+    private JLabel labelLogout;
+    private JLabel nonUsuario;
+    private JPanel panelMenu;
     // End of variables declaration//GEN-END:variables
 
     public JLabel getNonUsuario() {
@@ -96,6 +111,10 @@ public class VVentana extends javax.swing.JPanel {
 
     public JLabel getLabelCerrar() {
         return labelCerrar;
+    }
+
+    public JLabel getLabelLogout() {
+        return labelLogout;
     }
 
     public JPanel getPanelMenu() {

@@ -13,7 +13,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -29,29 +28,28 @@ import vista.VFuncionario;
  */
 public class CFuncionario implements ActionListener, MouseListener, KeyListener {
 
-    VFuncionario vista;
-    MFuncionario modelo;
-    
-    MCargo modeloCargo;
-    MCargo[] datosCargo;
-    
-    DefaultComboBoxModel modeloComBox;
-    DefaultTableModel modeloTabla;
-    
-    String arreglo;
-    String[] array;
-    String msj = "";
-    boolean bol = true;
-    HashMap<String, Integer> cargos;
-    Funciones f = new Funciones();
-    Validaciones val = new Validaciones();
+    private VFuncionario vista;
+    private MFuncionario modelo;
+
+    private MCargo modeloCargo;
+    private MCargo[] datosCargo;
+
+    private DefaultComboBoxModel modeloCbxCargo;
+    private DefaultTableModel modeloTabla;
+
+    private String msj = "";
+    private boolean bol = true;
+    private Funciones f = new Funciones();
+    private Validaciones val = new Validaciones();
 
     public CFuncionario() {
         vista = new VFuncionario();
         modelo = new MFuncionario();
-        
+
         modeloCargo = new MCargo();
-        
+
+        vista.getTxtFNacimiento().setDate(new Date());
+
         try {
             datosCargo = modeloCargo.selectTodo();
             crearCbxCargo(datosCargo);
@@ -64,7 +62,7 @@ public class CFuncionario implements ActionListener, MouseListener, KeyListener 
         } catch (SQLException ex) {
             Logger.getLogger(CUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         ventana.setTitle("Funcionario");
         marco.remove(panelPrincipal);
         vista.setBounds(290, 70, 670, 590);
@@ -74,32 +72,28 @@ public class CFuncionario implements ActionListener, MouseListener, KeyListener 
         ventana.validate();
         vista.getBtnModificar().setEnabled(false);
         vista.getBtnEliminar().setEnabled(false);
-        
-        cargos = modelo.hashCargo();
-        
+
         addListener();
 
     }
-    
+
     private void crearCbxCargo(MCargo[] datos) {
-        modeloComBox = new DefaultComboBoxModel();
-        modeloComBox.addElement("Seleccione...");
-        
+        modeloCbxCargo = new DefaultComboBoxModel();
+        modeloCbxCargo.addElement("Seleccione...");
+
         for (MCargo datosX : datos) {
-            modeloComBox.addElement(datosX.getNombre());
+            modeloCbxCargo.addElement(datosX.getNombre());
         }
-        
-        vista.getComBoxCargo().setModel(modeloComBox);
-            System.out.println("ComboBox Cargo creado");
+
+        vista.getCbxCargo().setModel(modeloCbxCargo);
+        System.out.println("ComboBox Cargo creado");
     }
 
     private void actualizarTabla(MFuncionario[] datos) {
         modeloTabla = new DefaultTableModel();
         modeloTabla.addColumn("Cédula");
-        modeloTabla.addColumn("Primer Nombre");
-        modeloTabla.addColumn("Segundo Nombre");
-        modeloTabla.addColumn("Primer Apellido");
-        modeloTabla.addColumn("Segundo Apellido");
+        modeloTabla.addColumn("Nombre");
+        modeloTabla.addColumn("Apellido");
         modeloTabla.addColumn("Cargo");
 
         vista.getTabla().setModel(modeloTabla);
@@ -110,11 +104,10 @@ public class CFuncionario implements ActionListener, MouseListener, KeyListener 
                 modeloTabla.addRow(new Object[]{
                     modelo.getCedula(),
                     modelo.getPrimerNombre(),
-                    modelo.getSegundoNombre(),
                     modelo.getPrimerApellido(),
-                    modelo.getSegundoApellido(),
                     modelo.getCargo().getNombre()});
             }
+
             System.out.println("Tabla Funcionario actualizada");
         }
     }
@@ -125,41 +118,47 @@ public class CFuncionario implements ActionListener, MouseListener, KeyListener 
         vista.getBtnModificar().addActionListener(this);
         vista.getBtnEliminar().addActionListener(this);
         vista.getTabla().addMouseListener(this);
-        vista.getTxtPNombre().addKeyListener(this);
         vista.getTxtCedula().addKeyListener(this);
+        vista.getTxtPNombre().addKeyListener(this);
         vista.getTxtSNombre().addKeyListener(this);
         vista.getTxtPApellido().addKeyListener(this);
         vista.getTxtSApellido().addKeyListener(this);
     }
 
+    private void limpiar() {
+        vista.getTxtCedula().setText("");
+        vista.getTxtPNombre().setText("");
+        vista.getTxtSNombre().setText("");
+        vista.getTxtPApellido().setText("");
+        vista.getTxtSApellido().setText("");
+        vista.getBtnGrpGenero().clearSelection();
+        vista.getTxtFNacimiento().setDate(new Date());
+        vista.getTxtTelefono().setText("");
+        vista.getTxtDireccion().setText("");
+        vista.getCbxCargo().setSelectedIndex(0);
+    }
+
     private Boolean validar() {
         this.bol = true;
-        
+        msj = "";
+
         if (vista.getTxtCedula().getText().isEmpty()) {
-            msj += "El Campo Cedula no puede Estar Vacio\n";
+            msj += "El campo Cédula no puede estar vacío\n";
             this.bol = false;
         }
         if (vista.getTxtPNombre().getText().isEmpty()) {
-            msj += "EL Campo Primer Nombre no puede Estar Vacio\n";
-            this.bol = false;
-        }
-        if (vista.getTxtSNombre().getText().isEmpty()) {
-            msj += "El Campo Segundo Nombre no puede Estar Vacio\n";
+            msj += "El campo Primer Nombre no puede estar vacío\n";
             this.bol = false;
         }
         if (vista.getTxtPApellido().getText().isEmpty()) {
-            msj += "El Campo Segundo Nombre no puede Estar Vacio\n";
+            msj += "El campo Primer Apellido no puede estar vacío\n";
             this.bol = false;
         }
-        if (vista.getTxtSApellido().getText().isEmpty()) {
-            msj += "El Campo Segundo Nombre no puede Estar Vacio\n";
-            this.bol = false;
-        }
-        if (!vista.getRaBtnF().isFocusable() || !vista.getRaBtnF().isFocusable()) {
+        if (vista.getBtnGrpGenero().getSelection() == null) {
             msj += "Elija entre Femenino o Masculino\n";
             this.bol = false;
         }
-        if (!vista.getComBoxCargo().isFocusable()) {
+        if (vista.getCbxCargo().getSelectedIndex() == 0) {
             msj += "Elija un Cargo\n";
             this.bol = false;
         }
@@ -170,173 +169,178 @@ public class CFuncionario implements ActionListener, MouseListener, KeyListener 
         return true;
     }
 
-    public void limpiar() {
-        vista.getTxtCedula().setText("");
-        vista.getTxtPNombre().setText("");
-        vista.getTxtSNombre().setText("");
-        vista.getTxtPApellido().setText("");
-        vista.getTxtSApellido().setText("");
-        vista.getTxtFNacimiento().setDate(new Date());
-        vista.getTxtTelefono().setText("");
-        vista.getRaBtnM().setSelected(false);
-        vista.getRaBtnF().setSelected(false);
+    private void agregar() {
+        modelo.setCedula(vista.getTxtCedula().getText());
+        modelo.setPrimerNombre(vista.getTxtPNombre().getText());
+        modelo.setSegundoNombre(vista.getTxtSNombre().getText());
+        modelo.setPrimerApellido(vista.getTxtPApellido().getText());
+        modelo.setSegundoApellido(vista.getTxtSApellido().getText());
+
+        if (vista.getRaBtnF().isSelected()) {
+            modelo.setGenero("f");
+        } else {
+            modelo.setGenero("m");
+        }
+
+        modelo.setFechaNacimiento(vista.getTxtFNacimiento().getDate());
+        modelo.setTelefono(vista.getTxtTelefono().getText());
+        modelo.setDireccion(vista.getTxtDireccion().getText());
+        int indice = vista.getCbxCargo().getSelectedIndex() - 1;
+        modelo.setCargo(datosCargo[indice]);
+
+        if (bol) {
+            modelo.insert();
+        }
+
+        try {
+            actualizarTabla(modelo.selectTodo());
+        } catch (SQLException ex) {
+            Logger.getLogger(CFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        limpiar();
+        vista.getBtnModificar().setEnabled(false);
+        vista.getBtnEliminar().setEnabled(false);
     }
 
-   /* public int obtenerIdCargo(String[] cargos) throws SQLException {
-        int apuntador = 0;
+    private void modificar() {
+        modelo.setPrimerNombre(vista.getTxtPNombre().getText());
+        modelo.setSegundoNombre(vista.getTxtSNombre().getText());
+        modelo.setPrimerApellido(vista.getTxtPApellido().getText());
+        modelo.setSegundoApellido(vista.getTxtSApellido().getText());
 
-        for (int i = 0; i < modelo.countCargos(); i++) {
-            if (cargos[i] == vista.getComBoxCargo().getSelectedItem()) {
-                apuntador = Integer.parseInt(modelo.obtenerIdCargo()[i]);
-            }
-
+        if (vista.getRaBtnF().isSelected()) {
+            modelo.setGenero("f");
+        } else {
+            modelo.setGenero("m");
         }
-        return apuntador;
+
+        modelo.setFechaNacimiento(vista.getTxtFNacimiento().getDate());
+        modelo.setTelefono(vista.getTxtTelefono().getText());
+        modelo.setDireccion(vista.getTxtDireccion().getText());
+
+        int indice = vista.getCbxCargo().getSelectedIndex() - 1;
+        modelo.setCargo(datosCargo[indice]);
+
+        if (bol) {
+            modelo.update();
+        }
+
+        try {
+            actualizarTabla(modelo.selectTodo());
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        limpiar();
+        vista.getBtnAgregar().setEnabled(true);
+        vista.getBtnModificar().setEnabled(false);
+        vista.getBtnEliminar().setEnabled(false);
     }
 
-    public String[] obtenerCargo() throws SQLException {
-        String apuntador2 = "";
-        String apuntador3 = "";
-        String[] array = new String[modelo.countCargos()];
+    private void eliminar() {
+        int filaSeleccionada = vista.getTabla().getSelectedRow();
 
-        for (int j = 0; j < modelo.countCargos(); j++) {
-            array[j] = modelo.getNombres_cargo()[j];
-        }
-        for (int h = 0; h < modelo.countCargos(); h++) {
-            if (array[h] == modelo.getNombre_cargo()) {
-                apuntador2 = array[h];
-                apuntador3 = array[0];
-                array[h] = apuntador3;
-                array[0] = apuntador2;
+        if (filaSeleccionada >= 0) {
+            String cedula;
+            cedula = vista.getTabla().getValueAt(vista.getTabla().getSelectedRow(), 0).toString();
+            modelo.setCedula(cedula);
+            modelo.delete();
+
+            try {
+                actualizarTabla(modelo.selectTodo());
+
+            } catch (SQLException ex) {
+                Logger.getLogger(CFuncionario.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            limpiar();
+            vista.getBtnAgregar().setEnabled(true);
+            vista.getBtnModificar().setEnabled(false);
+            vista.getBtnEliminar().setEnabled(false);
         }
-        return array;
-    }*/
+    }
+
+    private void llenarFormulario() {
+        int filaSeleccionada = vista.getTabla().getSelectedRow();
+
+        if (filaSeleccionada >= 0) {
+            String cedula;
+            cedula = vista.getTabla().getValueAt(filaSeleccionada, 0).toString();
+
+            try {
+                modelo.select(cedula);
+            } catch (SQLException ex) {
+                Logger.getLogger(CFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            vista.getTxtCedula().setText(modelo.getCedula());
+            vista.getTxtPNombre().setText((modelo.getPrimerNombre()));
+            vista.getTxtSNombre().setText(modelo.getSegundoNombre());
+            vista.getTxtPApellido().setText(modelo.getPrimerApellido());
+            vista.getTxtSApellido().setText(modelo.getSegundoApellido());
+
+            switch (modelo.getGenero()) {
+                case "f":
+                    vista.getRaBtnF().setSelected(true);
+                    break;
+                case "m":
+                    vista.getRaBtnM().setSelected(true);
+                    break;
+                default:
+                    break;
+            }
+
+            vista.getTxtFNacimiento().setDate(modelo.getFechaNacimiento());
+            vista.getTxtTelefono().setText(modelo.getTelefono());
+            vista.getTxtDireccion().setText(modelo.getDireccion());
+
+            int indice;
+
+            for (int i = 0; i < datosCargo.length; i++) {
+                if (modelo.getCargo().getId() == datosCargo[i].getId()) {
+                    indice = i + 1;
+                    vista.getCbxCargo().setSelectedIndex(indice);
+                    break;
+                }
+            }
+
+            vista.getBtnAgregar().setEnabled(false);
+            vista.getBtnModificar().setEnabled(true);
+            vista.getBtnEliminar().setEnabled(true);
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == vista.getBtnNuevo()) {
             limpiar();
-            vista.getComBoxCargo().setModel(modelo.obtenerCargo());
             vista.getBtnAgregar().setEnabled(true);
             vista.getBtnModificar().setEnabled(false);
             vista.getBtnEliminar().setEnabled(false);
         } else if (e.getSource() == vista.getBtnAgregar()) {
             validar();
-            modelo.setCedula(Integer.parseInt(vista.getTxtCedula().getText()));
-            modelo.setPrimerNombre(vista.getTxtPNombre().getText());
-            modelo.setSegundoNombre(vista.getTxtSNombre().getText());
-            modelo.setPrimerApellido(vista.getTxtPApellido().getText());
-            modelo.setSegundoApellido(vista.getTxtSApellido().getText());
-            if (vista.getRaBtnF().isSelected()) {
-                modelo.setGenero("F");
-            } else {
-                modelo.setGenero("M");
-            }
-            modelo.setCargo(new MCargo(cargos.get(vista.getComBoxCargo().getModel().getSelectedItem())));
-            modelo.setFechaNacimiento(new Date(vista.getTxtFNacimiento().getDate().toString()));
-            modelo.setTelefono(vista.getTxtTelefono().getText());
+
             if (bol) {
-                modelo.insert();
+                agregar();
             }
-
-            try {
-                actualizarTabla(modelo.selectTodo());
-
-            } catch (SQLException ex) {
-                Logger.getLogger(CEstado.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            }
-
-            limpiar();
-            vista.getBtnModificar().setEnabled(false);
-            vista.getBtnEliminar().setEnabled(false);
         } else if (e.getSource() == vista.getBtnModificar()) {
-            modelo.setPrimerNombre(vista.getTxtPNombre().getText());
-            modelo.setSegundoNombre(vista.getTxtSNombre().getText());
-            modelo.setPrimerApellido(vista.getTxtPApellido().getText());
-            modelo.setSegundoApellido(vista.getTxtSApellido().getText());
-            if (vista.getRaBtnF().isSelected()) {
-                modelo.setGenero("F");
-            } else {
-                modelo.setGenero("M");
+            validar();
+
+            if (bol) {
+                modificar();
             }
-            modelo.setCargo(new MCargo(cargos.get(vista.getComBoxCargo().getModel().getSelectedItem())));
-            modelo.setFechaNacimiento(new Date(vista.getTxtFNacimiento().getDate().toString()));
-            modelo.setTelefono(vista.getTxtTelefono().getText());
-            modelo.update();
-
-            try {
-                actualizarTabla(modelo.selectTodo());
-
-            } catch (SQLException ex) {
-                Logger.getLogger(CEstado.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            }
-
-            limpiar();
-            vista.getBtnModificar().setEnabled(false);
-            vista.getBtnEliminar().setEnabled(false);
         } else if (e.getSource() == vista.getBtnEliminar()) {
-            int filaSeleccionada = vista.getTabla().getSelectedRow();
-
-            if (filaSeleccionada >= 0) {
-                int id;
-                id = Integer.parseInt(vista.getTabla().getValueAt(vista.getTabla().getSelectedRow(), 0).toString());
-                modelo.setCedula(id);
-                modelo.delete();
-
-                try {
-                    actualizarTabla(modelo.selectTodo());
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(CEstado.class
-                            .getName()).log(Level.SEVERE, null, ex);
-                }
-
-                limpiar();
-                vista.getBtnAgregar().setEnabled(true);
-                vista.getBtnModificar().setEnabled(false);
-                vista.getBtnEliminar().setEnabled(false);
-            }
+            JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar el registro?", "¡Advertencia!", JOptionPane.YES_NO_OPTION);
+            eliminar();
         }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == vista.getTabla()) {
-            limpiar();
-            int filaSeleccionada = vista.getTabla().getSelectedRow();
-            if (filaSeleccionada >= 0) {
-                int id;
-                id = Integer.parseInt(vista.getTabla().getValueAt(filaSeleccionada, 0).toString());
-                try {
-                    System.out.println(id);
-                    modelo.select(id);
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(CEstado.class
-                            .getName()).log(Level.SEVERE, null, ex);
-                }
-                vista.getTxtCedula().setText(Integer.toString(modelo.getCedula()));
-                vista.getTxtPNombre().setText((modelo.getPrimerNombre()));
-                vista.getTxtSNombre().setText(modelo.getSegundoNombre());
-                vista.getTxtPApellido().setText(modelo.getPrimerApellido());
-                vista.getTxtSApellido().setText(modelo.getSegundoApellido());
-                vista.getTxtFNacimiento().setDateFormatString(modelo.getFechaNacimiento().toString());
-                vista.getTxtTelefono().setText(Integer.toString(Integer.parseInt(modelo.getTelefono())));
-                if (!"F".equals(modelo.getGenero())) {
-                    vista.getRaBtnM().setSelected(true);
-                    vista.getRaBtnF().setSelected(false);
-                } else {
-                    vista.getRaBtnM().setSelected(false);
-                    vista.getRaBtnF().setSelected(true);
-                }
-                vista.getComBoxCargo().getModel().setSelectedItem(modelo.getNombre_cargo());
-                vista.getBtnAgregar().setEnabled(false);
-                vista.getBtnModificar().setEnabled(true);
-                vista.getBtnEliminar().setEnabled(true);
-            }
+            llenarFormulario();
         }
     }
 
@@ -358,28 +362,33 @@ public class CFuncionario implements ActionListener, MouseListener, KeyListener 
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if (e.getSource() == vista.getTxtPNombre()) {
+        if (e.getSource() == vista.getTxtCedula()) {
+            val.Espacio(e);
+            val.evitarPegar(e);
+            val.soloNumeros(e);
+            val.Limite(e, vista.getTxtCedula().getText(), 10);
+        } else if (e.getSource() == vista.getTxtPNombre()) {
             val.Espacio(e);
             val.evitarPegar(e);
             val.soloLetras(e);
-            val.Limite(e, vista.getTxtPNombre().getText(), 10);
-        } else if(e.getSource() == vista.getTxtSNombre()){
+            val.Limite(e, vista.getTxtPNombre().getText(), 30);
+        } else if (e.getSource() == vista.getTxtSNombre()) {
             val.evitarPegar(e);
-            val.soloLetras(e);  
-            val.Limite(e, vista.getTxtPNombre().getText(), 30);          
+            val.soloLetras(e);
+            val.Limite(e, vista.getTxtSNombre().getText(), 30);
         } else if (e.getSource() == vista.getTxtPApellido()) {
             val.Espacio(e);
             val.evitarPegar(e);
             val.soloLetras(e);
-            val.Limite(e, vista.getTxtPNombre().getText(), 10);
-        } else if(e.getSource() == vista.getTxtSApellido()){
+            val.Limite(e, vista.getTxtPApellido().getText(), 30);
+        } else if (e.getSource() == vista.getTxtSApellido()) {
             val.evitarPegar(e);
-            val.soloLetras(e);  
-            val.Limite(e, vista.getTxtPNombre().getText(), 30);          
-        } else if(e.getSource() == vista.getTxtCedula()){
+            val.soloLetras(e);
+            val.Limite(e, vista.getTxtSApellido().getText(), 30);
+        } else if (e.getSource() == vista.getTxtCedula()) {
             val.evitarPegar(e);
-            val.soloNumeros(e);  
-            val.Limite(e, vista.getTxtPNombre().getText(), 30);  
+            val.soloNumeros(e);
+            val.Limite(e, vista.getTxtCedula().getText(), 10);
         }
     }
 
@@ -391,30 +400,24 @@ public class CFuncionario implements ActionListener, MouseListener, KeyListener 
     public void keyReleased(KeyEvent e) {
         if (e.getSource() == vista.getTxtCedula()) {
             String textoBuscar = vista.getTxtCedula().getText();
+
             try {
                 actualizarTabla(modelo.buscar(textoBuscar));
             } catch (SQLException ex) {
-                Logger.getLogger(CCargo.class
-                        .getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CFuncionario.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (vista.getTxtCedula().getText().length() == 0 && e.getKeyCode() == 8) {
             try {
                 actualizarTabla(modelo.selectTodo());
             } catch (SQLException ex) {
-                Logger.getLogger(CUsuario.class
-                        .getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CFuncionario.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (e.getSource() == vista.getTxtPNombre()) {
-            System.out.println("3");
             f.soloLetras(e);
             f.limitar(e, vista.getTxtPNombre().getText(), 10);
         }
-
-        System.out.println(e); //8
-        System.out.println(e.getKeyCode()); //8
-        System.out.println(" :" + vista.getTxtCedula().getText() + ": ");
     }
 
 }

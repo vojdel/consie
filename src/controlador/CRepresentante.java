@@ -29,7 +29,7 @@ public class CRepresentante implements ActionListener, ItemListener, MouseListen
     MRepresentante modelo;
 
     DefaultTableModel modeloTabla;
-    
+
     Funciones funciones = new Funciones();
 
     public CRepresentante() {
@@ -56,7 +56,6 @@ public class CRepresentante implements ActionListener, ItemListener, MouseListen
 
     private void actualizarTabla(MRepresentante[] datos) {
         modeloTabla = new DefaultTableModel();
-        modeloTabla.addColumn("Id");
         modeloTabla.addColumn("Cédula");
         modeloTabla.addColumn("Primer Nombre");
         modeloTabla.addColumn("Segundo Nombre");
@@ -71,9 +70,9 @@ public class CRepresentante implements ActionListener, ItemListener, MouseListen
         if (datos != null) {
             for (MRepresentante datosX : datos) {
                 modelo = datosX;
-                modeloTabla.addRow(new Object[]{modelo.getId(), modelo.getCedula(), modelo.getPrimerNombre(), modelo.getSegundoNombre(), modelo.getPrimerApellido(), modelo.getSegundoApellido(), modelo.getGenero(), modelo.getTelefono(), modelo.getDireccion()});
+                modeloTabla.addRow(new Object[]{modelo.getCedula(), modelo.getPrimerNombre(), modelo.getSegundoNombre(), modelo.getPrimerApellido(), modelo.getSegundoApellido(), modelo.getGenero(), modelo.getTelefono(), modelo.getDireccion()});
             }
-            
+
             funciones.ocultarColumnas(vista.getTabla(), new int[]{0});
             System.out.println("Tabla actualizada");
         }
@@ -84,6 +83,8 @@ public class CRepresentante implements ActionListener, ItemListener, MouseListen
         vista.getBtnAgregar().addActionListener(this);
         vista.getBtnModificar().addActionListener(this);
         vista.getBtnEliminar().addActionListener(this);
+        vista.getRadBtnMasculino().addItemListener(this);
+        vista.getRadBtnFemenino().addItemListener(this);
         vista.getTabla().addMouseListener(this);
     }
 
@@ -102,14 +103,27 @@ public class CRepresentante implements ActionListener, ItemListener, MouseListen
                     Logger.getLogger(CCargo.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
+                if (null != modelo.getGenero()) {
+                    switch (modelo.getGenero()) {
+                        case "Masculino":
+                            vista.getRadBtnMasculino().setSelected(true);
+                            break;
+                        case "Femenino":
+                            vista.getRadBtnFemenino().setSelected(true);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
                 vista.getTxtCedula().setText(modelo.getCedula());
                 vista.getTxtPrimerNombre().setText(modelo.getPrimerNombre());
                 vista.getTxtSegundoNombre().setText(modelo.getSegundoNombre());
                 vista.getTxtPrimerApellido().setText(modelo.getPrimerApellido());
                 vista.getTxtSegundoApellido().setText(modelo.getSegundoApellido());
-                vista.getRadButMasculino().setSelected(false);
-                vista.getRadButFemenino().setSelected(false);
-                vista.getTxtTelefono().setText(modelo.getTelefono());
+                String tlf[] = modelo.getTelefono().split("-");
+                vista.getCbxTelefono().setSelectedItem(tlf[0]);
+                vista.getTxtTelefono().setText(tlf[1]);
                 vista.getTxtDireccion().setText(modelo.getDireccion());
                 vista.getBtnAgregar().setEnabled(false);
                 vista.getBtnModificar().setEnabled(true);
@@ -142,8 +156,8 @@ public class CRepresentante implements ActionListener, ItemListener, MouseListen
             vista.getTxtSegundoNombre().setText("");
             vista.getTxtPrimerApellido().setText("");
             vista.getTxtSegundoApellido().setText("");
-            vista.getRadButMasculino().setSelected(false);
-            vista.getRadButFemenino().setSelected(false);
+            vista.getRadBtnMasculino().setSelected(false);
+            vista.getRadBtnFemenino().setSelected(false);
             vista.getTxtTelefono().setText("");
             vista.getTxtDireccion().setText("");
             vista.getBtnAgregar().setEnabled(true);
@@ -155,7 +169,7 @@ public class CRepresentante implements ActionListener, ItemListener, MouseListen
             modelo.setSegundoNombre(vista.getTxtSegundoNombre().getText());
             modelo.setPrimerApellido(vista.getTxtPrimerApellido().getText());
             modelo.setSegundoApellido(vista.getTxtSegundoApellido().getText());
-            modelo.setTelefono(vista.getTxtTelefono().getText());
+            modelo.setTelefono(vista.getCbxTelefono().getSelectedItem().toString() + "-" + vista.getTxtTelefono().getText());
             modelo.setDireccion(vista.getTxtDireccion().getText());
             modelo.insert();
 
@@ -170,8 +184,8 @@ public class CRepresentante implements ActionListener, ItemListener, MouseListen
             vista.getTxtSegundoNombre().setText("");
             vista.getTxtPrimerApellido().setText("");
             vista.getTxtSegundoApellido().setText("");
-            vista.getRadButMasculino().setSelected(false);
-            vista.getRadButFemenino().setSelected(false);
+            vista.getRadBtnMasculino().setSelected(false);
+            vista.getRadBtnFemenino().setSelected(false);
             vista.getTxtTelefono().setText("");
             vista.getTxtDireccion().setText("");
             vista.getBtnModificar().setEnabled(false);
@@ -182,7 +196,7 @@ public class CRepresentante implements ActionListener, ItemListener, MouseListen
             modelo.setSegundoNombre(vista.getTxtSegundoNombre().getText());
             modelo.setPrimerApellido(vista.getTxtPrimerApellido().getText());
             modelo.setSegundoApellido(vista.getTxtSegundoApellido().getText());
-            modelo.setTelefono(vista.getTxtTelefono().getText());
+            modelo.setTelefono(vista.getCbxTelefono().getSelectedItem().toString() + "-" + vista.getTxtTelefono().getText());
             modelo.setDireccion(vista.getTxtDireccion().getText());
             modelo.update();
 
@@ -197,8 +211,8 @@ public class CRepresentante implements ActionListener, ItemListener, MouseListen
             vista.getTxtSegundoNombre().setText("");
             vista.getTxtPrimerApellido().setText("");
             vista.getTxtSegundoApellido().setText("");
-            vista.getRadButMasculino().setSelected(false);
-            vista.getRadButFemenino().setSelected(false);
+            vista.getRadBtnMasculino().setSelected(false);
+            vista.getRadBtnFemenino().setSelected(false);
             vista.getTxtTelefono().setText("");
             vista.getTxtDireccion().setText("");
             vista.getBtnModificar().setEnabled(false);
@@ -209,7 +223,7 @@ public class CRepresentante implements ActionListener, ItemListener, MouseListen
             if (filaSeleccionada >= 0) {
                 int id;
                 id = Integer.parseInt(vista.getTabla().getValueAt(vista.getTabla().getSelectedRow(), 0).toString());
-                modelo.setId(id);
+                modelo.setCedula(Integer.toString(id));
                 modelo.delete();
 
                 try {
@@ -223,13 +237,34 @@ public class CRepresentante implements ActionListener, ItemListener, MouseListen
                 vista.getTxtSegundoNombre().setText("");
                 vista.getTxtPrimerApellido().setText("");
                 vista.getTxtSegundoApellido().setText("");
-                vista.getRadButMasculino().setSelected(false);
-                vista.getRadButFemenino().setSelected(false);
+                vista.getRadBtnMasculino().setSelected(false);
+                vista.getRadBtnFemenino().setSelected(false);
                 vista.getTxtTelefono().setText("");
                 vista.getTxtDireccion().setText("");
                 vista.getBtnAgregar().setEnabled(true);
                 vista.getBtnModificar().setEnabled(false);
                 vista.getBtnEliminar().setEnabled(false);
+            }
+        }
+    }
+    
+    @Override
+    public void itemStateChanged(ItemEvent ie) {
+        if (ie.getStateChange() == ItemEvent.SELECTED) {
+            if (ie.getSource() == vista.getRadBtnMasculino()) {
+                modelo.setGenero(vista.getRadBtnMasculino().getText());
+            }
+
+            if (ie.getSource() == vista.getRadBtnFemenino()) {
+                modelo.setGenero(vista.getRadBtnFemenino().getText());
+            }
+
+            if (ie.getSource() == vista.getRadBtnMasculino()) {
+                modelo.setGenero(vista.getRadBtnMasculino().getText());
+            }
+
+            if (ie.getSource() == vista.getRadBtnFemenino()) {
+                modelo.setGenero(vista.getRadBtnFemenino().getText());
             }
         }
     }
@@ -244,16 +279,5 @@ public class CRepresentante implements ActionListener, ItemListener, MouseListen
 
     @Override
     public void keyReleased(KeyEvent ke) {
-    }
-
-    @Override
-    public void itemStateChanged(ItemEvent ie) {
-        if (ie.getStateChange() == ItemEvent.SELECTED) {
-            if (ie.getSource() == vista.getRadButMasculino()) {
-                modelo.setGenero(vista.getRadButMasculino().getText());
-            } else if (ie.getSource() == vista.getRadButFemenino()) {
-                modelo.setGenero(vista.getRadButFemenino().getText());
-            }
-        }
     }
 }

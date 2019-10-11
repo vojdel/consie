@@ -86,7 +86,7 @@ public class MPersonal extends MPersona {
     public MPersonal[] buscar(String textoBuscar) throws SQLException {
         sql = "SELECT ci_personal, p_nombre_personal, s_nombre_personal, p_apellido_personal, s_apellido_personal, genero_personal, direccion_personal, telf_personal, c.nombre_cargo "
                 + "FROM personal AS p INNER JOIN cargo AS c ON p.id_cargo=c.id_cargo "
-                + "WHERE p_apellido_estudiante LIKE '%" + textoBuscar + "%' "
+                + "WHERE p_apellido_personal LIKE '%" + textoBuscar + "%' "
                 + "ORDER BY p_apellido_personal;";
         System.out.println(sql);
         con.conectar();
@@ -112,6 +112,34 @@ public class MPersonal extends MPersona {
         }
     }
 
+    public MPersonal[] busquedaDinamica(String nacionalidad, String cedula) throws SQLException {
+        sql = "SELECT ci_personal, p_nombre_personal, s_nombre_personal, p_apellido_personal, s_apellido_personal, genero_personal, direccion_personal, telf_personal, c.nombre_cargo "
+                + "FROM personal AS p INNER JOIN cargo AS c ON p.id_cargo=c.id_cargo "
+                + "WHERE ci_personal LIKE '%"+ nacionalidad +"-" + cedula + "%' "
+                + "ORDER BY p_apellido_personal;";
+        System.out.println(sql);
+        con.conectar();
+        rs = con.consultarBD();
+
+        if (rs != null) {
+            rs.last();
+            int contFilas = rs.getRow();
+            rs.beforeFirst();
+
+            MPersonal[] datos = new MPersonal[contFilas];
+
+            for (int i = 0; i < contFilas; i++) {
+                rs.next();
+                datos[i] = new MPersonal(rs.getString("ci_personal"), rs.getString("p_nombre_personal"), rs.getString("s_nombre_personal"), rs.getString("p_apellido_personal"), rs.getString("s_apellido_personal"), rs.getString("genero_personal"), rs.getString("direccion_personal"), rs.getString("telf_personal"), new MCargo(rs.getString("nombre_cargo")));
+            }
+
+            con.desconectar();
+            return datos;
+        } else {
+            con.desconectar();
+            return null;
+        }    }
+
     public void insert() {
         sql = "INSERT INTO personal (ci_personal, p_nombre_personal, s_nombre_personal, p_apellido_personal, s_apellido_personal, genero_personal, direccion_personal, telf_personal, id_cargo) "
                 + "VALUES ('" + cedula + "', '" + primerNombre + "', '" + segundoNombre + "', '" + primerApellido + "', '" + segundoApellido + "', '" + genero + "', '" + direccion + "', '" + telefono + "', '" + cargo.getId() + "');";
@@ -127,10 +155,10 @@ public class MPersonal extends MPersona {
                 + "p_nombre_personal='" + primerNombre + "', "
                 + "s_nombre_personal='" + segundoNombre + "', "
                 + "p_apellido_personal='" + primerApellido + "', "
-                + "s_apellido_personal='" + segundoApellido + "' "
-                + "genero_personal='" + genero + "' "
-                + "direccion_personal='" + direccion + "' "
-                + "telf_personal='" + telefono + "' "
+                + "s_apellido_personal='" + segundoApellido + "', "
+                + "genero_personal='" + genero + "', "
+                + "direccion_personal='" + direccion + "', "
+                + "telf_personal='" + telefono + "', "
                 + "id_cargo='" + cargo.getId() + "' "
                 + "WHERE ci_personal='" + cedula + "';";
         System.out.println(sql);

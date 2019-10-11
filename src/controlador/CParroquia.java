@@ -179,9 +179,10 @@ public class CParroquia implements ActionListener, ItemListener, MouseListener, 
                 modeloTabla.addRow(new Object[]{modelo.getId(), modelo.getMunicipio().getEstado().getNombre(), modelo.getMunicipio().getNombre(), modelo.getNombre()});
             }
 
-            funciones.ocultarColumnas(vista.getTabla(), new int[]{0});
             System.out.println("Tabla actualizada");
         }
+
+        funciones.ocultarColumnas(vista.getTabla(), new int[]{0});
     }
 
     private void addListener() {

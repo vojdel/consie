@@ -69,6 +69,8 @@ public class CPersonal implements ActionListener, MouseListener, KeyListener, It
     }
 
     private void addListener() {
+        vista.getCbxCedula().addItemListener(this);
+        vista.getTxtCedula().addKeyListener(this);
         vista.getBtnNuevo().addActionListener(this);
         vista.getBtnAgregar().addActionListener(this);
         vista.getBtnModificar().addActionListener(this);
@@ -144,17 +146,6 @@ public class CPersonal implements ActionListener, MouseListener, KeyListener, It
             Logger.getLogger(CEstudiante.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        limpiarFormulario();
-        vista.getTxtCedula().setText("");
-        vista.getTxtPNombre().setText("");
-        vista.getTxtSNombre().setText("");
-        vista.getTxtPApellido().setText("");
-        vista.getTxtSApellido().setText("");
-        vista.getBtnGrpGenero().clearSelection();
-        vista.getCbxTelefono().setSelectedIndex(0);
-        vista.getTxtTelefono().setText("");
-        vista.getTxtDireccion().setText("");
-        vista.getCbxCargo().setSelectedIndex(0);
     }
 
     private void modificar() {
@@ -254,6 +245,15 @@ public class CPersonal implements ActionListener, MouseListener, KeyListener, It
             vista.getBtnEliminar().setEnabled(true);
         }
     }
+    
+    private void busqueda(){
+         String nacionalidad = (vista.getCbxCedula().getSelectedIndex() == 0)? "V": "E";
+            try {
+                actualizarTabla(modelo.busquedaDinamica(nacionalidad, vista.getTxtCedula().getText()));
+            } catch (SQLException ex) {
+                Logger.getLogger(CPersonal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
 
     @Override
     public void itemStateChanged(ItemEvent ie) {
@@ -272,6 +272,9 @@ public class CPersonal implements ActionListener, MouseListener, KeyListener, It
 
             if (ie.getSource() == vista.getRadBtnFemenino()) {
                 modelo.setGenero(vista.getRadBtnFemenino().getText());
+            }
+            if(ie.getSource() == vista.getCbxCedula()){
+                 busqueda();
             }
         }
     }
@@ -317,16 +320,16 @@ public class CPersonal implements ActionListener, MouseListener, KeyListener, It
 
     @Override
     public void keyTyped(KeyEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(e.getSource() == vista.getTxtCedula()){
+            busqueda();
+        }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

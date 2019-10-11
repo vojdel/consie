@@ -2,6 +2,7 @@ package consie;
 
 import controlador.CInicioSesion;
 import javax.swing.JFrame;
+import modelo.MFuncionario;
 import modelo.MUsuario;
 
 /**
@@ -12,7 +13,8 @@ public class Consie {
 
     public static JFrame ventana;
     public static Object app;
-    public static MUsuario usuario;
+    public static MUsuario usuarioX;
+    public static MFuncionario funcionarioX;
     public static Object[] usuario2 = new Object[3];
 
     /**
