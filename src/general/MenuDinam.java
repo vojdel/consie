@@ -77,10 +77,15 @@ public class MenuDinam implements MouseListener {
     private Icon iconoRepresentante;
     private Icon iconoSeccion;
     private Icon iconoUsuario;
-    
+    private Icon iconoAdminEscuela;
+    private Icon iconoPedadogico;
+    private Icon iconoAdminPersonal;
+    private Icon iconoEstadisticas;
+
     private MFuncion[] funciones;
 
     public MenuDinam() {
+        // Maestros
         iconoAnioEscolar = new ImageIcon("img/icons8_calendar_plus_30px.png");
         iconoInicio = new ImageIcon("img/icons8_home_30px.png");
         iconoCargo = new ImageIcon("img/icons8_work_30px.png");
@@ -97,12 +102,18 @@ public class MenuDinam implements MouseListener {
         iconoRepresentante = new ImageIcon("img/icons8_family_30px.png");
         iconoSeccion = new ImageIcon("img/icons8_class_30px.png");
         iconoUsuario = new ImageIcon("img/icons8_user_30px.png");
-        
+
+        //Procesos
+        iconoAdminEscuela = new ImageIcon("img/icons8_school_building_30px.png");
+        iconoPedadogico = new ImageIcon("img/icons8_student_male_30px.png");
+        iconoAdminPersonal = new ImageIcon("img/icons8_school_director_30px.png");
+        iconoEstadisticas = new ImageIcon("img/icons8_statistics_30px.png");
+
         menuAnioEscolar = new JLabel("Año escolar");
         menuAnioEscolar.setFont(new Font("Tahoma", 0, 18));
         menuAnioEscolar.setForeground(new Color(255, 255, 255));
         menuAnioEscolar.setIcon(iconoAnioEscolar);
-        
+
         menuInicio = new JLabel("Inicio");
         menuInicio.setFont(new Font("Tahoma", 0, 18));
         menuInicio.setForeground(new Color(255, 255, 255));
@@ -137,7 +148,7 @@ public class MenuDinam implements MouseListener {
         menuGrado.setFont(new Font("Tahoma", 0, 18));
         menuGrado.setForeground(new Color(255, 255, 255));
         menuGrado.setIcon(iconoGrado);
-        
+
         menuIndicador = new JLabel("Indicador");
         menuIndicador.setFont(new Font("Tahoma", 0, 18));
         menuIndicador.setForeground(new Color(255, 255, 255));
@@ -179,9 +190,24 @@ public class MenuDinam implements MouseListener {
         menuUsuario.setIcon(iconoUsuario);
 
         menuPedagogico = new JLabel("Nivel Pedagógico");
+        menuPedagogico.setFont(new Font("Tahoma", 0, 18));
+        menuPedagogico.setForeground(new Color(255, 255, 255));
+        menuPedagogico.setIcon(iconoPedadogico);
+
         menuAdminPersonal = new JLabel("Administrar Personal");
+        menuAdminPersonal.setFont(new Font("Tahoma", 0, 18));
+        menuAdminPersonal.setForeground(new Color(255, 255, 255));
+        menuAdminPersonal.setIcon(iconoAdminPersonal);
+
         menuAdminEscuela = new JLabel("Administrar Escuela");
+        menuAdminEscuela.setFont(new Font("Tahoma", 0, 18));
+        menuAdminEscuela.setForeground(new Color(255, 255, 255));
+        menuAdminEscuela.setIcon(iconoAdminEscuela);
+
         menuEstadistica = new JLabel("Estadística");
+        menuEstadistica.setFont(new Font("Tahoma", 0, 18));
+        menuEstadistica.setForeground(new Color(255, 255, 255));
+        menuEstadistica.setIcon(iconoEstadisticas);
 
         menuCerrarSesion = new JLabel("Cerrar Sesión");
 
@@ -200,6 +226,10 @@ public class MenuDinam implements MouseListener {
 
         if (funciones != null) {
             for (MFuncion funcionesX : funciones) {
+                if ("anio escolar".equals(funcionesX.getNombre())) {
+                    panelMenu.add(menuAnioEscolar);
+                    menuAnioEscolar.setBounds(x, y += 30, w, h);
+                }
                 if ("cargo".equals(funcionesX.getNombre())) {
                     panelMenu.add(menuCargo);
                     menuCargo.setBounds(x, y += 30, w, h);
@@ -256,9 +286,24 @@ public class MenuDinam implements MouseListener {
                     panelMenu.add(menuUsuario);
                     menuUsuario.setBounds(x, y += 30, w, h);
                 }
-                if ("anio escolar".equals(funcionesX.getNombre())) {
-                    panelMenu.add(menuAnioEscolar);
-                    menuAnioEscolar.setBounds(x, y += 30, w, h);
+            }
+            y += 20;
+            for (MFuncion funcionesX : funciones) {
+                if ("administrar escuelas".equals(funcionesX.getNombre())) {
+                    panelMenu.add(menuAdminEscuela);
+                    menuAdminEscuela.setBounds(x, y += 30, w, h);
+                }
+                if ("nivel pedagocico".equals(funcionesX.getNombre())) {
+                    panelMenu.add(menuPedagogico);
+                    menuPedagogico.setBounds(x, y += 30, w, h);
+                }
+                if ("segimiento personal".equals(funcionesX.getNombre())) {
+                    panelMenu.add(menuAdminPersonal);
+                    menuAdminPersonal.setBounds(x, y += 30, w, h);
+                }
+                if ("estadisticas".equals(funcionesX.getNombre())) {
+                    panelMenu.add(menuEstadistica);
+                    menuEstadistica.setBounds(x, y += 30, w, h);
                 }
             }
         }

@@ -21,6 +21,11 @@ public class MMunicipio {
     public MMunicipio() {
     }
 
+    public MMunicipio(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+    
     public MMunicipio(int id, String nombre, MEstado estado) {
         this.id = id;
         this.nombre = nombre;

@@ -2,6 +2,8 @@ package vista;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.GroupLayout;
@@ -40,227 +42,290 @@ public class VAdminEscuela extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelMenu = new JPanel();
-        labelMenu = new JLabel();
-        jPanel3 = new JPanel();
-        labelCerrar = new JLabel();
-        jPanel4 = new JPanel();
+        tabla = new JScrollPane();
+        tablas = new JTable();
         jLabel3 = new JLabel();
-        jSeparator1 = new JSeparator();
-        jButton1 = new JButton();
-        jScrollPane1 = new JScrollPane();
-        jTable1 = new JTable();
-        jButton2 = new JButton();
-        jTextField1 = new JTextField();
-        jLabel4 = new JLabel();
+        jSeparator2 = new JSeparator();
+        btnTablaRecaudo = new JButton();
+        btnTablaPersonal = new JButton();
+        btnTablaCambio = new JButton();
+        btnAnterior = new JLabel();
+        btnSiguiente = new JLabel();
+        btnPrimero = new JLabel();
+        btnUltimo = new JLabel();
+        btnEntregaRecaudos = new JButton();
+        btnAsignarPersonal = new JButton();
+        btnReporteRecaudo = new JButton();
+        btnCambioEscuela = new JButton();
+        btnReportePersonal = new JButton();
+        btnReporteCambio = new JButton();
 
         FormListener formListener = new FormListener();
 
-        setBackground(new Color(0, 72, 181));
+        setBackground(new Color(255, 255, 255));
 
-        panelMenu.setBackground(new Color(0, 36, 92));
-        panelMenu.setName("panelMenu"); // NOI18N
-        panelMenu.addMouseListener(formListener);
+        tabla.setName("tabla"); // NOI18N
 
-        labelMenu.setIcon(new ImageIcon(getClass().getResource("/vista/img/navicon-white.png"))); // NOI18N
-        labelMenu.setName("labelMenu"); // NOI18N
-        labelMenu.addMouseListener(formListener);
-
-        GroupLayout panelMenuLayout = new GroupLayout(panelMenu);
-        panelMenu.setLayout(panelMenuLayout);
-        panelMenuLayout.setHorizontalGroup(panelMenuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(panelMenuLayout.createSequentialGroup()
-                .addComponent(labelMenu)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        panelMenuLayout.setVerticalGroup(panelMenuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(panelMenuLayout.createSequentialGroup()
-                .addComponent(labelMenu)
-                .addGap(0, 519, Short.MAX_VALUE))
-        );
-
-        jPanel3.setBackground(new Color(255, 255, 255));
-        jPanel3.setName("jPanel3"); // NOI18N
-
-        labelCerrar.setIcon(new ImageIcon(getClass().getResource("/vista/img/ios7-close-outline.png"))); // NOI18N
-        labelCerrar.setName("labelCerrar"); // NOI18N
-        labelCerrar.addMouseListener(formListener);
-
-        GroupLayout jPanel3Layout = new GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(labelCerrar))
-        );
-        jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(labelCerrar)
-        );
-
-        jPanel4.setBackground(new Color(255, 255, 255));
-        jPanel4.setName("jPanel4"); // NOI18N
-
-        jLabel3.setFont(new Font("Tahoma", 0, 24)); // NOI18N
-        jLabel3.setHorizontalAlignment(SwingConstants.CENTER);
-        jLabel3.setText("Escuela");
-        jLabel3.setName("jLabel3"); // NOI18N
-
-        jSeparator1.setName("jSeparator1"); // NOI18N
-
-        jButton1.setBackground(new Color(238, 24, 24));
-        jButton1.setFont(new Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setForeground(new Color(255, 255, 255));
-        jButton1.setText("Nueva Escuela");
-        jButton1.setBorder(new MatteBorder(null));
-        jButton1.setBorderPainted(false);
-        jButton1.setName("jButton1"); // NOI18N
-
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
-
-        jTable1.setModel(new DefaultTableModel(
+        tablas.setModel(new DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nombre", "Acción"
+
             }
         ));
-        jTable1.setName("jTable1"); // NOI18N
-        jScrollPane1.setViewportView(jTable1);
+        tablas.setName("tablas"); // NOI18N
+        tabla.setViewportView(tablas);
 
-        jButton2.setBackground(new Color(238, 24, 24));
-        jButton2.setFont(new Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setForeground(new Color(255, 255, 255));
-        jButton2.setText("Entregar recaudo");
-        jButton2.setBorder(new MatteBorder(null));
-        jButton2.setBorderPainted(false);
-        jButton2.setName("jButton2"); // NOI18N
+        jLabel3.setFont(new Font("Tahoma", 0, 24)); // NOI18N
+        jLabel3.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel3.setText("Aministrar Escuelas");
+        jLabel3.setName("jLabel3"); // NOI18N
 
-        jTextField1.setColumns(10);
-        jTextField1.setName("jTextField1"); // NOI18N
+        jSeparator2.setName("jSeparator2"); // NOI18N
 
-        jLabel4.setFont(new Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("Buscar:");
-        jLabel4.setName("jLabel4"); // NOI18N
+        btnTablaRecaudo.setBackground(new Color(255, 153, 51));
+        btnTablaRecaudo.setForeground(new Color(255, 255, 255));
+        btnTablaRecaudo.setText("Recaudos Entregados");
+        btnTablaRecaudo.setName("btnTablaRecaudo"); // NOI18N
+        btnTablaRecaudo.addActionListener(formListener);
 
-        GroupLayout jPanel4Layout = new GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator1, GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
-                    .addGroup(GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        btnTablaPersonal.setBackground(new Color(255, 153, 51));
+        btnTablaPersonal.setForeground(new Color(255, 255, 255));
+        btnTablaPersonal.setText("Personal Asignado");
+        btnTablaPersonal.setName("btnTablaPersonal"); // NOI18N
+
+        btnTablaCambio.setBackground(new Color(255, 153, 51));
+        btnTablaCambio.setForeground(new Color(255, 255, 255));
+        btnTablaCambio.setText("Cambio de Escuelas");
+        btnTablaCambio.setName("btnTablaCambio"); // NOI18N
+
+        btnAnterior.setForeground(new Color(0, 0, 0));
+        btnAnterior.setText("Anterior");
+        btnAnterior.setName("btnAnterior"); // NOI18N
+
+        btnSiguiente.setForeground(new Color(0, 0, 0));
+        btnSiguiente.setText("Siguiente");
+        btnSiguiente.setName("btnSiguiente"); // NOI18N
+
+        btnPrimero.setForeground(new Color(0, 0, 0));
+        btnPrimero.setText("Primero");
+        btnPrimero.setName("btnPrimero"); // NOI18N
+
+        btnUltimo.setForeground(new Color(0, 0, 0));
+        btnUltimo.setText("Ultimo");
+        btnUltimo.setName("btnUltimo"); // NOI18N
+
+        btnEntregaRecaudos.setBackground(new Color(255, 0, 51));
+        btnEntregaRecaudos.setForeground(new Color(255, 255, 255));
+        btnEntregaRecaudos.setText("Entrega de Recaudos");
+        btnEntregaRecaudos.setName("btnEntregaRecaudos"); // NOI18N
+
+        btnAsignarPersonal.setBackground(new Color(255, 0, 51));
+        btnAsignarPersonal.setForeground(new Color(255, 255, 255));
+        btnAsignarPersonal.setText("Asignar Personal");
+        btnAsignarPersonal.setName("btnAsignarPersonal"); // NOI18N
+
+        btnReporteRecaudo.setBackground(new Color(0, 102, 255));
+        btnReporteRecaudo.setForeground(new Color(255, 255, 255));
+        btnReporteRecaudo.setText("Repote de Recaudos");
+        btnReporteRecaudo.setName("btnReporteRecaudo"); // NOI18N
+        btnReporteRecaudo.addActionListener(formListener);
+
+        btnCambioEscuela.setBackground(new Color(255, 0, 51));
+        btnCambioEscuela.setForeground(new Color(255, 255, 255));
+        btnCambioEscuela.setText("Cambio de Escuela");
+        btnCambioEscuela.setName("btnCambioEscuela"); // NOI18N
+
+        btnReportePersonal.setBackground(new Color(0, 102, 255));
+        btnReportePersonal.setForeground(new Color(255, 255, 255));
+        btnReportePersonal.setText("Reporte de Personal");
+        btnReportePersonal.setToolTipText("");
+        btnReportePersonal.setName("btnReportePersonal"); // NOI18N
+
+        btnReporteCambio.setBackground(new Color(0, 102, 255));
+        btnReporteCambio.setForeground(new Color(255, 255, 255));
+        btnReporteCambio.setText("Reporte de Cambio de Escuela");
+        btnReporteCambio.setName("btnReporteCambio"); // NOI18N
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panelMenu, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
-            .addComponent(jPanel3, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(80, 80, 80)
+                                .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jSeparator2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addComponent(btnReporteCambio, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnReportePersonal, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnReporteRecaudo, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnCambioEscuela, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAsignarPersonal, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnEntregaRecaudos, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tabla, GroupLayout.PREFERRED_SIZE, 597, GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 28, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnTablaRecaudo, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTablaPersonal, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTablaCambio, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
+                .addGap(105, 105, 105))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(246, 246, 246)
+                .addComponent(btnPrimero)
+                .addGap(18, 18, 18)
+                .addComponent(btnAnterior)
+                .addGap(18, 18, 18)
+                .addComponent(btnSiguiente)
+                .addGap(18, 18, 18)
+                .addComponent(btnUltimo)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelMenu, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEntregaRecaudos)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAsignarPersonal)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCambioEscuela)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnReporteRecaudo)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnReportePersonal)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnReporteCambio)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTablaRecaudo)
+                    .addComponent(btnTablaPersonal)
+                    .addComponent(btnTablaCambio))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tabla, GroupLayout.PREFERRED_SIZE, 269, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAnterior)
+                    .addComponent(btnSiguiente)
+                    .addComponent(btnPrimero)
+                    .addComponent(btnUltimo))
+                .addGap(19, 19, 19))
         );
     }
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements MouseListener {
+    private class FormListener implements ActionListener {
         FormListener() {}
-        public void mouseClicked(MouseEvent evt) {
-            if (evt.getSource() == labelMenu) {
-                VAdminEscuela.this.labelMenuMouseClicked(evt);
+        public void actionPerformed(ActionEvent evt) {
+            if (evt.getSource() == btnTablaRecaudo) {
+                VAdminEscuela.this.btnTablaRecaudoActionPerformed(evt);
             }
-            else if (evt.getSource() == labelCerrar) {
-                VAdminEscuela.this.labelCerrarMouseClicked(evt);
+            else if (evt.getSource() == btnReporteRecaudo) {
+                VAdminEscuela.this.btnReporteRecaudoActionPerformed(evt);
             }
-        }
-
-        public void mouseEntered(MouseEvent evt) {
-        }
-
-        public void mouseExited(MouseEvent evt) {
-            if (evt.getSource() == panelMenu) {
-                VAdminEscuela.this.panelMenuMouseExited(evt);
-            }
-        }
-
-        public void mousePressed(MouseEvent evt) {
-        }
-
-        public void mouseReleased(MouseEvent evt) {
         }
     }// </editor-fold>//GEN-END:initComponents
 
-    private void labelMenuMouseClicked(MouseEvent evt) {//GEN-FIRST:event_labelMenuMouseClicked
+    private void btnTablaRecaudoActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnTablaRecaudoActionPerformed
         // TODO add your handling code here:
-        this.panelMenu.setSize(200,3000);
-    }//GEN-LAST:event_labelMenuMouseClicked
+    }//GEN-LAST:event_btnTablaRecaudoActionPerformed
 
-    private void panelMenuMouseExited(MouseEvent evt) {//GEN-FIRST:event_panelMenuMouseExited
+    private void btnReporteRecaudoActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnReporteRecaudoActionPerformed
         // TODO add your handling code here:
-        this.panelMenu.setSize(70,3000);
-    }//GEN-LAST:event_panelMenuMouseExited
-
-    private void labelCerrarMouseClicked(MouseEvent evt) {//GEN-FIRST:event_labelCerrarMouseClicked
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_labelCerrarMouseClicked
+    }//GEN-LAST:event_btnReporteRecaudoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public JButton jButton1;
-    public JButton jButton2;
+    public JLabel btnAnterior;
+    public JButton btnAsignarPersonal;
+    public JButton btnCambioEscuela;
+    public JButton btnEntregaRecaudos;
+    public JLabel btnPrimero;
+    public JButton btnReporteCambio;
+    public JButton btnReportePersonal;
+    public JButton btnReporteRecaudo;
+    public JLabel btnSiguiente;
+    public JButton btnTablaCambio;
+    public JButton btnTablaPersonal;
+    public JButton btnTablaRecaudo;
+    public JLabel btnUltimo;
     public JLabel jLabel3;
-    public JLabel jLabel4;
-    public JPanel jPanel3;
-    public JPanel jPanel4;
-    public JScrollPane jScrollPane1;
-    public JSeparator jSeparator1;
-    public JTable jTable1;
-    public JTextField jTextField1;
-    public JLabel labelCerrar;
-    public JLabel labelMenu;
-    public JPanel panelMenu;
+    public JSeparator jSeparator2;
+    public JScrollPane tabla;
+    public JTable tablas;
     // End of variables declaration//GEN-END:variables
+
+    public JLabel getBtnAnterior() {
+        return btnAnterior;
+    }
+
+    public JButton getBtnAsignarPersonal() {
+        return btnAsignarPersonal;
+    }
+
+    public JButton getBtnCambioEscuela() {
+        return btnCambioEscuela;
+    }
+
+    public JButton getBtnEntregaRecaudos() {
+        return btnEntregaRecaudos;
+    }
+
+    public JLabel getBtnPrimero() {
+        return btnPrimero;
+    }
+
+    public JButton getBtnReporteCambio() {
+        return btnReporteCambio;
+    }
+
+    public JButton getBtnReportePersonal() {
+        return btnReportePersonal;
+    }
+
+    public JButton getBtnReporteRecaudo() {
+        return btnReporteRecaudo;
+    }
+
+    public JLabel getBtnSiguiente() {
+        return btnSiguiente;
+    }
+
+    public JButton getBtnTablaCambio() {
+        return btnTablaCambio;
+    }
+
+    public JButton getBtnTablaPersonal() {
+        return btnTablaPersonal;
+    }
+
+    public JButton getBtnTablaRecaudo() {
+        return btnTablaRecaudo;
+    }
+
+    public JLabel getBtnUltimo() {
+        return btnUltimo;
+    }
+
+    public JTable getTablas() {
+        return tablas;
+    }
+    
+    
+
 }

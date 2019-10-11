@@ -322,13 +322,13 @@ public class CEscuela implements ActionListener, ItemListener, MouseListener, Ke
 
                 if (null != modelo.getTurno()) {
                     switch (modelo.getTurno()) {
-                        case "Manana":
+                        case "manana":
                             vista.getRadBtnManana().setSelected(true);
                             break;
-                        case "Tarde":
+                        case "tarde":
                             vista.getRadBtnTarde().setSelected(true);
                             break;
-                        case "Ambos":
+                        case "ambos":
                             vista.getRadBtnAmbos().setSelected(true);
                             break;
                         default:

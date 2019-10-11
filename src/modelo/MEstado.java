@@ -30,7 +30,7 @@ public class MEstado {
     }
 
     public MEstado[] selectTodo() throws SQLException {
-        sql = "SELECT * FROM estado ORDER BY estado;";
+        sql = "SELECT * FROM estado ORDER BY id_estado;";
         con.conectar();
         rs = con.consultarBD();
 

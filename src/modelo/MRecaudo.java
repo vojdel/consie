@@ -27,6 +27,11 @@ public class MRecaudo {
         this.frecuenciaEntrega = frecuenciaEntrega;
     }
 
+    public MRecaudo(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+
     public MRecaudo[] selectTodo() throws SQLException {
         con.setSql("SELECT * FROM recaudo ORDER BY nombre_recaudo;");
         con.conectar();
