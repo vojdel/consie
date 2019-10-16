@@ -4,7 +4,6 @@ import general.BD;
 import static general.BD.sql;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -106,43 +105,6 @@ public class MSeccion {
 
     }
     
-    public DefaultComboBoxModel obtenerGrado() {
-        sql = "SELECT * FROM grado ORDER BY id_grado;";
-        con.conectar();
-        rs = con.consultarBD();
-        DefaultComboBoxModel listaModelo = new DefaultComboBoxModel();
-        listaModelo.addElement("Seleccione");
-
-        try {
-            while (rs.next()) {
-                listaModelo.addElement(rs.getString("nombre_grado"));
-            }
-            con.desconectar();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-
-        return listaModelo;
-    }
-    
-    public HashMap<String, Integer> hashGrado() {
-        sql = "SELECT * FROM grado ORDER BY grado;";
-        con.conectar();
-        rs = con.consultarBD();
-        HashMap<String, Integer> hashModelo = new HashMap<String, Integer>();
-
-        try {
-            while (rs.next()) {
-                hashModelo.put(rs.getString("nombre_grado"), rs.getInt("id_grado"));
-            }
-            con.desconectar();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-
-        return hashModelo;
-    }
-
     public void insert() {
         sql = "INSERT INTO seccion(nombre_seccion, id_grado2, n_estudiantes)"
                 + " VALUES('" + nombre_seccion + "', "+id_grado+", "+n_estudiantes+");";

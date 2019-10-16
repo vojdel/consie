@@ -102,8 +102,10 @@ create table personal (
 );
 
 create table escuela_personal (
+        id_escuela_personal serial NOT NULL,
 	id_escuela int not null,
 	ci_personal varchar(10) not null,
+        CONSTRAINT pk_ep PRIMARY KEY (id_escuela_personal),
 	foreign key (id_escuela) references escuela (id_escuela),
 	foreign key (ci_personal) references personal (ci_personal)
 );
@@ -116,10 +118,22 @@ create table recaudo (
 );
 
 create table escuela_recaudo (
+        id_escuela_recaudo serial NOT NULL,
 	id_escuela int not null,
 	id_recaudo int not null,
+        CONSTRAINT pk_ider PRIMARY KEY (id_escuela_recaudo),
 	foreign key (id_escuela) references escuela (id_escuela),
 	foreign key (id_recaudo) references recaudo (id_recaudo)
+);
+
+CREATE TABLE entrega_recaudo(
+        id_entrega_recaudo serial NOT NULL,
+        id_escuela_recuado integer,
+        fecha_entrega date,
+        CONSTRAINT pk_ers PRIMARY KEY (id_entrega_recaudo),
+        CONSTRAINT fk_ers FOREIGN KEY (id_escuela_recuado)
+        REFERENCES escuela_recaudo (id_escuela_recaudo) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
 create table representante (
@@ -130,7 +144,7 @@ create table representante (
 	s_apellido_representante varchar(20),
 	genero_representante varchar(10) not null,
         direccion_personal varchar(200),
-        telf_personal varchar(12),
+        telf_personal varchar(12)
 );
 
 create table estudiante_representante (
@@ -193,18 +207,18 @@ CREATE TABLE estudiante_seccion (
 )
 ;
 
-CREATE TABLE estudiante_anio_escolar (
+/*CREATE TABLE estudiante_anio_escolar (
   id_estudiante varchar(32) NOT NULL,
   id_anio_escolar int4 NOT NULL,
   CONSTRAINT fk_anio1 FOREIGN KEY (id_anio_escolar) REFERENCES anio_escolar (id_anio_escolar) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT fk_est2 FOREIGN KEY (id_estudiante) REFERENCES estudiante (ci_estudiante) ON DELETE NO ACTION ON UPDATE NO ACTION
-)
+)*/
 ;
 
-CREATE TABLE estudiante_anio_escolar (
+/*CREATE TABLE estudiante_anio_escolar (
   id_estudiante int4 NOT NULL,
   id_anio_escolar int4 NOT NULL,
   CONSTRAINT fk_anio1 FOREIGN KEY (id_anio_escolar) REFERENCES anio_escolar (id_anio_escolar) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT fk_est2 FOREIGN KEY (id_estudiante) REFERENCES estado (id_estado) ON DELETE NO ACTION ON UPDATE NO ACTION
-)
+)*/
 ;

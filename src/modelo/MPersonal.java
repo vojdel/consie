@@ -20,6 +20,13 @@ public class MPersonal extends MPersona {
 
     }
 
+    public MPersonal(String cedula, String primerNombre, String segundoNombre, MCargo cargo) {
+        this.cedula = cedula;
+        this.primerNombre = primerNombre;
+        this.segundoNombre = segundoNombre;
+        this.cargo = cargo;
+    }
+
     public MPersonal(String cedula, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, String genero, String telefono, String direccion, MCargo cargo) {
         this.cedula = cedula;
         this.primerNombre = primerNombre;
@@ -33,9 +40,7 @@ public class MPersonal extends MPersona {
     }
 
     public MPersonal[] selectTodo() throws SQLException {
-        sql = "SELECT ci_personal, p_nombre_personal, s_nombre_personal, p_apellido_personal, s_apellido_personal, genero_personal, direccion_personal, telf_personal, c.nombre_cargo "
-                + "FROM personal AS p INNER JOIN cargo AS c ON p.id_cargo=c.id_cargo "
-                + "ORDER BY p_apellido_personal;";
+        sql = "SELECT * FROM view_personal;";
         System.out.println(sql);
         con.conectar();
         rs = con.consultarBD();

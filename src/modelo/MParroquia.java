@@ -21,12 +21,17 @@ public class MParroquia {
     public MParroquia() {
     }
 
+    public MParroquia(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+    
     public MParroquia(int id, String nombre, MMunicipio municipio) {
         this.id = id;
         this.nombre = nombre;
         this.municipio = municipio;
     }
-
+    
     public MParroquia[] selectTodo() throws SQLException {
         sql = "SELECT parroquia.id_parroquia, parroquia.parroquia, municipio.id_municipio, municipio.municipio, estado.id_estado, estado.estado "
                 + "FROM parroquia "

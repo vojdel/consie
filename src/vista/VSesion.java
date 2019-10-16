@@ -46,16 +46,14 @@ public class VSesion extends javax.swing.JPanel {
         jPanel4 = new JPanel();
         jLabel3 = new JLabel();
         jSeparator3 = new JSeparator();
-        btnIniciarSesion = new JButton();
         jPanel1 = new JPanel();
         jLabel8 = new JLabel();
-        jLabel9 = new JLabel();
-        jLabel10 = new JLabel();
-        jLabel11 = new JLabel();
-        jSeparator4 = new JSeparator();
-        jSeparator5 = new JSeparator();
         txtUsuario = new JTextField();
+        jSeparator4 = new JSeparator();
+        jLabel10 = new JLabel();
         txtClave = new JPasswordField();
+        jSeparator5 = new JSeparator();
+        btnIniciarSesion = new JButton();
 
         setBackground(new Color(0, 72, 181));
 
@@ -63,9 +61,7 @@ public class VSesion extends javax.swing.JPanel {
         jPanel3.setName("jPanel3"); // NOI18N
         jPanel3.setPreferredSize(new Dimension(827, 50));
 
-        labelCerrar.setFont(new Font("Times New Roman", 1, 14)); // NOI18N
-        labelCerrar.setIcon(new ImageIcon(getClass().getResource("/vista/img/icons8_cancel_30px.png"))); // NOI18N
-        labelCerrar.setHorizontalTextPosition(SwingConstants.CENTER);
+        labelCerrar.setIcon(new ImageIcon(getClass().getResource("/img/icons8_close_window_30px.png"))); // NOI18N
         labelCerrar.setName("labelCerrar"); // NOI18N
 
         jLabel1.setFont(new Font("Tahoma", 1, 18)); // NOI18N
@@ -94,10 +90,79 @@ public class VSesion extends javax.swing.JPanel {
         jPanel4.setName("jPanel4"); // NOI18N
 
         jLabel3.setFont(new Font("Comic Sans MS", 0, 18)); // NOI18N
-        jLabel3.setText("Inicio de Sesión");
+        jLabel3.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel3.setText("Iniciar sesión");
+        jLabel3.setToolTipText("");
         jLabel3.setName("jLabel3"); // NOI18N
 
         jSeparator3.setName("jSeparator3"); // NOI18N
+
+        jPanel1.setBackground(new Color(255, 255, 255));
+        jPanel1.setName("jPanel1"); // NOI18N
+
+        jLabel8.setFont(new Font("Tahoma", 0, 12)); // NOI18N
+        jLabel8.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel8.setIcon(new ImageIcon(getClass().getResource("/img/icons8_user_50px_1.png"))); // NOI18N
+        jLabel8.setText("Usuario:");
+        jLabel8.setHorizontalTextPosition(SwingConstants.CENTER);
+        jLabel8.setName("jLabel8"); // NOI18N
+        jLabel8.setVerticalTextPosition(SwingConstants.BOTTOM);
+
+        txtUsuario.setToolTipText("");
+        txtUsuario.setBorder(null);
+        txtUsuario.setName("txtUsuario"); // NOI18N
+
+        jSeparator4.setName("jSeparator4"); // NOI18N
+
+        jLabel10.setFont(new Font("Tahoma", 0, 12)); // NOI18N
+        jLabel10.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel10.setIcon(new ImageIcon(getClass().getResource("/img/icons8_password_50px.png"))); // NOI18N
+        jLabel10.setText("Contraseña:");
+        jLabel10.setHorizontalTextPosition(SwingConstants.CENTER);
+        jLabel10.setName("jLabel10"); // NOI18N
+        jLabel10.setVerticalTextPosition(SwingConstants.BOTTOM);
+
+        txtClave.setBorder(null);
+        txtClave.setName("txtClave"); // NOI18N
+
+        jSeparator5.setName("jSeparator5"); // NOI18N
+
+        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jSeparator4)
+                        .addComponent(txtUsuario, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jSeparator5)
+                        .addComponent(txtClave, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel8, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtUsuario, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtClave, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         btnIniciarSesion.setBackground(new Color(238, 24, 24));
         btnIniciarSesion.setFont(new Font("Tahoma", 0, 14)); // NOI18N
@@ -108,127 +173,51 @@ public class VSesion extends javax.swing.JPanel {
         btnIniciarSesion.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         btnIniciarSesion.setName("btnIniciarSesion"); // NOI18N
 
-        jPanel1.setBackground(new Color(255, 255, 255));
-        jPanel1.setName("jPanel1"); // NOI18N
-
-        jLabel8.setIcon(new ImageIcon(getClass().getResource("/vista/img/ios7-contact-outline.png"))); // NOI18N
-        jLabel8.setName("jLabel8"); // NOI18N
-
-        jLabel9.setText("  Usuario");
-        jLabel9.setName("jLabel9"); // NOI18N
-
-        jLabel10.setIcon(new ImageIcon(getClass().getResource("/vista/img/ios7-locked-outline.png"))); // NOI18N
-        jLabel10.setName("jLabel10"); // NOI18N
-
-        jLabel11.setText("Contraseña");
-        jLabel11.setName("jLabel11"); // NOI18N
-
-        jSeparator4.setName("jSeparator4"); // NOI18N
-
-        jSeparator5.setName("jSeparator5"); // NOI18N
-
-        txtUsuario.setToolTipText("");
-        txtUsuario.setBorder(null);
-        txtUsuario.setName("txtUsuario"); // NOI18N
-
-        txtClave.setBorder(null);
-        txtClave.setName("txtClave"); // NOI18N
-
-        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel9, GroupLayout.Alignment.LEADING))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jSeparator4, GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(txtUsuario)
-                            .addComponent(jSeparator5)
-                            .addComponent(txtClave))))
-                .addGap(35, 35, 35))
-        );
-        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9)
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel10))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtUsuario, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56)
-                        .addComponent(txtClave, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(25, 25, 25))
-                    .addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSeparator5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42))))
-        );
-
         GroupLayout jPanel4Layout = new GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(121, 121, 121)
-                .addComponent(jLabel3)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                            .addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 331, GroupLayout.PREFERRED_SIZE)
-                            .addGap(21, 21, 21))
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap()))
-                    .addGroup(GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(btnIniciarSesion, GroupLayout.PREFERRED_SIZE, 226, GroupLayout.PREFERRED_SIZE)
-                        .addGap(72, 72, 72))))
+                    .addComponent(jSeparator3)
+                    .addComponent(jLabel3, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(69, 69, 69)
+                .addComponent(btnIniciarSesion, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
+                .addComponent(jLabel3)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(btnIniciarSesion, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnIniciarSesion, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
             .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(209, Short.MAX_VALUE)
+                .addContainerGap(80, Short.MAX_VALUE)
                 .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(209, 209, 209))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -237,10 +226,8 @@ public class VSesion extends javax.swing.JPanel {
     private JButton btnIniciarSesion;
     private JLabel jLabel1;
     private JLabel jLabel10;
-    private JLabel jLabel11;
     private JLabel jLabel3;
     private JLabel jLabel8;
-    private JLabel jLabel9;
     private JPanel jPanel1;
     private JPanel jPanel3;
     private JPanel jPanel4;

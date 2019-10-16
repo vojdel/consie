@@ -23,18 +23,18 @@ public class CNivelPedagogico implements MouseListener {
     }
 
     private void addListeners() {
-        vista.labelCerrar.addMouseListener(this);
+        /*vista.labelCerrar.addMouseListener(this);
         vista.labelMenu.addMouseListener(this);
-        vista.panelMenu.addMouseListener(this);
+        vista.panelMenu.addMouseListener(this);*/
     }
 
     @Override
     public void mouseClicked(MouseEvent me) {
-        if (me.getSource() == vista.labelCerrar) {
+       /* if (me.getSource() == vista.labelCerrar) {
             System.exit(0);
         } else if (me.getSource() == vista.labelMenu) {
             vista.panelMenu.setSize(200, 3000);
-        }
+        }*/
     }
 
     @Override
@@ -51,8 +51,8 @@ public class CNivelPedagogico implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent me) {
-        if (me.getSource() == vista.panelMenu) {
+        /*if (me.getSource() == vista.panelMenu) {
             vista.panelMenu.setSize(50, 3000);
-        }
+        }*/
     }
 }

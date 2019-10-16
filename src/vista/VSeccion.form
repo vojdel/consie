@@ -92,7 +92,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="txtSeccion" min="-2" pref="120" max="-2" attributes="0"/>
-                          <Component id="ComBoxGrado" min="-2" pref="120" max="-2" attributes="0"/>
+                          <Component id="cbxGrado" min="-2" pref="120" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -121,7 +121,7 @@
                           <Component id="jLabel2" alignment="0" min="-2" pref="28" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnAgregar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="ComBoxGrado" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="cbxGrado" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -241,9 +241,9 @@
                 <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="ComBoxGrado">
+            <Component class="javax.swing.JComboBox" name="cbxGrado">
               <Properties>
-                <Property name="name" type="java.lang.String" value="ComBoxGrado" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="cbxGrado" noResource="true"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>

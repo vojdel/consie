@@ -50,7 +50,7 @@ public class VSeccion extends javax.swing.JPanel {
         btnModificar = new JButton();
         btnEliminar = new JButton();
         jLabel2 = new JLabel();
-        ComBoxGrado = new JComboBox<>();
+        cbxGrado = new JComboBox<>();
         jScrollPane1 = new JScrollPane();
         tabla = new JTable();
 
@@ -110,7 +110,7 @@ public class VSeccion extends javax.swing.JPanel {
         jLabel2.setText("Grado:");
         jLabel2.setName("jLabel2"); // NOI18N
 
-        ComBoxGrado.setName("ComBoxGrado"); // NOI18N
+        cbxGrado.setName("cbxGrado"); // NOI18N
 
         GroupLayout panelFormularioLayout = new GroupLayout(panelFormulario);
         panelFormulario.setLayout(panelFormularioLayout);
@@ -123,7 +123,7 @@ public class VSeccion extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(panelFormularioLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtSeccion, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ComBoxGrado, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxGrado, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(panelFormularioLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnEliminar, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
@@ -145,7 +145,7 @@ public class VSeccion extends javax.swing.JPanel {
                     .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelFormularioLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ComBoxGrado, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbxGrado, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnModificar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
@@ -208,11 +208,11 @@ public class VSeccion extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public JComboBox<String> ComBoxGrado;
     public JButton btnAgregar;
     public JButton btnEliminar;
     public JButton btnModificar;
     public JButton btnNuevo;
+    public JComboBox<String> cbxGrado;
     public JLabel jLabel2;
     public JLabel jLabel4;
     public JLabel jLabel5;
@@ -248,8 +248,8 @@ public class VSeccion extends javax.swing.JPanel {
         return txtSeccion;
     }
 
-    public JComboBox<String> getComBoxGrado() {
-        return ComBoxGrado;
+    public JComboBox<String> getCbxGrado() {
+        return cbxGrado;
     }
 
 }

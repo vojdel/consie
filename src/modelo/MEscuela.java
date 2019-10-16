@@ -27,6 +27,11 @@ public class MEscuela {
         this.id = id;
     }
 
+    public MEscuela(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+    
     public MEscuela(int id, String nombre, String turno, String direccion, MParroquia parroquia) {
         this.id = id;
         this.nombre = nombre;
@@ -36,7 +41,7 @@ public class MEscuela {
     }
 
     public MEscuela[] selectTodo() throws SQLException {
-        sql = "SELECT id_escuela, nombre_escuela, turno_escuela, direccion_escuela, parroquia.id_parroquia, parroquia.nombre_parroquia, municipio.id_municipio, municipio.nombre_municipio, estado.id_estado, estado.nombre_estado "
+        sql = "SELECT id_escuela, nombre_escuela, turno_escuela, direccion_escuela, parroquia.id_parroquia, parroquia.parroquia, municipio.id_municipio, municipio.municipio, estado.id_estado, estado.estado "
                 + "FROM escuela "
                 + "INNER JOIN parroquia "
                 + "ON escuela.id_parroquia = parroquia.id_parroquia "
@@ -45,6 +50,8 @@ public class MEscuela {
                 + "INNER JOIN estado "
                 + "ON municipio.id_estado = estado.id_estado "
                 + "ORDER BY nombre_escuela;";
+        /* Para mostrar como ejemplo en el salon
+        sql = "SELECT * FROM view_escuela;"; */
         System.out.println(sql);
         con.conectar();
         rs = con.consultarBD();
@@ -58,7 +65,7 @@ public class MEscuela {
 
             for (int i = 0; i < contFilas; i++) {
                 rs.next();
-                datos[i] = new MEscuela(rs.getInt("id_escuela"), rs.getString("nombre_escuela"), rs.getString("turno_escuela"), rs.getString("direccion_escuela"), new MParroquia(rs.getInt("id_parroquia"), rs.getString("nombre_parroquia"), new MMunicipio(rs.getInt("id_municipio"), rs.getString("nombre_municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("nombre_estado")))));
+                datos[i] = new MEscuela(rs.getInt("id_escuela"), rs.getString("nombre_escuela"), rs.getString("turno_escuela"), rs.getString("direccion_escuela"), new MParroquia(rs.getInt("id_parroquia"), rs.getString("parroquia"), new MMunicipio(rs.getInt("id_municipio"), rs.getString("municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("estado")))));
             }
 
             con.desconectar();
@@ -70,7 +77,7 @@ public class MEscuela {
     }
 
     public void select(int id) throws SQLException {
-        sql = "SELECT id_escuela, nombre_escuela, turno_escuela, direccion_escuela, parroquia.id_parroquia, parroquia.nombre_parroquia, municipio.id_municipio, municipio.nombre_municipio, estado.id_estado, estado.nombre_estado "
+        sql = "SELECT id_escuela, nombre_escuela, turno_escuela, direccion_escuela, parroquia.id_parroquia, parroquia.parroquia, municipio.id_municipio, municipio.municipio, estado.id_estado, estado.estado "
                 + "FROM escuela "
                 + "INNER JOIN parroquia "
                 + "ON escuela.id_parroquia = parroquia.id_parroquia "
@@ -89,13 +96,13 @@ public class MEscuela {
             this.nombre = rs.getString("nombre_escuela");
             this.turno = rs.getString("turno_escuela");
             this.direccion = rs.getString("direccion_escuela");
-            this.parroquia = new MParroquia(rs.getInt("id_parroquia"), rs.getString("nombre_parroquia"), new MMunicipio(rs.getInt("id_municipio"), rs.getString("nombre_municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("nombre_estado"))));
+            this.parroquia = new MParroquia(rs.getInt("id_parroquia"), rs.getString("parroquia"), new MMunicipio(rs.getInt("id_municipio"), rs.getString("municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("estado"))));
             con.desconectar();
         }
     }
 
     public MEscuela[] buscar(String textoBuscar) throws SQLException {
-        sql = "SELECT id_escuela, nombre_escuela, turno_escuela, direccion_escuela, parroquia.id_parroquia, parroquia.nombre_parroquia, municipio.id_municipio, municipio.nombre_municipio, estado.id_estado, estado.nombre_estado "
+        sql = "SELECT id_escuela, nombre_escuela, turno_escuela, direccion_escuela, parroquia.id_parroquia, parroquia.parroquia, municipio.id_municipio, municipio.municipio, estado.id_estado, estado.estado "
                 + "FROM escuela "
                 + "INNER JOIN parroquia "
                 + "ON escuela.id_parroquia = parroquia.id_parroquia "
@@ -118,7 +125,7 @@ public class MEscuela {
 
             for (int i = 0; i < contFilas; i++) {
                 rs.next();
-                datos[i] = new MEscuela(rs.getInt("id_escuela"), rs.getString("nombre_escuela"), rs.getString("turno_escuela"), rs.getString("direccion_escuela"), new MParroquia(rs.getInt("id_parroquia"), rs.getString("nombre_parroquia"), new MMunicipio(rs.getInt("id_municipio"), rs.getString("nombre_municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("nombre_estado")))));
+                datos[i] = new MEscuela(rs.getInt("id_escuela"), rs.getString("nombre_escuela"), rs.getString("turno_escuela"), rs.getString("direccion_escuela"), new MParroquia(rs.getInt("id_parroquia"), rs.getString("parroquia"), new MMunicipio(rs.getInt("id_municipio"), rs.getString("municipio"), new MEstado(rs.getInt("id_estado"), rs.getString("estado")))));
             }
 
             con.desconectar();
