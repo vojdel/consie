@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.MAdminEscuela;
+import modelo.MEscuela;
 import modelo.MEstado;
 import modelo.MMunicipio;
 import modelo.MParroquia;
@@ -34,25 +35,24 @@ import vista.VEntregarRecaudo;
  */
 public class CAdminEscuela implements ActionListener, MouseListener, KeyListener, ItemListener {
 
-    // VAdminEscuela vista;
-    VAdminEscuela vista;
-    VEntregarRecaudo vistaRecaudos;
-    VAsignarPersonal vistaPersonal;
-    MAdminEscuela modelo;
-    MPersonal modeloPersonal;
+    private VAdminEscuela vista;
+    private VEntregarRecaudo vistaRecaudos;
+    private VAsignarPersonal vistaPersonal;
+    private MAdminEscuela modelo;
+    private MPersonal modeloPersonal;
 
-    DefaultTableModel modeloTabla;
+    private DefaultTableModel modeloTabla;
 
-    MParroquia modeloParroquia;
-    MParroquia[] datosParroquia;
+    private MParroquia modeloParroquia;
+    private MParroquia[] datosParroquia;
 
-    MMunicipio modeloMunicipio;
-    MMunicipio[] datosMunicipio;
+    private MMunicipio modeloMunicipio;
+    private MMunicipio[] datosMunicipio;
 
-    MEstado modeloEstado;
-    MEstado[] datosEstado;
+    private MEstado modeloEstado;
+    private MEstado[] datosEstado;
 
-    Funciones funciones = new Funciones();
+    private Funciones funciones = new Funciones();
 
     public CAdminEscuela() {
         // vista = new VAdminEscuela();
@@ -93,13 +93,13 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
         vistaPersonal.getCbxParroquia().addItem("Seleccione un municipio");
         vistaPersonal.getCbxParroquia().setEnabled(false);
 
-        /*ventana.setTitle("Administrar Escuelas");
+        ventana.setTitle("Administrar Escuelas");
         marco.remove(panelPrincipal);
         vista.setBounds(290, 70, 670, 590);
         marco.add(vista);
         panelPrincipal = vista;
         ventana.repaint();
-        ventana.validate*/
+        ventana.validate();
         addListener();
     }
 
@@ -107,21 +107,40 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
         // Principal
         vista.getBtnEntregaRecaudos().addActionListener(this);
         vista.getBtnAsignarPersonal().addActionListener(this);
+        vista.getTablas().addMouseListener(this);
 
         // Entrega de Recaudos
         vistaRecaudos.getBtnAtras().addActionListener(this);
+        vistaRecaudos.getBtnAgregar().addActionListener(this);
+        vistaRecaudos.getBtnAnual().addActionListener(this);
+        vistaRecaudos.getBtnListo().addActionListener(this);
+        vistaRecaudos.getBtnMensual().addActionListener(this);
+        vistaRecaudos.getBtnReiniciar().addActionListener(this);
+        vistaRecaudos.getBtnTrimestral().addActionListener(this);
+        vistaRecaudos.getBtnEliminar().addActionListener(this);
         vistaRecaudos.getCbxEstado().addItemListener(this);
         vistaRecaudos.getCbxMunicipio().addItemListener(this);
         vistaRecaudos.getCbxParroquia().addItemListener(this);
         vistaRecaudos.getTxtEscuela().addKeyListener(this);
+        vistaRecaudos.getTablaEntrega().addMouseListener(this);
+        vistaRecaudos.getTablaEscuela().addMouseListener(this);
+        vistaRecaudos.getTablaRecaudo().addMouseListener(this);
 
         // Asignar Personal
         vistaPersonal.getBtnAtras().addActionListener(this);
+        vistaPersonal.getBtnAgregar().addActionListener(this);
+        vistaPersonal.getBtnListo().addActionListener(this);
+        vistaPersonal.getBtnReiniciar().addActionListener(this);
+        vistaPersonal.getBtnEliminar().addActionListener(this);
         vistaPersonal.getCbxEstado().addItemListener(this);
         vistaPersonal.getCbxMunicipio().addItemListener(this);
         vistaPersonal.getCbxParroquia().addItemListener(this);
+        vistaPersonal.getCbxCedula().addItemListener(this);
         vistaPersonal.getTxtEscuela().addKeyListener(this);
         vistaPersonal.getTxtPersonal().addKeyListener(this);
+        vistaPersonal.getTablaPersonal().addMouseListener(this);
+        vistaPersonal.getTablaEscuela().addMouseListener(this);
+        vistaPersonal.getTablaEscuelaPersonal().addMouseListener(this);
     }
 
     private void actualizarTablaEscuela(JTable tabla, String columns[], MAdminEscuela[] datos) {
@@ -134,8 +153,18 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
         if (datos != null) {
             for (MAdminEscuela datosX : datos) {
                 modelo = datosX;
-                modeloTabla.addRow(new Object[]{modelo.getEscuela().getId(), modelo.getEscuela().getNombre(), modelo.getEstado().getId(), modelo.getEstado().getNombre(), modelo.getMunicipio().getId(), modelo.getMunicipio().getNombre(), modelo.getParroquia().getId(), modelo.getParroquia().getNombre()});
-                System.out.println(modelo.getEscuela().getId() + " " + modelo.getEscuela().getNombre() + " " + modelo.getEstado().getId() + " " + modelo.getEstado().getNombre() + " " + modelo.getMunicipio().getId() + " " + modelo.getMunicipio().getNombre() + " " + modelo.getParroquia().getId() + " " + modelo.getParroquia().getNombre());
+                modeloTabla.addRow(
+                        new Object[]{
+                            modelo.getEscuela().getId(),
+                            modelo.getEscuela().getNombre(),
+                            modelo.getEstado().getId(),
+                            modelo.getEstado().getNombre(),
+                            modelo.getMunicipio().getId(),
+                            modelo.getMunicipio().getNombre(),
+                            modelo.getParroquia().getId(),
+                            modelo.getParroquia().getNombre()
+                        }
+                );
             }
         }
 
@@ -143,6 +172,7 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
     }
 
     private void actualizarTablaPersonal(JTable tabla, MPersonal[] datos) {
+
         modeloTabla = new DefaultTableModel();
         modeloTabla.addColumn("Cédula");
         modeloTabla.addColumn("Primer Nombre");
@@ -159,9 +189,52 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
         if (datos != null) {
             for (MPersonal datosX : datos) {
                 modeloPersonal = datosX;
-                modeloTabla.addRow(new Object[]{modeloPersonal.getCedula(), modeloPersonal.getPrimerNombre(), modeloPersonal.getSegundoNombre(), modeloPersonal.getPrimerApellido(), modeloPersonal.getSegundoApellido(), modeloPersonal.getGenero(), modeloPersonal.getTelefono(), modeloPersonal.getDireccion(), modeloPersonal.getCargo().getNombre()});
+                modeloTabla.addRow(
+                        new Object[]{
+                            modeloPersonal.getCedula(),
+                            modeloPersonal.getPrimerNombre(),
+                            modeloPersonal.getSegundoNombre(),
+                            modeloPersonal.getPrimerApellido(),
+                            modeloPersonal.getSegundoApellido(),
+                            modeloPersonal.getGenero(),
+                            modeloPersonal.getTelefono(),
+                            modeloPersonal.getDireccion(),
+                            modeloPersonal.getCargo().getNombre()
+                        }
+                );
             }
         }
+    }
+
+    private void actualizarTablaEscuelaPersonal(JTable tabla, MAdminEscuela[] datos) {
+
+        modeloTabla = new DefaultTableModel();
+        modeloTabla.addColumn("id");
+        modeloTabla.addColumn("Cédula");
+        modeloTabla.addColumn("Nombre(s)");
+        modeloTabla.addColumn("cargo");
+        modeloTabla.addColumn("id_escuela");
+        modeloTabla.addColumn("escuela");
+
+        tabla.setModel(modeloTabla);
+
+        if (datos != null) {
+            for (MAdminEscuela datosX : datos) {
+                modelo = datosX;
+                modeloTabla.addRow(
+                        new Object[]{
+                            modelo.getId(),
+                            modelo.getPersonal().getCedula(),
+                            modelo.getPersonal().getPrimerNombre() + " "
+                            + modelo.getPersonal().getSegundoNombre(),
+                            modelo.getPersonal().getCargo().getNombre(),
+                            modelo.getEscuela().getId(),
+                            modelo.getEscuela().getNombre()
+                        }
+                );
+            }
+        }
+        funciones.ocultarColumnas(tabla, new int[]{0, 4});
     }
 
     private void cambioVentana(String titulo, JPanel panel) {
@@ -219,6 +292,41 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
 
     @Override
     public void mouseClicked(MouseEvent me) {
+        if (me.getSource() == vistaPersonal.getTablaEscuela()) {
+            int filaSeleccionada = vistaPersonal.getTablaEscuela().getSelectedRow();
+
+            if (filaSeleccionada >= 0) {
+                int id;
+                id = Integer.parseInt(vistaPersonal.getTablaEscuela().getValueAt(filaSeleccionada, 0).toString());
+
+                try {
+                    actualizarTablaEscuelaPersonal(
+                            vistaPersonal.getTablaEscuelaPersonal(),
+                            modelo.selectAsignarPersonal(id)
+                    );
+                } catch (SQLException ex) {
+                    Logger.getLogger(CEscuela.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        if (me.getSource() == vistaPersonal.getTablaEscuela()) {
+            int filaSeleccionada = vistaPersonal.getTablaEscuela().getSelectedRow();
+
+            if (filaSeleccionada >= 0) {
+                int id;
+                id = Integer.parseInt(vistaPersonal.getTablaEscuela().getValueAt(filaSeleccionada, 0).toString());
+
+                try {
+                    actualizarTablaEscuelaPersonal(
+                            vistaPersonal.getTablaEscuelaPersonal(),
+                            modelo.selectAsignarPersonal(id)
+                    );
+                } catch (SQLException ex) {
+                    Logger.getLogger(CEscuela.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
     }
 
     @Override
@@ -260,6 +368,54 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
         if (e.getSource() == vistaPersonal.getBtnAtras()) {
             cambioVentana("Administración Escuelas", vista);
         }
+        if (e.getSource() == vistaPersonal.getBtnAgregar()) {
+            
+            int filaSeleccionadaEscuela = vistaPersonal.getTablaEscuela().getSelectedRow();
+            int filaSeleccionadaPersonal = vistaPersonal.getTablaPersonal().getSelectedRow();
+
+            if (filaSeleccionadaEscuela >= 0) {
+                int idEscuela;
+                idEscuela = Integer.parseInt(vistaPersonal.getTablaEscuela().getValueAt(filaSeleccionadaEscuela, 0).toString());
+                String idPersonal;
+                idPersonal = vistaPersonal.getTablaPersonal().getValueAt(filaSeleccionadaPersonal, 0).toString();
+
+                try {
+                    modelo.setEscuela(new MEscuela(idEscuela));
+                    modelo.setPersonal(new MPersonal(idPersonal));
+                    modelo.insertAsignarPersonal();
+                    actualizarTablaEscuelaPersonal(
+                            vistaPersonal.getTablaEscuelaPersonal(),
+                            modelo.selectAsignarPersonal(idEscuela)
+                    );
+                } catch (SQLException ex) {
+                    Logger.getLogger(CEscuela.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        if (e.getSource() == vistaPersonal.getBtnEliminar()) {
+            int filaSeleccionada = vistaPersonal.getTablaEscuelaPersonal().getSelectedRow();
+            int filaSeleccionadaEscuela = vistaPersonal.getTablaEscuela().getSelectedRow();
+
+            if (filaSeleccionada >= 0) {
+                
+                int idEscuela;
+                idEscuela = Integer.parseInt(vistaPersonal.getTablaEscuela().getValueAt(filaSeleccionadaEscuela, 0).toString());
+                int id;
+                id = Integer.parseInt(vistaPersonal.getTablaEscuelaPersonal().getValueAt(filaSeleccionada, 0).toString());
+
+                try {
+                    modelo.setId(id);
+                    modelo.deleteAsignarPersonal();
+                    actualizarTablaEscuelaPersonal(
+                            vistaPersonal.getTablaEscuelaPersonal(),
+                            modelo.selectAsignarPersonal(idEscuela)
+                    );
+                } catch (SQLException ex) {
+                    Logger.getLogger(CEscuela.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
     }
 
     @Override
@@ -294,7 +450,16 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
 
             String columns[] = {"id", "escuela", "id", "estado", "id", "municipio", "id", "parroquia"};
             try {
-                actualizarTablaEscuela(vistaPersonal.getTablaEscuela(), columns, modelo.buscarEscuela(vistaPersonal.getTxtEscuela().getText(), vistaPersonal.getCbxEstado().getSelectedIndex(), vistaPersonal.getCbxMunicipio().getSelectedIndex(), vistaPersonal.getCbxParroquia().getSelectedIndex()));
+                actualizarTablaEscuela(
+                        vistaPersonal.getTablaEscuela(),
+                        columns,
+                        modelo.buscarEscuela(
+                                vistaPersonal.getTxtEscuela().getText(),
+                                vistaPersonal.getCbxEstado().getSelectedIndex(),
+                                vistaPersonal.getCbxMunicipio().getSelectedIndex(),
+                                vistaPersonal.getCbxParroquia().getSelectedIndex()
+                        )
+                );
             } catch (SQLException ex) {
                 Logger.getLogger(CCargo.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -303,7 +468,7 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
         if (e.getSource() == vistaPersonal.getTxtPersonal()) {
             try {
                 actualizarTablaPersonal(vistaPersonal.getTablaPersonal(), modeloPersonal.busquedaDinamica(
-                        "V",
+                        vistaPersonal.getCbxCedula().getSelectedItem().toString(),
                         vistaPersonal.getTxtPersonal().getText()
                 )
                 );
@@ -314,7 +479,8 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
     }
 
     @Override
-    public void itemStateChanged(ItemEvent e) {
+    public void itemStateChanged(ItemEvent e
+    ) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
             // Entrgar Recaudos
             if (e.getSource() == vistaRecaudos.getCbxEstado()) {
@@ -345,7 +511,16 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
 
                 String columns[] = {"id", "escuela", "id", "estado", "id", "municipio", "id", "parroquia"};
                 try {
-                    actualizarTablaEscuela(vistaRecaudos.getTablaEscuela(), columns, modelo.buscarEscuela(vistaRecaudos.getTxtEscuela().getText(), vistaRecaudos.getCbxEstado().getSelectedIndex(), vistaRecaudos.getCbxMunicipio().getSelectedIndex(), vistaRecaudos.getCbxParroquia().getSelectedIndex()));
+                    actualizarTablaEscuela(
+                            vistaRecaudos.getTablaEscuela(),
+                            columns,
+                            modelo.buscarEscuela(
+                                    vistaRecaudos.getTxtEscuela().getText(),
+                                    vistaRecaudos.getCbxEstado().getSelectedIndex(),
+                                    vistaRecaudos.getCbxMunicipio().getSelectedIndex(),
+                                    vistaRecaudos.getCbxParroquia().getSelectedIndex()
+                            )
+                    );
                 } catch (SQLException ex) {
                     Logger.getLogger(CCargo.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -377,7 +552,16 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
 
                 String columns[] = {"id", "escuela", "id", "estado", "id", "municipio", "id", "parroquia"};
                 try {
-                    actualizarTablaEscuela(vistaRecaudos.getTablaEscuela(), columns, modelo.buscarEscuela(vistaRecaudos.getTxtEscuela().getText(), vistaRecaudos.getCbxEstado().getSelectedIndex(), vistaRecaudos.getCbxMunicipio().getSelectedIndex(), vistaRecaudos.getCbxParroquia().getSelectedIndex()));
+                    actualizarTablaEscuela(
+                            vistaRecaudos.getTablaEscuela(),
+                            columns,
+                            modelo.buscarEscuela(
+                                    vistaRecaudos.getTxtEscuela().getText(),
+                                    vistaRecaudos.getCbxEstado().getSelectedIndex(),
+                                    vistaRecaudos.getCbxMunicipio().getSelectedIndex(),
+                                    vistaRecaudos.getCbxParroquia().getSelectedIndex()
+                            )
+                    );
                 } catch (SQLException ex) {
                     Logger.getLogger(CCargo.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -387,7 +571,16 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
 
                 String columns[] = {"id", "escuela", "id", "estado", "id", "municipio", "id", "parroquia"};
                 try {
-                    actualizarTablaEscuela(vistaRecaudos.getTablaEscuela(), columns, modelo.buscarEscuela(vistaRecaudos.getTxtEscuela().getText(), vistaRecaudos.getCbxEstado().getSelectedIndex(), vistaRecaudos.getCbxMunicipio().getSelectedIndex(), vistaRecaudos.getCbxParroquia().getSelectedIndex()));
+                    actualizarTablaEscuela(
+                            vistaRecaudos.getTablaEscuela(),
+                            columns,
+                            modelo.buscarEscuela(
+                                    vistaRecaudos.getTxtEscuela().getText(),
+                                    vistaRecaudos.getCbxEstado().getSelectedIndex(),
+                                    vistaRecaudos.getCbxMunicipio().getSelectedIndex(),
+                                    vistaRecaudos.getCbxParroquia().getSelectedIndex()
+                            )
+                    );
                 } catch (SQLException ex) {
                     Logger.getLogger(CCargo.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -424,7 +617,16 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
 
                 String columns[] = {"id", "escuela", "id", "estado", "id", "municipio", "id", "parroquia"};
                 try {
-                    actualizarTablaEscuela(vistaPersonal.getTablaEscuela(), columns, modelo.buscarEscuela(vistaPersonal.getTxtEscuela().getText(), vistaPersonal.getCbxEstado().getSelectedIndex(), vistaPersonal.getCbxMunicipio().getSelectedIndex(), vistaPersonal.getCbxParroquia().getSelectedIndex()));
+                    actualizarTablaEscuela(
+                            vistaPersonal.getTablaEscuela(),
+                            columns,
+                            modelo.buscarEscuela(
+                                    vistaPersonal.getTxtEscuela().getText(),
+                                    vistaPersonal.getCbxEstado().getSelectedIndex(),
+                                    vistaPersonal.getCbxMunicipio().getSelectedIndex(),
+                                    vistaPersonal.getCbxParroquia().getSelectedIndex()
+                            )
+                    );
                 } catch (SQLException ex) {
                     Logger.getLogger(CCargo.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -456,7 +658,15 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
 
                 String columns[] = {"id", "escuela", "id", "estado", "id", "municipio", "id", "parroquia"};
                 try {
-                    actualizarTablaEscuela(vistaPersonal.getTablaEscuela(), columns, modelo.buscarEscuela(vistaPersonal.getTxtEscuela().getText(), vistaPersonal.getCbxEstado().getSelectedIndex(), vistaPersonal.getCbxMunicipio().getSelectedIndex(), vistaPersonal.getCbxParroquia().getSelectedIndex()));
+                    actualizarTablaEscuela(
+                            vistaPersonal.getTablaEscuela(),
+                            columns,
+                            modelo.buscarEscuela(vistaPersonal.getTxtEscuela().getText(),
+                                    vistaPersonal.getCbxEstado().getSelectedIndex(),
+                                    vistaPersonal.getCbxMunicipio().getSelectedIndex(),
+                                    vistaPersonal.getCbxParroquia().getSelectedIndex()
+                            )
+                    );
                 } catch (SQLException ex) {
                     Logger.getLogger(CCargo.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -466,11 +676,31 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
 
                 String columns[] = {"id", "escuela", "id", "estado", "id", "municipio", "id", "parroquia"};
                 try {
-                    actualizarTablaEscuela(vistaPersonal.getTablaEscuela(), columns, modelo.buscarEscuela(vistaPersonal.getTxtEscuela().getText(), vistaPersonal.getCbxEstado().getSelectedIndex(), vistaPersonal.getCbxMunicipio().getSelectedIndex(), vistaPersonal.getCbxParroquia().getSelectedIndex()));
+                    actualizarTablaEscuela(
+                            vistaPersonal.getTablaEscuela(),
+                            columns,
+                            modelo.buscarEscuela(
+                                    vistaPersonal.getTxtEscuela().getText(),
+                                    vistaPersonal.getCbxEstado().getSelectedIndex(),
+                                    vistaPersonal.getCbxMunicipio().getSelectedIndex(),
+                                    vistaPersonal.getCbxParroquia().getSelectedIndex()
+                            )
+                    );
                 } catch (SQLException ex) {
                     Logger.getLogger(CCargo.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
+            }
+            if (e.getSource() == vistaPersonal.getCbxCedula()) {
+                try {
+                    actualizarTablaPersonal(vistaPersonal.getTablaPersonal(), modeloPersonal.busquedaDinamica(
+                            vistaPersonal.getCbxCedula().getSelectedItem().toString(),
+                            vistaPersonal.getTxtPersonal().getText()
+                    )
+                    );
+                } catch (SQLException ex) {
+                    Logger.getLogger(CCargo.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
         }

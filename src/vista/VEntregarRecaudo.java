@@ -38,7 +38,6 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaEscuela = new javax.swing.JTable();
-        btnSemanal = new javax.swing.JButton();
         btnMensual = new javax.swing.JButton();
         btnTrimestral = new javax.swing.JButton();
         btnAnual = new javax.swing.JButton();
@@ -51,7 +50,7 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
         cbxParroquia = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaRecaudo = new javax.swing.JTable();
-        bntEliminar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
@@ -83,15 +82,6 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
             }
         ));
         jScrollPane1.setViewportView(tablaEscuela);
-
-        btnSemanal.setBackground(new java.awt.Color(255, 153, 51));
-        btnSemanal.setForeground(new java.awt.Color(255, 255, 255));
-        btnSemanal.setText("Semanales");
-        btnSemanal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSemanalActionPerformed(evt);
-            }
-        });
 
         btnMensual.setBackground(new java.awt.Color(255, 153, 51));
         btnMensual.setForeground(new java.awt.Color(255, 255, 255));
@@ -186,12 +176,12 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
         ));
         jScrollPane3.setViewportView(tablaRecaudo);
 
-        bntEliminar.setBackground(new java.awt.Color(255, 0, 0));
-        bntEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        bntEliminar.setText("Eliminar");
-        bntEliminar.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setBackground(new java.awt.Color(255, 0, 0));
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntEliminarActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -229,13 +219,11 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(btnSemanal, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(79, 79, 79)
                 .addComponent(btnMensual, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addGap(48, 48, 48)
                 .addComponent(btnTrimestral, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(53, 53, 53)
                 .addComponent(btnAnual, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -257,7 +245,7 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
                                         .addComponent(txtEscuela, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel4)
@@ -274,7 +262,7 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxParroquia, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bntEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -304,7 +292,7 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
                         .addComponent(cbxParroquia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(bntEliminar)
+                        .addComponent(btnEliminar)
                         .addComponent(btnAgregar)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -320,13 +308,10 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnAnual)
-                        .addComponent(btnTrimestral))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnSemanal)
-                        .addComponent(btnMensual)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAnual)
+                    .addComponent(btnTrimestral)
+                    .addComponent(btnMensual))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -338,10 +323,6 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
                 .addGap(8, 8, 8))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnSemanalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSemanalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSemanalActionPerformed
 
     private void btnMensualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMensualActionPerformed
         // TODO add your handling code here:
@@ -367,9 +348,9 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxEstadoActionPerformed
 
-    private void bntEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEliminarActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_bntEliminarActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
@@ -385,14 +366,13 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntEliminar;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnAnual;
     private javax.swing.JButton btnAtras;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnListo;
     private javax.swing.JButton btnMensual;
     private javax.swing.JButton btnReiniciar;
-    private javax.swing.JButton btnSemanal;
     private javax.swing.JButton btnTrimestral;
     private javax.swing.JComboBox<String> cbxEstado;
     private javax.swing.JComboBox<String> cbxMunicipio;
@@ -412,8 +392,8 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
     private javax.swing.JTextField txtEscuela;
     // End of variables declaration//GEN-END:variables
 
-    public JButton getBntEliminar() {
-        return bntEliminar;
+    public JButton getBtnEliminar() {
+        return btnEliminar;
     }
 
     public JButton getBtnAgregar() {
@@ -426,10 +406,6 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
 
     public JButton getBtnMensual() {
         return btnMensual;
-    }
-
-    public JButton getBtnSemanal() {
-        return btnSemanal;
     }
 
     public JButton getBtnTrimestral() {

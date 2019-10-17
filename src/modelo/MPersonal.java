@@ -17,9 +17,12 @@ public class MPersonal extends MPersona {
     private ResultSet rs;
 
     public MPersonal() {
-
     }
-
+    
+    public MPersonal(String cedula){
+        this.cedula = cedula;
+    }
+    
     public MPersonal(String cedula, String primerNombre, String segundoNombre, MCargo cargo) {
         this.cedula = cedula;
         this.primerNombre = primerNombre;
