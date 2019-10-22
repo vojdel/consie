@@ -9,6 +9,7 @@ import general.BD;
 import static general.BD.sql;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 /**
  *
@@ -23,6 +24,7 @@ public class MAdminEscuela {
     private MEstado estado;
     private MMunicipio municipio;
     private MParroquia parroquia;
+    private Date fechaEntrega;
 
     private final BD con = new BD();
     private ResultSet rs;
@@ -34,6 +36,13 @@ public class MAdminEscuela {
         this.id = id;
         this.escuela = escuela;
         this.recaudo = recaudo;
+    }
+
+    public MAdminEscuela(int id, MEscuela escuela, MRecaudo recaudo, Date fechaEntrega) {
+        this.id = id;
+        this.escuela = escuela;
+        this.recaudo = recaudo;
+        this.fechaEntrega = fechaEntrega;
     }
 
     public MAdminEscuela(int id, MEscuela escuela, MPersonal personal) {
@@ -53,11 +62,17 @@ public class MAdminEscuela {
         this.personal = personal;
     }
 
+    public MAdminEscuela(MRecaudo recaudo) {
+        this.recaudo = recaudo;
+    }
+
     /* Selects */
-    public MAdminEscuela[] selectEntregaRecaudo() throws SQLException {
+    public MAdminEscuela[] selectEntregaRecaudo(int id) throws SQLException {
         sql = "SELECT * FROM escuela as e INNER JOIN escuela_recaudo AS er ON "
                 + "e.id_escuela=er.id_escuela INNER JOIN recaudo AS r ON"
-                + "er.id_recaudo=r.id_recaudo";
+                + "er.id_recaudo=r.id_recaudo INNER JOIN entrega_recaudo AS enr ON "
+                + "enr.id_escuela_recaudo=er.id_escuela_recaudo "
+                + "WHERE e.id_escuela=" + id + ";";
         con.conectar();
         rs = con.consultarBD();
         System.out.println("antes01");
@@ -80,6 +95,45 @@ public class MAdminEscuela {
                         new MRecaudo(
                                 rs.getInt("id_recaudo"),
                                 rs.getString("nombre_recaudo")
+                        ),
+                        rs.getDate("fecha_entrega")
+                );
+            }
+
+            con.desconectar();
+            return datos;
+        } else {
+            con.desconectar();
+            return null;
+        }
+    }
+
+    public MAdminEscuela[] selectRecaudo(int id, String frec) throws SQLException {
+        sql = "SELECT * FROM escuela as e INNER JOIN escuela_recaudo AS er ON "
+                + "e.id_escuela=er.id_escuela INNER JOIN recaudo AS r ON "
+                + "er.id_recaudo=r.id_recaudo ";
+        if ("Mensual".equals(frec) || "Trimestral".equals(frec) || "Anual".equals(frec)) {
+            sql += "WHERE e.id_escuela=" + id + " AND r.frecuencia_entrega='" + frec + "' ;";
+        } else if("".equals(frec)) {
+            sql += "WHERE e.id_escuela=" + id + ";";
+        }
+        con.conectar();
+        rs = con.consultarBD();
+        System.out.println("antes01");
+        if (rs != null) {
+            System.out.println("despues01");
+            rs.last();
+            int contFilas = rs.getRow();
+            rs.beforeFirst();
+
+            MAdminEscuela[] datos = new MAdminEscuela[contFilas];
+
+            for (int i = 0; i < contFilas; i++) {
+                rs.next();
+                datos[i] = new MAdminEscuela(
+                        new MRecaudo(
+                                rs.getInt("id_recaudo"),
+                                rs.getString("nombre_recaudo")
                         )
                 );
             }
@@ -93,7 +147,8 @@ public class MAdminEscuela {
     }
 
     public MAdminEscuela[] buscarEscuela(String escuela, int estado, int municipio, int parroquia) throws SQLException {
-        sql = "SELECT id_escuela, nombre_escuela, turno_escuela, direccion_escuela, p.id_parroquia, p.parroquia, m.id_municipio, m.municipio, es.id_estado, es.estado "
+        sql = "SELECT id_escuela, nombre_escuela, turno_escuela, direccion_escuela, p.id_parroquia,"
+                + " p.parroquia, m.id_municipio, m.municipio, es.id_estado, es.estado "
                 + "FROM escuela AS e "
                 + "INNER JOIN parroquia AS p "
                 + "ON e.id_parroquia = p.id_parroquia "
@@ -101,7 +156,8 @@ public class MAdminEscuela {
                 + "ON p.id_municipio = m.id_municipio "
                 + "INNER JOIN estado AS es "
                 + "ON m.id_estado = es.id_estado "
-                + "WHERE e.nombre_escuela LIKE '%" + escuela + "%' and (es.id_estado=" + estado + " or m.id_municipio=" + municipio + " or p.id_parroquia=" + parroquia + ") "
+                + "WHERE e.nombre_escuela LIKE '%" + escuela + "%' and (es.id_estado=" + estado + ""
+                + " or m.id_municipio=" + municipio + " or p.id_parroquia=" + parroquia + ") "
                 + "ORDER BY nombre_escuela LIMIT 10;";
         con.conectar();
         rs = con.consultarBD();
@@ -190,10 +246,10 @@ public class MAdminEscuela {
 
     /* Inserts */
     public void insertEntregaRecaudo() {
-        sql = "INSERT INTO escuela_recaudo "
+        sql = "INSERT INTO entrega_recaudo "
                 + "VALUES"
                 + "(" + escuela.getId() + ", "
-                + "" + recaudo.getId() + ")";
+                + "" + fechaEntrega + ")";
         con.conectar();
         con.actualizarBD();
         con.desconectar();
@@ -291,6 +347,14 @@ public class MAdminEscuela {
 
     public MParroquia getParroquia() {
         return parroquia;
+    }
+
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
     }
 
 }

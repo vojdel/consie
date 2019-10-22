@@ -5,8 +5,6 @@ import general.BD;
 import static general.BD.sql;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -19,16 +17,16 @@ public class MUsuario {
     private String contrasenia;
     private String preguntaSeguridad;
     private String respuestaSecreta;
-    private MFuncionario funcionario;
     private MFuncion[] funciones;
-
-    private String contrasenia2;
 
     private final BD con = new BD();
     private ResultSet rs;
-    private final String p[] = new String[]{"Deporte Favorito", "¿Actividad Favorita?", "¿Nacimiento de tu Hija/Hijo?", "¿Cumpleaños de tu padre?", "¿Nombre de tu primera mascota?"};
 
     public MUsuario() {
+    }
+
+    public MUsuario(int id) {
+        this.id = id;
     }
 
     public MUsuario(int id, String usuario) {
@@ -36,19 +34,9 @@ public class MUsuario {
         this.usuario = usuario;
     }
 
-    public MUsuario(int id) {
-        this.id = id;
-    }
-
     public MUsuario(String usuario, String contrasenia) {
         this.usuario = usuario;
         this.contrasenia = contrasenia;
-    }
-
-    public MUsuario(int id, String usuario, MFuncionario funcionario) {
-        this.id = id;
-        this.usuario = usuario;
-        this.funcionario = funcionario;
     }
 
     public MUsuario(int id_usaurio, String usuario, String p_secreta, String r_secreta) {
@@ -59,15 +47,12 @@ public class MUsuario {
     }
 
     public MUsuario[] selectTodo() throws SQLException {
-        sql = "SELECT id_usuario, usuario, f.ci_funcionario, p_nombre_fun, s_nombre_fun, p_apellido_fun, s_apellido_fun "
-                + "FROM usuario AS u "
-                + "INNER JOIN funcionario AS f "
-                + "ON u.ci_funcionario = f.ci_funcionario;";
+        sql = "SELECT id_usuario, usuario "
+                + "FROM usuario;";
         System.out.println(sql);
         con.conectar();
         rs = con.consultarBD();
-        System.out.println("antes01");
-        if (rs != null) {System.out.println("despues01");
+        if (rs != null) {
             rs.last();
             int contFilas = rs.getRow();
             rs.beforeFirst();
@@ -91,16 +76,16 @@ public class MUsuario {
         sql = "SELECT id_usuario, usuario, p_secreta, respuesta, id_funcion, f.funcion "
                 + "FROM usuario AS u "
                 + "INNER JOIN usuario_funcion AS uf "
-                + "ON u.id_usuario=uf.id_usuario "
+                + "ON u.id_usuario = uf.id_usuario "
                 + "INNER JOIN funcion AS f "
-                + "ON uf.id_funcion=f.id_funcion "
-                + "WHERE id_usuario=" + id + ";";
+                + "ON uf.id_funcion = f.id_funcion "
+                + "WHERE id_usuario = " + id + ";";
         con.conectar();
         rs = con.consultarBD();
 
         if (rs != null) {
             rs.next();
-            id = id;
+            this.id = id;
             this.usuario = rs.getString("usuario");
             this.preguntaSeguridad = rs.getString("p_secreta");
             this.respuestaSecreta = rs.getString("respuesta");
@@ -144,9 +129,9 @@ public class MUsuario {
 
     public Boolean iniciarSesion(String usuario, String password) throws SQLException {
         Boolean sw;
-        sql = "SELECT usuario.id_usuario, usuario "
+        sql = "SELECT id_usuario, usuario "
                 + "FROM usuario "
-                + "WHERE usuario='" + usuario + "' AND contrasenia='" + password + "';";
+                + "WHERE usuario = '" + usuario + "' AND contrasenia = '" + password + "';";
         System.out.println(sql);
         con.conectar();
         rs = con.consultarBD();
@@ -161,6 +146,7 @@ public class MUsuario {
             sw = false;
             System.out.println("Usuario no existe");
         }
+
         con.desconectar();
         return sw;
     }
@@ -210,44 +196,6 @@ public class MUsuario {
         }
     }
 
-    /*Funcion*/
-    public DefaultComboBoxModel obtenerFuncion() {
-        sql = "SELECT * FROM funcion ORDER BY id_funcion;";
-        con.conectar();
-        rs = con.consultarBD();
-        DefaultComboBoxModel listaModelo = new DefaultComboBoxModel();
-        listaModelo.addElement("Seleccione");
-
-        try {
-            while (rs.next()) {
-                listaModelo.addElement(rs.getString("funcion"));
-            }
-            con.desconectar();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-
-        return listaModelo;
-    }
-
-    public HashMap<String, Integer> hashFuncion() {
-        sql = "SELECT * FROM funcion ORDER BY id_funcion;";
-        con.conectar();
-        rs = con.consultarBD();
-        HashMap<String, Integer> hashModelo = new HashMap<String, Integer>();
-
-        try {
-            while (rs.next()) {
-                hashModelo.put(rs.getString("funcion"), rs.getInt("id_funcion"));
-            }
-            con.desconectar();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-
-        return hashModelo;
-    }
-
     public void insert() throws SQLException {
         sql = "SELECT insertarusuario("
                 + "    '" + usuario + "',"
@@ -255,21 +203,22 @@ public class MUsuario {
                 + "    '" + preguntaSeguridad + "',"
                 + "    '" + respuestaSecreta + "',"
                 + ");";
-        sql = "INSERT INTO usuario (usuario, funcionario, contrasenia, p_secreta, respuesta) "
+        sql = "INSERT INTO usuario (usuario, contrasenia, p_secreta, respuesta) "
                 + "VALUES ('" + usuario + "', '" + contrasenia + "', '" + preguntaSeguridad + "', '" + respuestaSecreta + "');";
         System.out.println(sql);
         con.conectar();
         con.actualizarBD();
 
         sql = "SELECT id_usuario "
-                + "FROM usuario;";
+                + "FROM usuario "
+                + "ORDER BY id_usuario ASC;";
         System.out.println(sql);
         con.conectar();
         rs = con.consultarBD();
 
         if (rs != null) {
-            rs.next();
-            id = rs.getInt("id_usuario");
+            rs.last();
+            this.id = rs.getInt("id_usuario");
         }
 
         for (MFuncion funcionesX : funciones) {
@@ -349,14 +298,6 @@ public class MUsuario {
 
     public void setRespuestaSecreta(String respuestaSecreta) {
         this.respuestaSecreta = respuestaSecreta;
-    }
-
-    public MFuncionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(MFuncionario funcionario) {
-        this.funcionario = funcionario;
     }
 
     public MFuncion[] getFunciones() {

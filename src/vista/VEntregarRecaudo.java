@@ -35,7 +35,6 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaEscuela = new javax.swing.JTable();
         btnMensual = new javax.swing.JButton();
@@ -56,6 +55,7 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
         btnAtras = new javax.swing.JButton();
         btnListo = new javax.swing.JButton();
         btnReiniciar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -65,10 +65,6 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
 
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Escuela:");
-
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Recaudos");
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -197,9 +193,9 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
             }
         });
 
-        btnAtras.setBackground(new java.awt.Color(255, 255, 102));
-        btnAtras.setForeground(new java.awt.Color(0, 0, 0));
-        btnAtras.setText("<-");
+        btnAtras.setBackground(new java.awt.Color(0, 102, 255));
+        btnAtras.setForeground(new java.awt.Color(255, 255, 255));
+        btnAtras.setText("Regresar");
         btnAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAtrasActionPerformed(evt);
@@ -213,6 +209,15 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
         btnReiniciar.setBackground(new java.awt.Color(0, 153, 0));
         btnReiniciar.setForeground(new java.awt.Color(255, 255, 255));
         btnReiniciar.setText("Reiniciar");
+
+        btnGuardar.setBackground(new java.awt.Color(204, 0, 0));
+        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -265,14 +270,15 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(165, 165, 165)
                                 .addComponent(btnReiniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnListo, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnListo, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -307,19 +313,18 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAnual)
                     .addComponent(btnTrimestral)
                     .addComponent(btnMensual))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnListo)
-                    .addComponent(btnReiniciar))
+                    .addComponent(btnReiniciar)
+                    .addComponent(btnGuardar))
                 .addGap(8, 8, 8))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -364,12 +369,17 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAtrasActionPerformed
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnAnual;
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnListo;
     private javax.swing.JButton btnMensual;
     private javax.swing.JButton btnReiniciar;
@@ -380,7 +390,6 @@ public class VEntregarRecaudo extends javax.swing.JPanel {
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

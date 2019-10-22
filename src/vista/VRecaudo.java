@@ -1,7 +1,10 @@
 package vista;
 
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -47,14 +50,20 @@ public class VRecaudo extends javax.swing.JPanel {
         txtNombre = new JTextField();
         jLabel5 = new JLabel();
         jLabel6 = new JLabel();
-        txtNumFrecuencia = new JTextField();
         comBoxFrecuencia = new JComboBox<>();
         btnNuevo = new JButton();
         btnAgregar = new JButton();
         btnModificar = new JButton();
         btnEliminar = new JButton();
+        jLabel7 = new JLabel();
+        dateDia = new JDateChooser();
+        jButton1 = new JButton();
+        jButton2 = new JButton();
+        cbxTrimestre = new JComboBox<>();
         jScrollPane1 = new JScrollPane();
         tabla = new JTable();
+
+        FormListener formListener = new FormListener();
 
         setBackground(new Color(255, 255, 255));
 
@@ -81,15 +90,13 @@ public class VRecaudo extends javax.swing.JPanel {
         jLabel5.setName("jLabel5"); // NOI18N
 
         jLabel6.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-        jLabel6.setText("cada");
+        jLabel6.setText("Trimestre: ");
         jLabel6.setName("jLabel6"); // NOI18N
 
-        txtNumFrecuencia.setColumns(2);
-        txtNumFrecuencia.setName("txtNumFrecuencia"); // NOI18N
-
         comBoxFrecuencia.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-        comBoxFrecuencia.setModel(new DefaultComboBoxModel<>(new String[] { "Días", "Semanas", "Meses", "Años" }));
+        comBoxFrecuencia.setModel(new DefaultComboBoxModel<>(new String[] { "Seleccione", "Mensual", "Trimestral", "Anual" }));
         comBoxFrecuencia.setName("comBoxFrecuencia"); // NOI18N
+        comBoxFrecuencia.addActionListener(formListener);
 
         btnNuevo.setBackground(new Color(238, 24, 24));
         btnNuevo.setForeground(new Color(255, 255, 255));
@@ -119,6 +126,31 @@ public class VRecaudo extends javax.swing.JPanel {
         btnEliminar.setBorderPainted(false);
         btnEliminar.setName("btnEliminar"); // NOI18N
 
+        jLabel7.setFont(new Font("Tahoma", 0, 12)); // NOI18N
+        jLabel7.setText("Dia:");
+        jLabel7.setName("jLabel7"); // NOI18N
+
+        dateDia.setBackground(new Color(255, 255, 255));
+        dateDia.setForeground(new Color(0, 0, 0));
+        dateDia.setToolTipText("");
+        dateDia.setDateFormatString("d");
+        dateDia.setName("dateDia"); // NOI18N
+
+        jButton1.setBackground(new Color(0, 102, 255));
+        jButton1.setText("?");
+        jButton1.setToolTipText("no es obligatorio, solo si no son todos los trimestres");
+        jButton1.setEnabled(false);
+        jButton1.setName("jButton1"); // NOI18N
+
+        jButton2.setBackground(new Color(0, 102, 255));
+        jButton2.setText("?");
+        jButton2.setToolTipText("no es obligatorio, solo si es en un dia especifico y que sea mensual");
+        jButton2.setEnabled(false);
+        jButton2.setName("jButton2"); // NOI18N
+
+        cbxTrimestre.setModel(new DefaultComboBoxModel<>(new String[] { "Seleccione", "primero", "segundo", "tercero", "primero y segundo", "segundo y tercero", "primero y tercero", "todos" }));
+        cbxTrimestre.setName("cbxTrimestre"); // NOI18N
+
         GroupLayout panelFormLayout = new GroupLayout(panelForm);
         panelForm.setLayout(panelFormLayout);
         panelFormLayout.setHorizontalGroup(panelFormLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -126,23 +158,26 @@ public class VRecaudo extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(panelFormLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addGroup(panelFormLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelFormLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNumFrecuencia, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(comBoxFrecuencia, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtNombre, GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                    .addComponent(comBoxFrecuencia, 0, 120, Short.MAX_VALUE)
+                    .addComponent(cbxTrimestre, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateDia, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelFormLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGap(184, 184, 184)
                 .addGroup(panelFormLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNuevo, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnModificar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(40, 40, 40))
         );
         panelFormLayout.setVerticalGroup(panelFormLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(panelFormLayout.createSequentialGroup()
@@ -154,15 +189,22 @@ public class VRecaudo extends javax.swing.JPanel {
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelFormLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(txtNumFrecuencia, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
                     .addComponent(comBoxFrecuencia, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnModificar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelFormLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnModificar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(jButton1)
+                    .addComponent(cbxTrimestre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panelFormLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(dateDia, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelFormLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton2))
+                    .addComponent(jLabel7))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         jScrollPane2.setViewportView(panelForm);
@@ -189,7 +231,7 @@ public class VRecaudo extends javax.swing.JPanel {
                     .addComponent(jSeparator1)
                     .addComponent(jLabel3, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -204,7 +246,22 @@ public class VRecaudo extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
                 .addContainerGap())
         );
+    }
+
+    // Code for dispatching events from components to event handlers.
+
+    private class FormListener implements ActionListener {
+        FormListener() {}
+        public void actionPerformed(ActionEvent evt) {
+            if (evt.getSource() == comBoxFrecuencia) {
+                VRecaudo.this.comBoxFrecuenciaActionPerformed(evt);
+            }
+        }
     }// </editor-fold>//GEN-END:initComponents
+
+    private void comBoxFrecuenciaActionPerformed(ActionEvent evt) {//GEN-FIRST:event_comBoxFrecuenciaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comBoxFrecuenciaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -212,18 +269,22 @@ public class VRecaudo extends javax.swing.JPanel {
     private JButton btnEliminar;
     private JButton btnModificar;
     private JButton btnNuevo;
+    private JComboBox<String> cbxTrimestre;
     private JComboBox<String> comBoxFrecuencia;
+    private JDateChooser dateDia;
+    private JButton jButton1;
+    private JButton jButton2;
     private JLabel jLabel3;
     private JLabel jLabel4;
     private JLabel jLabel5;
     private JLabel jLabel6;
+    private JLabel jLabel7;
     private JScrollPane jScrollPane1;
     private JScrollPane jScrollPane2;
     private JSeparator jSeparator1;
     private JPanel panelForm;
     private JTable tabla;
     private JTextField txtNombre;
-    private JTextField txtNumFrecuencia;
     // End of variables declaration//GEN-END:variables
 
     public JButton getBtnEliminar() {
@@ -254,7 +315,12 @@ public class VRecaudo extends javax.swing.JPanel {
         return txtNombre;
     }
 
-    public JTextField getTxtNumFrecuencia() {
-        return txtNumFrecuencia;
+    public JDateChooser getDateDia() {
+        return dateDia;
     }
+
+    public JComboBox<String> getCbxTrimestre() {
+        return cbxTrimestre;
+    }
+    
 }

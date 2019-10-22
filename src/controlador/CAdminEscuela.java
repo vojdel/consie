@@ -4,6 +4,7 @@ import static consie.Consie.ventana;
 import static controlador.CVentana.marco;
 import static controlador.CVentana.panelPrincipal;
 import general.Funciones;
+import general.RenderTabla;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -15,10 +16,14 @@ import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import modelo.MAdminEscuela;
 import modelo.MEscuela;
 import modelo.MEstado;
@@ -53,6 +58,7 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
     private MEstado[] datosEstado;
 
     private Funciones funciones = new Funciones();
+    private RenderTabla render = new RenderTabla();
 
     public CAdminEscuela() {
         // vista = new VAdminEscuela();
@@ -237,6 +243,67 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
         funciones.ocultarColumnas(tabla, new int[]{0, 4});
     }
 
+    private void actualizarTablaRecaudo(JTable tabla, String columns[], MAdminEscuela[] datos) {
+        modeloTabla = new DefaultTableModel();
+        for (int i = 0; i < columns.length; i++) {
+            modeloTabla.addColumn(columns[i]);
+        }
+        tabla.setModel(modeloTabla);
+
+        if (datos != null) {
+            for (MAdminEscuela datosX : datos) {
+                modelo = datosX;
+                modeloTabla.addRow(
+                        new Object[]{
+                            modelo.getRecaudo().getId(),
+                            modelo.getRecaudo().getNombre(),}
+                );
+            }
+        }
+
+        funciones.ocultarColumnas(tabla, new int[]{0});
+    }
+
+    private void actualizarTablaEntrega(JTable tabla, String columns[], MAdminEscuela[] datos, String tipo) {
+        modeloTabla = new DefaultTableModel();
+        for (int i = 0; i < columns.length; i++) {
+            modeloTabla.addColumn(columns[i]);
+        }
+        tabla.setModel(modeloTabla);
+
+        if (datos != null) {
+            for (MAdminEscuela datosX : datos) {
+                modelo = datosX;
+                modeloTabla.addRow(
+                        new Object[]{
+                            modelo.getRecaudo().getId(),
+                            modelo.getRecaudo().getNombre()
+                        }
+                );
+            }
+
+            JCheckBox radioBtn;
+            TableColumn sportColumn;
+            for (int k = 1; k < columns.length; k++) {
+                sportColumn = vistaRecaudos.getTablaEntrega().getColumnModel().getColumn(k);
+                if (k > 1) {
+                    radioBtn = new JCheckBox("", false);
+                    sportColumn.setCellEditor(new DefaultCellEditor(radioBtn));
+                    //sportColumn.setCellRenderer(render);
+                }
+                if (k == 1) {        
+                    sportColumn.setPreferredWidth(500);
+                    sportColumn.setMaxWidth(500);
+                    sportColumn.setMinWidth(200);
+                    tabla.setRowHeight(25);
+                }
+            }
+
+        }
+
+        funciones.ocultarColumnas(tabla, new int[]{0});
+    }
+
     private void cambioVentana(String titulo, JPanel panel) {
         ventana.setTitle(titulo);
         marco.remove(panelPrincipal);
@@ -292,6 +359,45 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
 
     @Override
     public void mouseClicked(MouseEvent me) {
+        // Entregar Recaudos
+        if (me.getSource() == vistaRecaudos.getTablaEscuela()) {
+            int filaSeleccionada = vistaRecaudos.getTablaEscuela().getSelectedRow();
+
+            if (filaSeleccionada >= 0) {
+                int id;
+                id = Integer.parseInt(vistaRecaudos.getTablaEscuela().getValueAt(filaSeleccionada, 0).toString());
+                String column[] = {"id", "recaudo"};
+                try {
+                    actualizarTablaRecaudo(
+                            vistaRecaudos.getTablaRecaudo(),
+                            column,
+                            modelo.selectRecaudo(id, "")
+                    );
+                } catch (SQLException ex) {
+                    Logger.getLogger(CEscuela.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        if (me.getSource() == vistaPersonal.getTablaEscuela()) {
+            int filaSeleccionada = vistaPersonal.getTablaEscuela().getSelectedRow();
+
+            if (filaSeleccionada >= 0) {
+                int id;
+                id = Integer.parseInt(vistaPersonal.getTablaEscuela().getValueAt(filaSeleccionada, 0).toString());
+
+                try {
+                    actualizarTablaEscuelaPersonal(
+                            vistaPersonal.getTablaEscuelaPersonal(),
+                            modelo.selectAsignarPersonal(id)
+                    );
+                } catch (SQLException ex) {
+                    Logger.getLogger(CEscuela.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
+
+        // Asignar personal
         if (me.getSource() == vistaPersonal.getTablaEscuela()) {
             int filaSeleccionada = vistaPersonal.getTablaEscuela().getSelectedRow();
 
@@ -363,13 +469,83 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
         if (e.getSource() == vistaRecaudos.getBtnAtras()) {
             cambioVentana("Administración Escuelas", vista);
         }
+        if (e.getSource() == vistaRecaudos.getBtnMensual()) {
+            String column[] = {
+                "id", "Recaudo",
+                "Ene", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"
+            };
+            int filaSeleccionada = vistaRecaudos.getTablaEscuela().getSelectedRow();
+            if (filaSeleccionada >= 0) {
+                int id;
+                id = Integer.parseInt(vistaRecaudos.getTablaEscuela().getValueAt(filaSeleccionada, 0).toString());
+                try {
+                    actualizarTablaEntrega(
+                            vistaRecaudos.getTablaEntrega(),
+                            column,
+                            modelo.selectRecaudo(
+                                    id,
+                                    "Mensual"
+                            ),
+                            "Mensual"
+                    );
+                } catch (SQLException ex) {
+                    Logger.getLogger(CAdminEscuela.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
+        if (e.getSource() == vistaRecaudos.getBtnTrimestral()) {
+            String column[] = {
+                "id", "Recaudo",
+                "I", "II", "III"
+            };
+            int filaSeleccionada = vistaRecaudos.getTablaEscuela().getSelectedRow();
+            if (filaSeleccionada >= 0) {
+                int id;
+                id = Integer.parseInt(vistaRecaudos.getTablaEscuela().getValueAt(filaSeleccionada, 0).toString());
+                try {
+                    actualizarTablaEntrega(
+                            vistaRecaudos.getTablaEntrega(),
+                            column,
+                            modelo.selectRecaudo(
+                                    id,
+                                    "Trimestral"
+                            ),
+                            "Trimestral"
+                    );
+                } catch (SQLException ex) {
+                    Logger.getLogger(CAdminEscuela.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        if (e.getSource() == vistaRecaudos.getBtnAnual()) {
+            String column[] = {"id", "Recaudo", "Anual"};
+            int filaSeleccionada = vistaRecaudos.getTablaEscuela().getSelectedRow();
+            if (filaSeleccionada >= 0) {
+                int id;
+                id = Integer.parseInt(vistaRecaudos.getTablaEscuela().getValueAt(filaSeleccionada, 0).toString());
+                try {
+                    actualizarTablaEntrega(
+                            vistaRecaudos.getTablaEntrega(),
+                            column,
+                            modelo.selectRecaudo(
+                                    id,
+                                    "Anual"
+                            ),
+                            "Anual"
+                    );
+                } catch (SQLException ex) {
+                    Logger.getLogger(CAdminEscuela.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
 
         // Asignar Personal
         if (e.getSource() == vistaPersonal.getBtnAtras()) {
             cambioVentana("Administración Escuelas", vista);
         }
         if (e.getSource() == vistaPersonal.getBtnAgregar()) {
-            
+
             int filaSeleccionadaEscuela = vistaPersonal.getTablaEscuela().getSelectedRow();
             int filaSeleccionadaPersonal = vistaPersonal.getTablaPersonal().getSelectedRow();
 
@@ -397,7 +573,7 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
             int filaSeleccionadaEscuela = vistaPersonal.getTablaEscuela().getSelectedRow();
 
             if (filaSeleccionada >= 0) {
-                
+
                 int idEscuela;
                 idEscuela = Integer.parseInt(vistaPersonal.getTablaEscuela().getValueAt(filaSeleccionadaEscuela, 0).toString());
                 int id;

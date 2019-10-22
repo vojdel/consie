@@ -113,7 +113,7 @@ create table escuela_personal (
 create table recaudo (
 	id_recaudo serial not null primary key,
 	nombre_recaudo varchar(200) not null,
-	num_frecuencia int not null,
+	num_frecuencia int,
 	frecuencia_entrega varchar(10) not null
 );
 
