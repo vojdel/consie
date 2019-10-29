@@ -3,10 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Usuario/Desktop/Diego/Consie/src/general/crear_consie.sql</file>
             <file>file:/C:/Users/Usuario/Desktop/Diego/Consie/src/general/datos_consie.sql</file>
             <file>file:/C:/Users/Usuario/Desktop/Diego/Consie/src/modelo/MSeccion.java</file>
             <file>file:/C:/Users/Usuario/Desktop/Diego/Consie/src/controlador/CSeccion.java</file>
+=======
+            <file>file:/C:/Users/Usuario/Desktop/Diego/Consie/src/controlador/CUsuario.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/Diego/Consie/src/general/Validaciones.java</file>
+>>>>>>> f794d333efab9ce596d4ae473570f3e06924e314
         </group>
     </open-files>
 </project-private>

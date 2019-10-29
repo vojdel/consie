@@ -275,7 +275,11 @@ public class CUsuario implements ActionListener, MouseListener, KeyListener {
         funcionario.setCedula(vista.getTxtFuncionario().getText());
         modelo.setUsuario(vista.getTxtUsuario().getText());
         modelo.setContrasenia(f.encriptar(vista.getTxtContrasenia().getText()));
+<<<<<<< HEAD
         modelo.setPreguntaSeguridad(Integer.toString(vista.getCbxPregunta().getSelectedIndex()));
+=======
+        modelo.setPreguntaSeguridad(vista.getCbxPregunta().getSelectedIndex());
+>>>>>>> f794d333efab9ce596d4ae473570f3e06924e314
         modelo.setRespuestaSecreta(f.encriptar(vista.getTxtRespuesta().getText()));
         
         int[] indices = vista.getLstFunciones().getSelectedIndices();
@@ -310,7 +314,7 @@ public class CUsuario implements ActionListener, MouseListener, KeyListener {
         if (!vista.getTxtContrasenia().isEnabled()) {
             modelo.setUsuario(vista.getTxtUsuario().getText());
             modelo.setContrasenia(modelo.getContrasenia());
-            modelo.setPreguntaSeguridad(Integer.toString(vista.getCbxPregunta().getSelectedIndex()));
+            modelo.setPreguntaSeguridad(vista.getCbxPregunta().getSelectedIndex());
             modelo.setRespuestaSecreta(vista.getTxtRespuesta().getText());
             modelo.update();
         } else {
