@@ -109,103 +109,123 @@ public class MenuDinam implements MouseListener {
         iconoAdminPersonal = new ImageIcon("img/icons8_school_director_30px.png");
         iconoEstadisticas = new ImageIcon("img/icons8_statistics_30px.png");
 
-        menuAnioEscolar = new JLabel("Año escolar");
+        menuAnioEscolar = new JLabel("Año Escolar");
         menuAnioEscolar.setFont(new Font("Tahoma", 0, 18));
+        menuAnioEscolar.setToolTipText("Año Escolar");
         menuAnioEscolar.setForeground(new Color(255, 255, 255));
         menuAnioEscolar.setIcon(iconoAnioEscolar);
 
         menuInicio = new JLabel("Inicio");
         menuInicio.setFont(new Font("Tahoma", 0, 18));
+        menuInicio.setToolTipText("Inicio");
         menuInicio.setForeground(new Color(255, 255, 255));
         menuInicio.setIcon(iconoInicio);
 
         menuCargo = new JLabel("Cargo");
         menuCargo.setFont(new Font("Tahoma", 0, 18));
+        menuCargo.setToolTipText("Cargo");
         menuCargo.setForeground(new Color(255, 255, 255));
         menuCargo.setIcon(iconoCargo);
 
         menuEscuela = new JLabel("Escuela");
         menuEscuela.setFont(new Font("Tahoma", 0, 18));
+        menuEscuela.setToolTipText("Escuela");
         menuEscuela.setForeground(new Color(255, 255, 255));
         menuEscuela.setIcon(iconoEscuela);
 
         menuEstado = new JLabel("Estado");
         menuEstado.setFont(new Font("Tahoma", 0, 18));
+        menuEstado.setToolTipText("Estado");
         menuEstado.setForeground(new Color(255, 255, 255));
         menuEstado.setIcon(iconoEstado);
 
         menuEstudiante = new JLabel("Estudiante");
         menuEstudiante.setFont(new Font("Tahoma", 0, 18));
+        menuEstudiante.setToolTipText("Estudiante");
         menuEstudiante.setForeground(new Color(255, 255, 255));
         menuEstudiante.setIcon(iconoEstudiante);
 
         menuFuncionario = new JLabel("Funcionario");
         menuFuncionario.setFont(new Font("Tahoma", 0, 18));
+        menuFuncionario.setToolTipText("Funcionario");
         menuFuncionario.setForeground(new Color(255, 255, 255));
         menuFuncionario.setIcon(iconoFuncionario);
 
         menuGrado = new JLabel("Grado");
         menuGrado.setFont(new Font("Tahoma", 0, 18));
+        menuGrado.setToolTipText("Grado");
         menuGrado.setForeground(new Color(255, 255, 255));
         menuGrado.setIcon(iconoGrado);
 
         menuIndicador = new JLabel("Indicador");
         menuIndicador.setFont(new Font("Tahoma", 0, 18));
+        menuIndicador.setToolTipText("Indicador");
         menuIndicador.setForeground(new Color(255, 255, 255));
         menuIndicador.setIcon(iconoIndicador);
 
         menuMunicipio = new JLabel("Municipio");
         menuMunicipio.setFont(new Font("Tahoma", 0, 18));
+        menuMunicipio.setToolTipText("Municipio");
         menuMunicipio.setForeground(new Color(255, 255, 255));
         menuMunicipio.setIcon(iconoMunicipio);
 
         menuParroquia = new JLabel("Parroquia");
         menuParroquia.setFont(new Font("Tahoma", 0, 18));
+        menuParroquia.setToolTipText("Parroquia");
         menuParroquia.setForeground(new Color(255, 255, 255));
         menuParroquia.setIcon(iconoParroquia);
 
         menuPersonal = new JLabel("Personal");
         menuPersonal.setFont(new Font("Tahoma", 0, 18));
+        menuPersonal.setToolTipText("Personal");
         menuPersonal.setForeground(new Color(255, 255, 255));
         menuPersonal.setIcon(iconoPersonal);
 
         menuRecaudo = new JLabel("Recaudo");
         menuRecaudo.setFont(new Font("Tahoma", 0, 18));
+        menuRecaudo.setToolTipText("Recaudo");
         menuRecaudo.setForeground(new Color(255, 255, 255));
         menuRecaudo.setIcon(iconoRecaudo);
 
         menuRepresentante = new JLabel("Representante");
         menuRepresentante.setFont(new Font("Tahoma", 0, 18));
+        menuRepresentante.setToolTipText("Representante");
         menuRepresentante.setForeground(new Color(255, 255, 255));
         menuRepresentante.setIcon(iconoRepresentante);
 
         menuSeccion = new JLabel("Sección");
         menuSeccion.setFont(new Font("Tahoma", 0, 18));
+        menuSeccion.setToolTipText("Seccion");
         menuSeccion.setForeground(new Color(255, 255, 255));
         menuSeccion.setIcon(iconoSeccion);
 
         menuUsuario = new JLabel("Usuario");
         menuUsuario.setFont(new Font("Tahoma", 0, 18));
+        menuUsuario.setToolTipText("Usuario");
         menuUsuario.setForeground(new Color(255, 255, 255));
         menuUsuario.setIcon(iconoUsuario);
 
         menuPedagogico = new JLabel("Nivel Pedagógico");
         menuPedagogico.setFont(new Font("Tahoma", 0, 18));
+        menuPedagogico.setToolTipText("Nivel Pedagógico");
         menuPedagogico.setForeground(new Color(255, 255, 255));
         menuPedagogico.setIcon(iconoPedadogico);
 
         menuAdminPersonal = new JLabel("Administrar Personal");
         menuAdminPersonal.setFont(new Font("Tahoma", 0, 18));
+        menuAdminPersonal.setToolTipText("Administrar Personal");
         menuAdminPersonal.setForeground(new Color(255, 255, 255));
         menuAdminPersonal.setIcon(iconoAdminPersonal);
 
         menuAdminEscuela = new JLabel("Administrar Escuela");
         menuAdminEscuela.setFont(new Font("Tahoma", 0, 18));
+        menuAdminEscuela.setToolTipText("Administrar Escuela");
         menuAdminEscuela.setForeground(new Color(255, 255, 255));
         menuAdminEscuela.setIcon(iconoAdminEscuela);
 
         menuEstadistica = new JLabel("Estadística");
         menuEstadistica.setFont(new Font("Tahoma", 0, 18));
+        menuEstadistica.setToolTipText("Estadistica");
         menuEstadistica.setForeground(new Color(255, 255, 255));
         menuEstadistica.setIcon(iconoEstadisticas);
 

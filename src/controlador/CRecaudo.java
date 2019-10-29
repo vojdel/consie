@@ -6,11 +6,14 @@ import static controlador.CVentana.panelPrincipal;
 import general.Funciones;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -21,25 +24,25 @@ import vista.VRecaudo;
  *
  * @author Diego
  */
-public class CRecaudo implements ActionListener, MouseListener, KeyListener {
+public class CRecaudo implements ActionListener, MouseListener, KeyListener, ItemListener {
 
     VRecaudo vista;
     MRecaudo modelo;
-    
+
     DefaultTableModel modeloTabla;
-    
+
     Funciones funciones = new Funciones();
 
     public CRecaudo() {
         vista = new VRecaudo();
         modelo = new MRecaudo();
-        
+
         try {
             actualizarTabla(modelo.selectTodo());
         } catch (SQLException ex) {
             Logger.getLogger(CEstado.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         ventana.setTitle("Recaudo");
         marco.remove(panelPrincipal);
         vista.setBounds(290, 70, 670, 590);
@@ -49,9 +52,12 @@ public class CRecaudo implements ActionListener, MouseListener, KeyListener {
         ventana.validate();
         vista.getBtnModificar().setEnabled(false);
         vista.getBtnEliminar().setEnabled(false);
+        vista.getDateDia().setDate(new Date());
+        vista.getDateDia().setEnabled(false);
+        vista.getCbxTrimestre().setEnabled(false);
         addListener();
     }
-    
+
     private void actualizarTabla(MRecaudo[] datos) {
         modeloTabla = new DefaultTableModel();
         modeloTabla.addColumn("Id");
@@ -65,7 +71,7 @@ public class CRecaudo implements ActionListener, MouseListener, KeyListener {
                 modelo = datosX;
                 modeloTabla.addRow(new Object[]{modelo.getId(), modelo.getNombre(), modelo.getFrecuenciaEntrega()});
             }
-            
+
             funciones.ocultarColumnas(vista.getTabla(), new int[]{0});
             System.out.println("Tabla actualizada");
         }
@@ -77,20 +83,34 @@ public class CRecaudo implements ActionListener, MouseListener, KeyListener {
         vista.getBtnModificar().addActionListener(this);
         vista.getBtnEliminar().addActionListener(this);
         vista.getTabla().addMouseListener(this);
+        vista.getComBoxFrecuencia().addItemListener(this);
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == vista.getBtnNuevo()) {
+
             vista.getTxtNombre().setText("");
             vista.getBtnAgregar().setEnabled(true);
             vista.getBtnModificar().setEnabled(false);
             vista.getBtnEliminar().setEnabled(false);
+
         } else if (ae.getSource() == vista.getBtnAgregar()) {
+
             modelo.setNombre(vista.getTxtNombre().getText());
-            String num_frecuencia_entrega = vista.getTxtNumFrecuencia().getText();
-            String medida_frecuencia_entrega = vista.getComBoxFrecuencia().getItemAt(vista.getComBoxFrecuencia().getSelectedIndex());
-            modelo.setFrecuenciaEntrega(num_frecuencia_entrega.concat("").concat(medida_frecuencia_entrega));
+            String num_frecuencia_entrega = vista.getCbxTrimestre().getItemAt(vista.getCbxTrimestre().getSelectedIndex());
+            modelo.setFrecuenciaEntrega((String) vista.getComBoxFrecuencia().getSelectedItem());
+
+            if (!"Seleccione".equals(vista.getCbxTrimestre().getSelectedItem())) {
+
+                modelo.setNumFrecuencia(Integer.parseInt(num_frecuencia_entrega));
+
+            } else if (vista.getDateDia().isEnabled() == false) {
+
+                modelo.setNumFrecuencia(Integer.parseInt(vista.getDateDia().getDate().toString()));
+                System.out.println(vista.getDateDia().getDate().toString());
+
+            }
             modelo.insert();
 
             try {
@@ -186,5 +206,24 @@ public class CRecaudo implements ActionListener, MouseListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent ke) {
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            if (e.getSource() == vista.getComBoxFrecuencia()) {
+                if ("Trimestral".equals(vista.getComBoxFrecuencia().getSelectedItem())) {
+
+                    vista.getDateDia().setEnabled(false);
+                    vista.getCbxTrimestre().setEnabled(true);
+
+                } else if ("Mensual".equals(vista.getComBoxFrecuencia().getSelectedItem())) {
+
+                    vista.getCbxTrimestre().setEnabled(false);
+                    vista.getDateDia().setEnabled(true);
+
+                }
+            }
+        }
     }
 }

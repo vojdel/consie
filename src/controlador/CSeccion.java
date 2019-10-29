@@ -12,17 +12,16 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import modelo.MGrado;
 import modelo.MSeccion;
 import vista.VSeccion;
 
 /**
  *
  * @author Diego
- * 
  */
 public class CSeccion implements ActionListener, MouseListener, KeyListener {
 
@@ -30,25 +29,15 @@ public class CSeccion implements ActionListener, MouseListener, KeyListener {
     MSeccion modelo;
     Validaciones val;
     Funciones f;
-    MGrado datosGrado[];
-    MGrado modeloGrado;
+    HashMap<String, Integer> grados;
     DefaultTableModel modeloTabla;
 
     public CSeccion() {
         vista = new VSeccion();
         modelo = new MSeccion();
-        modeloGrado = new MGrado();
+        grados = modelo.hashGrado();
         val = new Validaciones();
         f = new Funciones();
-                
-        /* Datos del Combobox Cargo */
-        
-        try {
-            datosGrado= modeloGrado.selectTodo();
-            crearComboBoxGrado(modeloGrado.selectTodo());
-        } catch (SQLException ex) {
-            Logger.getLogger(CEstudiante.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         try {
             actualizarTabla(modelo.selectTodo());
@@ -65,6 +54,7 @@ public class CSeccion implements ActionListener, MouseListener, KeyListener {
         panelPrincipal = vista;
         ventana.repaint();
         ventana.validate();
+        vista.getCbxGrado().setModel(modelo.obtenerGrado());
         vista.getBtnModificar().setEnabled(false);
         vista.getBtnEliminar().setEnabled(false);
         addListeners();
@@ -97,19 +87,6 @@ public class CSeccion implements ActionListener, MouseListener, KeyListener {
         vista.getBtnEliminar().addActionListener(this);
         vista.getTabla().addMouseListener(this);
     }
-    
-      private void crearComboBoxGrado(MGrado[] datos) {
-        vista.getCbxGrado().addItem("Seleccione...");
-
-        if (datos != null) {
-            for (MGrado datosX : datos) {
-                modeloGrado = datosX;
-                vista.getCbxGrado().addItem(modeloGrado.getNombre());
-            }
-
-            System.out.println("ComboBox Cargo creado");
-        }
-    }
 
     @Override
     public void mouseClicked(MouseEvent me) {
@@ -128,7 +105,6 @@ public class CSeccion implements ActionListener, MouseListener, KeyListener {
 
                 vista.getTxtSeccion().setText(modelo.getSeccion());
                 vista.getCbxGrado().getModel().setSelectedItem(modelo.getGrado());
-//                vista.getTxtNEstudiantes().setText(Integer.toString(modelo.getN_estudiantes()));
                 vista.getBtnAgregar().setEnabled(false);
                 vista.getBtnModificar().setEnabled(true);
                 vista.getBtnEliminar().setEnabled(true);
@@ -165,8 +141,7 @@ public class CSeccion implements ActionListener, MouseListener, KeyListener {
         } else if (ae.getSource() == vista.getBtnAgregar()) {
 
             modelo.setSeccion(vista.getTxtSeccion().getText());
-            //modelo.setId_grado(grados.get(vista.getCbxGrado().getModel().getSelectedItem()));
-            // modelo.setN_estudiantes(Integer.parseInt(vista.getTxtNEstudiantes().getText()));
+            modelo.setId_grado(grados.get(vista.getCbxGrado().getModel().getSelectedItem()));
             modelo.insert();
 
             try {
@@ -181,8 +156,7 @@ public class CSeccion implements ActionListener, MouseListener, KeyListener {
         } else if (ae.getSource() == vista.getBtnModificar()) {
 
             modelo.setSeccion(vista.getTxtSeccion().getText());
-            //modelo.setId_grado(grados.get(vista.getComBoxGrado().getModel().getSelectedItem()));
-            // modelo.setN_estudiantes(Integer.parseInt(vista.getTxtNEstudiantes().getText()));
+            modelo.setId_grado(grados.get(vista.getCbxGrado().getModel().getSelectedItem()));
             modelo.update();
 
             try {
@@ -222,7 +196,7 @@ public class CSeccion implements ActionListener, MouseListener, KeyListener {
     public void keyTyped(KeyEvent e) {
         if (e.getSource() == vista.getTxtSeccion()) {
             val.Espacio(e);
-            val.Limite(e, vista.getTxtSeccion().getText(), 15);
+            val.limite(e, vista.getTxtSeccion().getText(), 15);
         }
     }
 

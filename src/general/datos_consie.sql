@@ -1521,42 +1521,83 @@ INSERT INTO parroquia (id_parroquia, id_municipio, parroquia) VALUES
 
 -- Funcion
 
-insert into funcion (funcion) values('anio escolar');
-insert into funcion (funcion) values('cargo');
-insert into funcion (funcion) values('escuela');
-insert into funcion (funcion) values('estado');
-insert into funcion (funcion) values('estudiante');
-insert into funcion (funcion) values('funcionario');
-insert into funcion (funcion) values('grado');
-insert into funcion (funcion) values('iniciar sesión');
-insert into funcion (funcion) values('municipio');
-insert into funcion (funcion) values('parroquia');
-insert into funcion (funcion) values('personal');
-insert into funcion (funcion) values('recaudo');
-insert into funcion (funcion) values('representante');
-insert into funcion (funcion) values('seccion');
-insert into funcion (funcion) values('usuario');
+insert into funcion (funcion) 
+    values
+    ('anio escolar'),
+    ('cargo'),
+    ('escuela'),
+    ('estado'),
+    ('estudiante'),
+    ('funcionario'),
+    ('grado'),
+    ('indicador'),
+    ('iniciar sesión'),
+    ('municipio'),
+    ('parroquia'),
+    ('personal'),
+    ('recaudo'),
+    ('representante'),
+    ('seccion'),
+    ('usuario'),
+    ('administrar escuelas'),
+    ('nivel pedagocico'),
+    ('segimiento personal'),
+    ('estadisticas');
 
 -- Escuela
 
-INSERT INTO escuela (nombre_escuela, turno_escuela, direccion_escuela, id_parroquia) VALUES ('juan josé de maya', 'ambos', 'avenida cartagena entre avenidas 28 y 29', '2');
-insert into escuela (nombre_escuela, turno_escuela, direccion_escuela, id_parroquia) values ('los angeles', 'ambos', 'calle, avenida', 3);
-INSERT INTO escuela (nombre_escuela, turno_escuela, direccion_escuela, id_parroquia) VALUES ('luisa de morales', 'ambos', 'calle, direcciÃ³n', '4');
-insert into escuela (nombre_escuela, turno_escuela, direccion_escuela, id_parroquia) values ('"santa maría"', 'ambos', 'calle, avenida', 5);
+INSERT INTO escuela (nombre_escuela, turno_escuela, direccion_escuela, id_parroquia)
+    VALUES
+    ('juan josé de maya', 'ambos', 'avenida cartagena entre avenidas 28 y 29', '2'),
+    ('los angeles', 'ambos', 'calle, avenida', 3),
+    ('luisa de morales', 'ambos', 'calle, direcciÃ³n', '4'),
+    ('"santa maría"', 'ambos', 'calle, avenida', 5);
 
 -- Estudiante
 
-insert into estudiante (ci_estudiante, p_nombre_estudiante, s_nombre_estudiante, p_apellido_estudiante, s_apellido_estudiante, genero_estudiante, f_nacimiento_estudiante, direccion_estudiante, id_escuela) values ('26942316', 'diego', null, 'rodrÃ­guez', 'mendoza', 'masculino', '25-08-1999', 'san pablo', '4');
+insert into estudiante 
+    values 
+    ('26942316', 'diego', 'alfonso', 'mendoza', 'mendoza', 'masculino', '25-08-1999', 'san pablo', '4'),
+    ('26942316', 'diego', null, 'alfonso', 'mendoza', 'masculino', '25-08-1999', 'san pablo', '3'),
+    ('26942316', 'diego', null, 'alfonso', 'mendoza', 'masculino', '25-08-1999', 'san pablo', '2'),
+    ('26942316', 'javier', 'david', 'vallez', null, 'masculino', '25-08-1999', 'san pablo', '1'),
+    ('27122644', 'jose', 'daniel', 'vasquez', 'pineda', 'masculino', '09-06-1999', 'san pablo', '4');
 
 -- Usuario
 
-insert into usuario (usuario, contrasenia) values ('admin', '21232f297a57a5a743894a0e4a801fc3');
-insert into usuario (usuario, contrasenia) values ('eggo', '0d46279411daa880c814c1bc449d2cf3');
-insert into usuario (usuario, contrasenia) values ('dan', '8598a34e1dd8da2eb944a7f21b074f98');
+insert into usuario (usuario, contrasenia) values 
+    ('admin', '21232f297a57a5a743894a0e4a801fc3'),
+    ('eggo', '0d46279411daa880c814c1bc449d2cf3'),
+    ('dan', '8598a34e1dd8da2eb944a7f21b074f98');
 
 -- Funcionario
 
 insert into funcionario values ('208455289', 'diego', null, 'rodríguez', 'mendoza', 'm', '1999-08-25', null, '10', '2');
+
+-- Recaudo
+
+INSERT INTO recaudo(nombre_recaudo, frecuencia_entrega)
+    VALUES 
+    ('Matrícula Inicial / Final', 'Trimestral'), 
+    ('Matrícula Inicial Nominal', 'Trimestral'), 
+    ('Estadística mensual por edad y sexo', 'Mensual'), 
+    ('Registro de control de asistencia de estudiantes', 'Mensual'), 
+    ('Informe con resultados del diagnóstico (inicio de año escolar)', 'Anual'), 
+    ('Caracterización del personal', 'Anual'), 
+    ('Ficha de dotación e infraestructura', 'Anual'), 
+    ('Cronograma de acompañamiento al aula trimestral', 'Trimestral'), 
+    ('Sistematización de los acompañamientos al aula', 'Mensual'), 
+    ('Soporte de registro de renovación de Consejo Educativo.', 'Trimestral'), 
+    ('Diagnóstico Participativo Integral Comunitario', 'Trimestral'), 
+    ('Plan de Acción del PEIC trimestral', 'Trimestral'), 
+    ('Sistematización y Evaluación del PEIC', 'Anual'), 
+    ('Sistematización de la Construcción Colectiva de los Acuerdos de Convivencia', 'Trimestral'), 
+    ('Informe del Rendimiento Estudiantil', 'Mensual'), 
+    ('Informe Institucional', 'Trimestral'), 
+    ('Cronograma de Reuniones con Representantes y Asamblea general por lapso', 'Trimestral'), 
+    ('Evaluación del Personal', 'Trimestral'), 
+    ('Sistematización de los Planes, Proyectos y Programas', 'Trimestral');
+
 
 -- Usuario_Funcion
 
@@ -1575,6 +1616,11 @@ insert into usuario_funcion values ('1', '12');
 insert into usuario_funcion values ('1', '13');
 insert into usuario_funcion values ('1', '14');
 insert into usuario_funcion values ('1', '15');
+insert into usuario_funcion values ('1', '16');
+insert into usuario_funcion values ('1', '17');
+insert into usuario_funcion values ('1', '18');
+insert into usuario_funcion values ('1', '19');
+insert into usuario_funcion values ('1', '20');
 insert into usuario_funcion values ('2', '1');
 insert into usuario_funcion values ('2', '2');
 insert into usuario_funcion values ('2', '3');
@@ -1590,6 +1636,11 @@ insert into usuario_funcion values ('2', '12');
 insert into usuario_funcion values ('2', '13');
 insert into usuario_funcion values ('2', '14');
 insert into usuario_funcion values ('2', '15');
+insert into usuario_funcion values ('2', '16');
+insert into usuario_funcion values ('2', '17');
+insert into usuario_funcion values ('2', '18');
+insert into usuario_funcion values ('2', '19');
+insert into usuario_funcion values ('2', '20');
 insert into usuario_funcion values ('3', '1');
 insert into usuario_funcion values ('3', '2');
 insert into usuario_funcion values ('3', '3');
@@ -1605,3 +1656,8 @@ insert into usuario_funcion values ('3', '12');
 insert into usuario_funcion values ('3', '13');
 insert into usuario_funcion values ('3', '14');
 insert into usuario_funcion values ('3', '15');
+insert into usuario_funcion values ('3', '16');
+insert into usuario_funcion values ('3', '17');
+insert into usuario_funcion values ('3', '18');
+insert into usuario_funcion values ('3', '19');
+insert into usuario_funcion values ('3', '20');

@@ -185,7 +185,7 @@ public class CGrado implements ActionListener, MouseListener, KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
         if (e.getSource() == vista.getTxtGrado()) {
-            val.Limite(e, vista.getTxtGrado().getText(), 15);
+            val.limite(e, vista.getTxtGrado().getText(), 15);
         }
     }
 

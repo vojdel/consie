@@ -14,11 +14,16 @@ public class MRecaudo {
     private int id;
     private String nombre;
     private String frecuenciaEntrega;
+    private int numFrecuencia;
 
     private BD con = new BD();
     private ResultSet rs;
 
     public MRecaudo() {
+    }
+
+    public MRecaudo(int id) {
+        this.id = id;
     }
 
     public MRecaudo(int id, String nombre, String frecuenciaEntrega) {
@@ -33,7 +38,7 @@ public class MRecaudo {
     }
 
     public MRecaudo[] selectTodo() throws SQLException {
-        con.setSql("SELECT * FROM recaudo ORDER BY nombre_recaudo;");
+        con.setSql("SELECT * FROM recaudo ORDER BY id_recaudo;");
         con.conectar();
         rs = con.consultarBD();
 
@@ -46,7 +51,7 @@ public class MRecaudo {
 
             for (int i = 0; i < contFilas; i++) {
                 rs.next();
-                datos[i] = new MRecaudo(rs.getInt("id"), rs.getString("nombre_recaudo"), rs.getString("frecuencia_entrega_recaudo"));
+                datos[i] = new MRecaudo(rs.getInt("id_recaudo"), rs.getString("nombre_recaudo"), rs.getString("frecuencia_entrega"));
             }
 
             con.desconectar();
@@ -58,7 +63,7 @@ public class MRecaudo {
     }
 
     public void select(int id) throws SQLException {
-        con.setSql("SELECT * FROM recaudo WHERE id_recaudo='" + id + "';");
+        con.setSql("SELECT * FROM recaudo WHERE id_recaudo='" + id + "' ORDER BY id_recaudo;");
         con.conectar();
         rs = con.consultarBD();
 
@@ -66,13 +71,14 @@ public class MRecaudo {
             rs.next();
             this.id = rs.getInt("id_recaudo");
             this.nombre = rs.getString("nombre_recaudo");
-            this.frecuenciaEntrega = rs.getString("frecuencia_entrega_recaudo");
+            this.frecuenciaEntrega = rs.getString("frecuencia_entrega");
+            this.numFrecuencia = rs.getInt("num_frecuencia");
             con.desconectar();
         }
     }
 
-    public MRecaudo[] buscar(String textoBuscar) throws SQLException {
-        con.setSql("SELECT * FROM recaudo WHERE nombre_estado LIKE '%" + textoBuscar + "%' ORDER BY nombre_recaudo");
+    public MRecaudo[] selecionaTodo() throws SQLException {
+        con.setSql("SELECT * FROM recaudo ORDER BY id_recaudo;");
         con.conectar();
         rs = con.consultarBD();
 
@@ -85,7 +91,42 @@ public class MRecaudo {
 
             for (int i = 0; i < contFilas; i++) {
                 rs.next();
-                datos[i] = new MRecaudo(rs.getInt("id_recaudo"), rs.getString("nombre_recaudo"), rs.getString("frecuencia_entrega_recaudo"));
+                datos[i] = new MRecaudo(rs.getInt("id_recaudo"), rs.getString("nombre_recaudo"));
+            }
+
+            con.desconectar();
+            return datos;
+        } else {
+            con.desconectar();
+            return null;
+        }
+    }
+
+    public int count() throws SQLException {
+        con.setSql("SELECT CAST(COUNT(id_recaudo) AS Integer) AS total FROM recaudo");
+        con.conectar();
+        rs = con.consultarBD();
+        int datos;
+        rs.next();
+        datos = rs.getInt("total");
+        return datos;
+    }
+
+    public MRecaudo[] buscar(String textoBuscar) throws SQLException {
+        con.setSql("SELECT * FROM recaudo WHERE nombre_recaudo LIKE '%" + textoBuscar + "%' ORDER BY nombre_recaudo");
+        con.conectar();
+        rs = con.consultarBD();
+
+        if (rs != null) {
+            rs.last();
+            int contFilas = rs.getRow();
+            rs.beforeFirst();
+
+            MRecaudo[] datos = new MRecaudo[contFilas];
+
+            for (int i = 0; i < contFilas; i++) {
+                rs.next();
+                datos[i] = new MRecaudo(rs.getInt("id_recaudo"), rs.getString("nombre_recaudo"), rs.getString("frecuencia_entrega"));
             }
 
             con.desconectar();
@@ -97,8 +138,8 @@ public class MRecaudo {
     }
 
     public void insert() {
-        con.setSql("INSERT INTO recaudo(nombre_recaudo, frecuencia_entrega_recaudo) "
-                + "VALUES('" + nombre + "', '" + frecuenciaEntrega + "');");
+        con.setSql("INSERT INTO recaudo(nombre_recaudo, frecuencia_entrega, num_frecuencia) "
+                + "VALUES('" + nombre + "', '" + frecuenciaEntrega + "', " + numFrecuencia + ");");
         con.conectar();
         con.actualizarBD();
         con.desconectar();
@@ -106,9 +147,10 @@ public class MRecaudo {
 
     public void update() {
         con.setSql("UPDATE recaudo SET "
-                + "nombre='" + nombre + "', "
-                + "frecuencia_entrega='" + frecuenciaEntrega + "' "
-                        + "WHERE id_recaudo='" + id + "';");
+                + "nombre_recaudo='" + nombre + "', "
+                + "frecuencia_entrega='" + frecuenciaEntrega + "' ,"
+                + "num_frecuencia='" + numFrecuencia + "' "
+                + "WHERE id_recaudo='" + id + "';");
         con.conectar();
         con.actualizarBD();
         con.desconectar();
@@ -143,6 +185,14 @@ public class MRecaudo {
 
     public void setFrecuenciaEntrega(String frecuenciaEntrega) {
         this.frecuenciaEntrega = frecuenciaEntrega;
+    }
+
+    public int getNumFrecuencia() {
+        return numFrecuencia;
+    }
+
+    public void setNumFrecuencia(int numFrecuencia) {
+        this.numFrecuencia = numFrecuencia;
     }
 
 }

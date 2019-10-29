@@ -114,7 +114,7 @@ public class CIndicador implements ActionListener, MouseListener, KeyListener {
     @Override
     public void keyTyped(KeyEvent ke) {
         if (ke.getSource() == vista.getTxtNombre()) {
-            val.Limite(ke, vista.getTxtNombre().getText(), 100);
+            val.limite(ke, vista.getTxtNombre().getText(), 100);
             val.soloLetras(ke);
             val.Espacio(ke);
         }
