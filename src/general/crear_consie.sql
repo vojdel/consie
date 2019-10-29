@@ -222,3 +222,438 @@ CREATE TABLE estudiante_seccion (
   CONSTRAINT fk_est2 FOREIGN KEY (id_estudiante) REFERENCES estado (id_estado) ON DELETE NO ACTION ON UPDATE NO ACTION
 )*/
 ;
+
+-- bitacora
+create table if not exists bitacora (
+	id_bitacora serial not null primary key,
+	operacion text not null,
+	tabla text not null,
+	id_usuario int,
+	valor_viejo text,
+	valor_nuevo text,
+	fecha_hora timestamp without time zone default localtimestamp(0)
+);
+
+
+-- Crear Vistas
+-- Cargo
+create or replace view vista_cargo as
+	select
+		id_cargo,
+		nombre_cargo
+	from cargo;
+	
+-- Estado
+create or replace view vista_estado as
+	SELECT 
+		id_estado, 
+		estado
+	FROM estado;
+
+-- Municipio
+create or replace view vista_municipio as
+	SELECT 
+		m.id_municipio, 
+		m.municipio,
+		e.id_estado,
+		e.estado
+	FROM municipio m
+	inner join vista_estado e on m.id_estado = e.id_estado;
+
+-- Parroquia
+create or replace view vista_parroquia as
+	SELECT 
+		p.id_parroquia, 
+		p.parroquia,
+		m.id_municipio,
+		m.municipio,
+		e.id_estado,
+		e.estado
+	FROM parroquia p
+	inner join municipio m on p.id_municipio = m.id_municipio
+	inner join estado e on m.id_estado = e.id_estado;
+
+-- Escuela
+create or replace view vista_escuela as
+	SELECT 
+		esc.id_escuela, 
+		esc.nombre_escuela, 
+		esc.turno_escuela, 
+		esc.direccion_escuela, 
+		p.id_parroquia,
+		p.parroquia,
+		m.id_municipio,
+		m.municipio,
+		est.id_estado,
+		est.estado
+	FROM escuela esc
+	inner join vista_parroquia p on esc.id_parroquia = p.id_parroquia
+	inner join vista_municipio m on p.id_municipio = m.id_municipio
+	inner join vista_estado est on m.id_estado = est.id_estado;
+
+-- Estudiante
+create or replace view vista_estudiante as 
+	SELECT 
+		estu.ci_estudiante, 
+		estu.p_nombre_estudiante, 
+		estu.s_nombre_estudiante, 
+		estu.p_apellido_estudiante, 
+		estu.s_apellido_estudiante, 
+		estu.genero_estudiante, 
+		estu.f_nacimiento_estudiante, 
+		estu.direccion_estudiante, 
+		esc.id_escuela,
+		esc.nombre_escuela,
+		esc.turno_escuela,
+		esc.direccion_escuela,
+		p.id_parroquia,
+		p.parroquia,
+		m.id_municipio,
+		m.municipio,
+		est.id_estado,
+		est.estado
+	FROM estudiante estu
+	inner join vista_escuela esc on estu.id_escuela = esc.id_escuela
+	inner join vista_parroquia p on esc.id_parroquia = p.id_parroquia
+	inner join vista_municipio m on p.id_municipio = m.id_municipio
+	inner join vista_estado est on m.id_estado = est.id_estado;
+
+-- Funcion
+create or replace view vista_funcion as
+	SELECT 
+		id_funcion, 
+		funcion
+	FROM funcion;
+
+create or replace view vista_funcionario as
+	SELECT 
+		f.ci_funcionario, 
+		f.p_nombre_fun, 
+		f.s_nombre_fun, 
+		f.p_apellido_fun, 
+		f.s_apellido_fun, 
+		f.genero, 
+		f.f_nacimiento, 
+		f.telefono, 
+		f.direccion, 
+		c.id_cargo, 
+		c.nombre_cargo,
+		f.id_usuario
+	FROM funcionario f
+	inner join cargo c on f.id_cargo = c.id_cargo;
+
+
+---------- Crear Funciones ----------
+---------- Otras ----------
+-- Calcular edad
+/*create or replace function calcular_edad(f_nacimiento date) returns int as $calcular_edad$
+begin
+	declare edad date;
+	edad := to_char(current_date() - f_nacimiento);
+	extract
+	returns edad;
+end;
+$calcular_edad$ language plpgsql;*/
+
+CREATE OR REPLACE FUNCTION minusculas_cargo() RETURNS trigger AS $minusculas_cargo$
+BEGIN
+	NEW.nombre_cargo = lower(NEW.nombre_cargo);
+	RETURN NEW;
+END;
+$minusculas_cargo$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION minusculas_escuela() RETURNS trigger AS $minusculas_escuela$
+BEGIN
+	NEW.nombre_escuela = lower(NEW.nombre_escuela);
+	new.turno_escuela = lower(new.turno_escuela);
+	new.direccion_escuela = lower(new.direccion_escuela);
+	RETURN NEW;
+END;
+$minusculas_escuela$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION minusculas_estado() RETURNS trigger AS $minusculas_estado$
+BEGIN
+	NEW.estado = lower(NEW.estado);
+	RETURN NEW;
+END;
+$minusculas_estado$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION minusculas_estudiante() RETURNS trigger AS $minusculas_estudiante$
+BEGIN
+	NEW.p_nombre_estudiante = lower(NEW.p_nombre_estudiante);
+	NEW.s_nombre_estudiante = lower(NEW.s_nombre_estudiante);
+	NEW.p_apellido_estudiante = lower(NEW.p_apellido_estudiante);
+	NEW.s_apellido_estudiante = lower(NEW.s_apellido_estudiante);
+	NEW.genero_estudiante = lower(NEW.genero_estudiante);
+	NEW.direccion_estudiante = lower(NEW.direccion_estudiante);
+	RETURN NEW;
+END;
+$minusculas_estudiante$ LANGUAGE plpgsql;
+
+--Bitácora
+create or replace function llenar_bitacora() returns trigger as $llenar_bitacora$
+begin
+	if TG_OP = 'INSERT' then
+		insert into bitacora (operacion, tabla, valor_nuevo)
+		values (TG_OP, TG_TABLE_NAME, new);
+		end if;
+	if TG_OP = 'UPDATE' then
+		insert into bitacora (operacion, tabla, valor_viejo, valor_nuevo)
+		values (TG_OP, TG_TABLE_NAME, old, new);
+		end if;
+	if TG_OP = 'DELETE' then
+		insert into bitacora (operacion, tabla, valor_viejo)
+		values (TG_OP, TG_TABLE_NAME, old);
+	end if;
+	return new;
+end;
+$llenar_bitacora$ language plpgsql;
+
+
+---------- Crear Funciones Trigger ----------
+CREATE TRIGGER tg_minusculas_cargo
+BEFORE INSERT OR UPDATE
+ON cargo
+FOR EACH ROW
+EXECUTE PROCEDURE minusculas_cargo();
+
+CREATE TRIGGER tg_minusculas_escuela
+BEFORE INSERT OR UPDATE
+ON escuela
+FOR EACH ROW
+EXECUTE PROCEDURE minusculas_escuela();
+
+CREATE TRIGGER tg_minusculas_estado
+BEFORE INSERT OR UPDATE
+ON estado
+FOR EACH ROW
+EXECUTE PROCEDURE minusculas_estado();
+
+CREATE TRIGGER tg_minusculas_estudiante
+BEFORE INSERT OR UPDATE
+ON estudiante
+FOR EACH ROW
+EXECUTE PROCEDURE minusculas_estudiante();
+
+create trigger tg_bitacora
+before insert or update or delete
+on cargo
+for each row
+execute procedure llenar_bitacora();
+-- bitacora
+create table if not exists bitacora (
+	id_bitacora serial not null primary key,
+	operacion text not null,
+	tabla text not null,
+	id_usuario int,
+	valor_viejo text,
+	valor_nuevo text,
+	fecha_hora timestamp without time zone default localtimestamp(0)
+);
+
+
+-- Crear Vistas
+-- Cargo
+create or replace view vista_cargo as
+	select
+		id_cargo,
+		nombre_cargo
+	from cargo;
+	
+-- Estado
+create or replace view vista_estado as
+	SELECT 
+		id_estado, 
+		estado
+	FROM estado;
+
+-- Municipio
+create or replace view vista_municipio as
+	SELECT 
+		m.id_municipio, 
+		m.municipio,
+		e.id_estado,
+		e.estado
+	FROM municipio m
+	inner join vista_estado e on m.id_estado = e.id_estado;
+
+-- Parroquia
+create or replace view vista_parroquia as
+	SELECT 
+		p.id_parroquia, 
+		p.parroquia,
+		m.id_municipio,
+		m.municipio,
+		e.id_estado,
+		e.estado
+	FROM parroquia p
+	inner join municipio m on p.id_municipio = m.id_municipio
+	inner join estado e on m.id_estado = e.id_estado;
+
+-- Escuela
+create or replace view vista_escuela as
+	SELECT 
+		esc.id_escuela, 
+		esc.nombre_escuela, 
+		esc.turno_escuela, 
+		esc.direccion_escuela, 
+		p.id_parroquia,
+		p.parroquia,
+		m.id_municipio,
+		m.municipio,
+		est.id_estado,
+		est.estado
+	FROM escuela esc
+	inner join vista_parroquia p on esc.id_parroquia = p.id_parroquia
+	inner join vista_municipio m on p.id_municipio = m.id_municipio
+	inner join vista_estado est on m.id_estado = est.id_estado;
+
+-- Estudiante
+create or replace view vista_estudiante as 
+	SELECT 
+		estu.ci_estudiante, 
+		estu.p_nombre_estudiante, 
+		estu.s_nombre_estudiante, 
+		estu.p_apellido_estudiante, 
+		estu.s_apellido_estudiante, 
+		estu.genero_estudiante, 
+		estu.f_nacimiento_estudiante, 
+		estu.direccion_estudiante, 
+		esc.id_escuela,
+		esc.nombre_escuela,
+		esc.turno_escuela,
+		esc.direccion_escuela,
+		p.id_parroquia,
+		p.parroquia,
+		m.id_municipio,
+		m.municipio,
+		est.id_estado,
+		est.estado
+	FROM estudiante estu
+	inner join vista_escuela esc on estu.id_escuela = esc.id_escuela
+	inner join vista_parroquia p on esc.id_parroquia = p.id_parroquia
+	inner join vista_municipio m on p.id_municipio = m.id_municipio
+	inner join vista_estado est on m.id_estado = est.id_estado;
+
+-- Funcion
+create or replace view vista_funcion as
+	SELECT 
+		id_funcion, 
+		funcion
+	FROM funcion;
+
+create or replace view vista_funcionario as
+	SELECT 
+		f.ci_funcionario, 
+		f.p_nombre_fun, 
+		f.s_nombre_fun, 
+		f.p_apellido_fun, 
+		f.s_apellido_fun, 
+		f.genero, 
+		f.f_nacimiento, 
+		f.telefono, 
+		f.direccion, 
+		c.id_cargo, 
+		c.nombre_cargo,
+		f.id_usuario
+	FROM funcionario f
+	inner join cargo c on f.id_cargo = c.id_cargo;
+
+
+---------- Crear Funciones ----------
+---------- Otras ----------
+-- Calcular edad
+/*create or replace function calcular_edad(f_nacimiento date) returns int as $calcular_edad$
+begin
+	declare edad date;
+	edad := to_char(current_date() - f_nacimiento);
+	extract
+	returns edad;
+end;
+$calcular_edad$ language plpgsql;*/
+
+CREATE OR REPLACE FUNCTION minusculas_cargo() RETURNS trigger AS $minusculas_cargo$
+BEGIN
+	NEW.nombre_cargo = lower(NEW.nombre_cargo);
+	RETURN NEW;
+END;
+$minusculas_cargo$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION minusculas_escuela() RETURNS trigger AS $minusculas_escuela$
+BEGIN
+	NEW.nombre_escuela = lower(NEW.nombre_escuela);
+	new.turno_escuela = lower(new.turno_escuela);
+	new.direccion_escuela = lower(new.direccion_escuela);
+	RETURN NEW;
+END;
+$minusculas_escuela$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION minusculas_estado() RETURNS trigger AS $minusculas_estado$
+BEGIN
+	NEW.estado = lower(NEW.estado);
+	RETURN NEW;
+END;
+$minusculas_estado$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION minusculas_estudiante() RETURNS trigger AS $minusculas_estudiante$
+BEGIN
+	NEW.p_nombre_estudiante = lower(NEW.p_nombre_estudiante);
+	NEW.s_nombre_estudiante = lower(NEW.s_nombre_estudiante);
+	NEW.p_apellido_estudiante = lower(NEW.p_apellido_estudiante);
+	NEW.s_apellido_estudiante = lower(NEW.s_apellido_estudiante);
+	NEW.genero_estudiante = lower(NEW.genero_estudiante);
+	NEW.direccion_estudiante = lower(NEW.direccion_estudiante);
+	RETURN NEW;
+END;
+$minusculas_estudiante$ LANGUAGE plpgsql;
+
+--Bitácora
+create or replace function llenar_bitacora() returns trigger as $llenar_bitacora$
+begin
+	if TG_OP = 'INSERT' then
+		insert into bitacora (operacion, tabla, valor_nuevo)
+		values (TG_OP, TG_TABLE_NAME, new);
+		end if;
+	if TG_OP = 'UPDATE' then
+		insert into bitacora (operacion, tabla, valor_viejo, valor_nuevo)
+		values (TG_OP, TG_TABLE_NAME, old, new);
+		end if;
+	if TG_OP = 'DELETE' then
+		insert into bitacora (operacion, tabla, valor_viejo)
+		values (TG_OP, TG_TABLE_NAME, old);
+	end if;
+	return new;
+end;
+$llenar_bitacora$ language plpgsql;
+
+
+---------- Crear Funciones Trigger ----------
+CREATE TRIGGER tg_minusculas_cargo
+BEFORE INSERT OR UPDATE
+ON cargo
+FOR EACH ROW
+EXECUTE PROCEDURE minusculas_cargo();
+
+CREATE TRIGGER tg_minusculas_escuela
+BEFORE INSERT OR UPDATE
+ON escuela
+FOR EACH ROW
+EXECUTE PROCEDURE minusculas_escuela();
+
+CREATE TRIGGER tg_minusculas_estado
+BEFORE INSERT OR UPDATE
+ON estado
+FOR EACH ROW
+EXECUTE PROCEDURE minusculas_estado();
+
+CREATE TRIGGER tg_minusculas_estudiante
+BEFORE INSERT OR UPDATE
+ON estudiante
+FOR EACH ROW
+EXECUTE PROCEDURE minusculas_estudiante();
+
+create trigger tg_bitacora
+before insert or update or delete
+on cargo
+for each row
+execute procedure llenar_bitacora();
