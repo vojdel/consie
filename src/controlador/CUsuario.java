@@ -12,7 +12,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -37,15 +36,21 @@ public class CUsuario implements ActionListener, MouseListener, KeyListener {
     MFuncion modeloFuncion;
     MFuncion[] datosFuncion;
 
+    DefaultComboBoxModel<String> modeloCbxPreguta;
     DefaultListModel modeloLstFuncion;
     DefaultTableModel modeloTabla;
 
-    Validaciones val = new Validaciones();
+    String[] preguntas = {
+        "¿Deporte Favorito?",
+        "¿Actividad Favorita?",
+        "¿Nacimiento de tu Hija/Hijo?",
+        "¿Cumpleaños de tu padre?",
+        "¿Nombre de tu primera mascota?"
+    };
 
+    Validaciones val = new Validaciones();
     String msj = "";
     boolean bol = true;
-    HashMap<Integer, String> preguntas;
-    DefaultComboBoxModel<String> modelP = new DefaultComboBoxModel<String>();
 
     Funciones f = new Funciones();
 
@@ -57,6 +62,8 @@ public class CUsuario implements ActionListener, MouseListener, KeyListener {
         funcionario = new MFuncionario();
 
         modeloFuncion = new MFuncion();
+
+        iniciarPreguntas();
 
         try {
             datosFuncion = modeloFuncion.selectTodo();
@@ -81,18 +88,8 @@ public class CUsuario implements ActionListener, MouseListener, KeyListener {
         ventana.repaint();
         ventana.validate();
 
-        iniciarPreguntas();
-        vista.getCbxPregunta().setModel(modelP);
-
         vista.getBtnModificar().setEnabled(false);
         vista.getBtnEliminar().setEnabled(false);
-
-        preguntas = new HashMap<Integer, String>();
-        preguntas.put(1, "¿Deporte Favorito?");
-        preguntas.put(2, "¿Actividad Favorita?");
-        preguntas.put(3, "¿Nacimiento de tu Hija/Hijo?");
-        preguntas.put(4, "¿Cumpleaños de tu padre?");
-        preguntas.put(5, "¿Nombre de tu primera mascota?");
 
         addListeners();
     }
@@ -168,22 +165,22 @@ public class CUsuario implements ActionListener, MouseListener, KeyListener {
         if (e.getSource() == vista.getTxtUsuario()) {
             val.Espacio(e);
             val.evitarPegar(e);
-            val.Limite(e, vista.getTxtUsuario().getText(), 15);
+            val.limite(e, vista.getTxtUsuario().getText(), 15);
 
         } else if (e.getSource() == vista.getTxtContrasenia()) {
 
             val.evitarPegar(e);
-            val.Limite(e, vista.getTxtContrasenia().getText(), 15);
+            val.limite(e, vista.getTxtContrasenia().getText(), 15);
 
         } else if (e.getSource() == vista.getTxtContrasenia2()) {
 
             val.evitarPegar(e);
-            val.Limite(e, vista.getTxtContrasenia2().getText(), 15);
+            val.limite(e, vista.getTxtContrasenia2().getText(), 15);
 
         } else if (e.getSource() == vista.getTxtRespuesta()) {
 
             val.evitarPegar(e);
-            val.Limite(e, vista.getTxtRespuesta().getText(), 30);
+            val.limite(e, vista.getTxtRespuesta().getText(), 30);
 
         }
     }
@@ -220,7 +217,7 @@ public class CUsuario implements ActionListener, MouseListener, KeyListener {
         if (datos != null) {
             for (MUsuario datosX : datos) {
                 modelo = datosX;
-        funcionario = new MFuncionario();
+                funcionario = new MFuncionario();
 
                 try {
                     funcionario.selectPorUsuario(modelo.getId());
@@ -238,12 +235,14 @@ public class CUsuario implements ActionListener, MouseListener, KeyListener {
     }
 
     private void iniciarPreguntas() {
-        modelP.addElement("Seleccione");
-        modelP.addElement("¿Deporte Favorito?");
-        modelP.addElement("¿Actividad Favorita?");
-        modelP.addElement("¿Nacimiento de tu Hija/Hijo?");
-        modelP.addElement("¿Cumpleaños de tu padre?");
-        modelP.addElement("¿Nombre de tu primera mascota?");
+        modeloCbxPreguta = new DefaultComboBoxModel<>();
+        modeloCbxPreguta.addElement("Seleccione...");
+
+        for (String preguntasX : preguntas) {
+            modeloCbxPreguta.addElement(preguntasX);
+        }
+
+        vista.getCbxPregunta().setModel(modeloCbxPreguta);
     }
 
     private void addListeners() {
@@ -260,11 +259,16 @@ public class CUsuario implements ActionListener, MouseListener, KeyListener {
         vista.getTxtRespuesta().addKeyListener(this);
     }
 
-    public void limpiar() {
+    private void limpiar() {
+        vista.getTxtFuncionario().setText("");
+        vista.getTxtNombre().setText("");
+        vista.getTxtApellido().setText("");
         vista.getTxtUsuario().setText("");
         vista.getTxtContrasenia().setText("");
         vista.getTxtContrasenia2().setText("");
+        vista.getCbxPregunta().setSelectedIndex(0);
         vista.getTxtRespuesta().setText("");
+        vista.getLstFunciones().clearSelection();
     }
 
     private void agregar() {
@@ -272,12 +276,13 @@ public class CUsuario implements ActionListener, MouseListener, KeyListener {
         modelo.setUsuario(vista.getTxtUsuario().getText());
         modelo.setContrasenia(f.encriptar(vista.getTxtContrasenia().getText()));
         modelo.setPreguntaSeguridad(Integer.toString(vista.getCbxPregunta().getSelectedIndex()));
-        modelo.setRespuestaSecreta(vista.getTxtRespuesta().getText());
-        int[] indice = vista.getLstFunciones().getSelectedIndices();
-        MFuncion[] funciones = new MFuncion[indice.length];
+        modelo.setRespuestaSecreta(f.encriptar(vista.getTxtRespuesta().getText()));
+        
+        int[] indices = vista.getLstFunciones().getSelectedIndices();
+        MFuncion[] funciones = new MFuncion[indices.length];
 
-        for (int i = 0; i < indice.length; i++) {
-            funciones[i] = datosFuncion[indice[i]];
+        for (int i = 0; i < indices.length; i++) {
+            funciones[i] = datosFuncion[indices[i]];
         }
 
         modelo.setFunciones(funciones);
@@ -308,21 +313,18 @@ public class CUsuario implements ActionListener, MouseListener, KeyListener {
             modelo.setPreguntaSeguridad(Integer.toString(vista.getCbxPregunta().getSelectedIndex()));
             modelo.setRespuestaSecreta(vista.getTxtRespuesta().getText());
             modelo.update();
-
         } else {
-
             String pass = vista.getTxtContrasenia().getText();
             String pass2 = vista.getTxtContrasenia().getText();
             System.out.println(pass);
 
             if (pass.length() == pass2.length()) {
-
                 modelo.setContrasenia(f.encriptar(pass));
-
             }
 
             modelo.updatePass();
         }
+        
         try {
             actualizarTabla(modelo.selectTodo());
         } catch (SQLException ex) {
@@ -369,14 +371,32 @@ public class CUsuario implements ActionListener, MouseListener, KeyListener {
             id = Integer.parseInt(vista.getTabla().getValueAt(filaSeleccionada, 0).toString());
 
             try {
+                funcionario.selectPorUsuario(id);
                 modelo.select(id);
+                modelo.selectPermisos();
             } catch (SQLException ex) {
                 Logger.getLogger(CEstado.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+            vista.getTxtFuncionario().setText(funcionario.getCedula());
+            vista.getTxtNombre().setText(funcionario.getPrimerNombre());
+            vista.getTxtApellido().setText(funcionario.getPrimerApellido());
             vista.getTxtUsuario().setText(modelo.getUsuario());
-            vista.getTxtRespuesta().setText(modelo.getRespuestaSecreta());
-            vista.getCbxPregunta().getModel().setSelectedItem(preguntas.get(Integer.parseInt(modelo.getPreguntaSeguridad())));
+
+            int[] indices;
+            indices = new int[modelo.getFunciones().length];
+
+            for (int i = 0; i < modelo.getFunciones().length; i++) {
+                for (int j = 0; j < datosFuncion.length; j++) {
+                    if (modelo.getFunciones()[i].getId() == datosFuncion[j].getId()) {
+                        indices[i] = j;
+                        break;
+                    }
+                }
+            }
+
+            vista.getLstFunciones().setSelectedIndices(indices);
+
             vista.getTxtContrasenia().setEnabled(false);
             vista.getTxtContrasenia2().setEnabled(false);
             vista.getBtnAgregar().setEnabled(false);

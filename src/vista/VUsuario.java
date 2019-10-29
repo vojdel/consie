@@ -70,11 +70,12 @@ public class VUsuario extends javax.swing.JPanel {
         btnContrasenia = new JButton();
         jScrollPane1 = new JScrollPane();
         tabla = new JTable();
+        btnReporte = new JButton();
 
         setBackground(new Color(255, 255, 255));
 
         jLabel3.setFont(new Font("Tahoma", 0, 24)); // NOI18N
-        jLabel3.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel3.setHorizontalAlignment(SwingConstants.RIGHT);
         jLabel3.setText("Usuario");
         jLabel3.setName("jLabel3"); // NOI18N
 
@@ -297,22 +298,33 @@ public class VUsuario extends javax.swing.JPanel {
         tabla.setName("tabla"); // NOI18N
         jScrollPane1.setViewportView(tabla);
 
+        btnReporte.setBackground(new Color(0, 153, 255));
+        btnReporte.setForeground(new Color(0, 0, 0));
+        btnReporte.setText("Generar Reporte");
+        btnReporte.setName("btnReporte"); // NOI18N
+
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator1)
                     .addComponent(jScrollPane3, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 381, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnReporte, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReporte))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
@@ -330,6 +342,7 @@ public class VUsuario extends javax.swing.JPanel {
     private JButton btnEliminar;
     private JButton btnModificar;
     private JButton btnNuevo;
+    private JButton btnReporte;
     private JComboBox<String> cbxPregunta;
     private JLabel jLabel1;
     private JLabel jLabel10;
@@ -419,6 +432,10 @@ public class VUsuario extends javax.swing.JPanel {
 
     public JTextField getTxtNombre() {
         return txtNombre;
+    }
+
+    public JButton getBtnReporte() {
+        return btnReporte;
     }
     
 }

@@ -151,7 +151,7 @@ public class MFuncionario {
     public void selectPorUsuario(int id) throws SQLException {
         sql = "SELECT ci_funcionario, p_nombre_fun, p_apellido_fun "
                 + "FROM funcionario "
-                + "WHERE id_usuario = '" + id + "';";
+                + "WHERE funcionario.id_usuario = " + id + ";";
         System.out.println(sql);
         con.conectar();
         rs = con.consultarBD();

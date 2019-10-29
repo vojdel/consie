@@ -103,8 +103,8 @@ public class CFuncionario implements ActionListener, MouseListener, KeyListener 
                 modelo = datosX;
                 modeloTabla.addRow(new Object[]{
                     modelo.getCedula(),
-                    modelo.getPrimerNombre(),
-                    modelo.getPrimerApellido(),
+                    modelo.getPrimerNombre() + " " + modelo.getSegundoNombre(),
+                    modelo.getPrimerApellido() + " " + modelo.getSegundoApellido(),
                     modelo.getCargo().getNombre()});
             }
 
@@ -363,32 +363,40 @@ public class CFuncionario implements ActionListener, MouseListener, KeyListener 
     @Override
     public void keyTyped(KeyEvent e) {
         if (e.getSource() == vista.getTxtCedula()) {
+
+            String textoBuscar = vista.getTxtCedula().getText();
+
+            try {
+                actualizarTabla(modelo.buscar(textoBuscar));
+            } catch (SQLException ex) {
+                Logger.getLogger(CFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            }
             val.Espacio(e);
             val.evitarPegar(e);
             val.soloNumeros(e);
-            val.Limite(e, vista.getTxtCedula().getText(), 10);
+            val.limite(e, vista.getTxtCedula().getText(), 10);
         } else if (e.getSource() == vista.getTxtPNombre()) {
             val.Espacio(e);
             val.evitarPegar(e);
             val.soloLetras(e);
-            val.Limite(e, vista.getTxtPNombre().getText(), 30);
+            val.limite(e, vista.getTxtPNombre().getText(), 30);
         } else if (e.getSource() == vista.getTxtSNombre()) {
             val.evitarPegar(e);
             val.soloLetras(e);
-            val.Limite(e, vista.getTxtSNombre().getText(), 30);
+            val.limite(e, vista.getTxtSNombre().getText(), 30);
         } else if (e.getSource() == vista.getTxtPApellido()) {
             val.Espacio(e);
             val.evitarPegar(e);
             val.soloLetras(e);
-            val.Limite(e, vista.getTxtPApellido().getText(), 30);
+            val.limite(e, vista.getTxtPApellido().getText(), 30);
         } else if (e.getSource() == vista.getTxtSApellido()) {
             val.evitarPegar(e);
             val.soloLetras(e);
-            val.Limite(e, vista.getTxtSApellido().getText(), 30);
+            val.limite(e, vista.getTxtSApellido().getText(), 30);
         } else if (e.getSource() == vista.getTxtCedula()) {
             val.evitarPegar(e);
             val.soloNumeros(e);
-            val.Limite(e, vista.getTxtCedula().getText(), 10);
+            val.limite(e, vista.getTxtCedula().getText(), 10);
         }
     }
 
@@ -398,26 +406,6 @@ public class CFuncionario implements ActionListener, MouseListener, KeyListener 
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (e.getSource() == vista.getTxtCedula()) {
-            String textoBuscar = vista.getTxtCedula().getText();
-
-            try {
-                actualizarTabla(modelo.buscar(textoBuscar));
-            } catch (SQLException ex) {
-                Logger.getLogger(CFuncionario.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        if (vista.getTxtCedula().getText().length() == 0 && e.getKeyCode() == 8) {
-            try {
-                actualizarTabla(modelo.selectTodo());
-            } catch (SQLException ex) {
-                Logger.getLogger(CFuncionario.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        if (e.getSource() == vista.getTxtPNombre()) {
-            f.soloLetras(e);
-            f.limitar(e, vista.getTxtPNombre().getText(), 10);
-        }
     }
 
 }

@@ -1,6 +1,8 @@
 package controlador;
 
 import static consie.Consie.ventana;
+import static controlador.CVentana.marco;
+import static controlador.CVentana.panelPrincipal;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import vista.VSeguimientoPersonal;
@@ -15,26 +17,21 @@ public class CSeguimientoPersonal implements MouseListener {
 
     public CSeguimientoPersonal() {
         vista = new VSeguimientoPersonal();
-        ventana.getContentPane().removeAll();
-        ventana.add(vista);
-        ventana.setTitle("AdminPersonal");
-        ventana.pack();
+        ventana.setTitle("Seguimiento de personal");
+        marco.remove(panelPrincipal);
+        vista.setBounds(290, 70, 670, 590);
+        marco.add(vista);
+        panelPrincipal = vista;
+        ventana.repaint();
+        ventana.validate();
         addListeners();
     }
 
     private void addListeners() {
-        vista.getLabelCerrar().addMouseListener(this);
-        vista.getLabelMenu().addMouseListener(this);
-        vista.getPanelMenu().addMouseListener(this);
     }
 
     @Override
     public void mouseClicked(MouseEvent me) {
-        if (me.getSource() == vista.getLabelCerrar()) {
-            System.exit(0);
-        } else if (me.getSource() == vista.getLabelMenu()) {
-            vista.getPanelMenu().setSize(200, 3000);
-        }
     }
 
     @Override
@@ -51,8 +48,5 @@ public class CSeguimientoPersonal implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent me) {
-        if (me.getSource() == vista.getPanelMenu()) {
-            vista.getPanelMenu().setSize(50, 3000);
-        }
     }
 }

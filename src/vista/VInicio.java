@@ -5,6 +5,8 @@
  */
 package vista;
 
+import javax.swing.JLabel;
+
 /**
  *
  * @author Diego
@@ -29,10 +31,10 @@ public class VInicio extends javax.swing.JPanel {
 
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        btnPedagogico = new javax.swing.JLabel();
+        btnSegEscuela = new javax.swing.JLabel();
+        btnAdminPersonal = new javax.swing.JLabel();
+        btnAsistencia = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -40,33 +42,33 @@ public class VInicio extends javax.swing.JPanel {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("CONSIE");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_student_male_120px.png"))); // NOI18N
-        jLabel2.setText("Nivel Pedagógico");
-        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnPedagogico.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnPedagogico.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnPedagogico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_student_male_120px.png"))); // NOI18N
+        btnPedagogico.setText("Nivel Pedagógico");
+        btnPedagogico.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnPedagogico.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_school_building_120px.png"))); // NOI18N
-        jLabel4.setText("Seguimiento de Escuelas");
-        jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSegEscuela.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnSegEscuela.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnSegEscuela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_school_building_120px.png"))); // NOI18N
+        btnSegEscuela.setText("Seguimiento de Escuelas");
+        btnSegEscuela.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSegEscuela.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_school_director_120px.png"))); // NOI18N
-        jLabel5.setText("Seguimiento de Personal");
-        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAdminPersonal.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnAdminPersonal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnAdminPersonal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_school_director_120px.png"))); // NOI18N
+        btnAdminPersonal.setText("Seguimiento de Personal");
+        btnAdminPersonal.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAdminPersonal.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_statistics_120px.png"))); // NOI18N
-        jLabel6.setText("Asistencia y Estadística");
-        jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAsistencia.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnAsistencia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnAsistencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_statistics_120px.png"))); // NOI18N
+        btnAsistencia.setText("Asistencia y Estadística");
+        btnAsistencia.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAsistencia.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -79,12 +81,12 @@ public class VInicio extends javax.swing.JPanel {
                     .addComponent(jSeparator1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnPedagogico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAdminPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnSegEscuela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAsistencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -97,23 +99,40 @@ public class VInicio extends javax.swing.JPanel {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnPedagogico, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSegEscuela, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAdminPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel btnAdminPersonal;
+    private javax.swing.JLabel btnAsistencia;
+    private javax.swing.JLabel btnPedagogico;
+    private javax.swing.JLabel btnSegEscuela;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
+
+  public JLabel getBtnAdminPersonal() {
+        return btnAdminPersonal;
+    }
+    
+    public JLabel getBtnSegEscuela() {
+        return btnSegEscuela;
+    }
+    
+    public JLabel getBtnAsistencia() {
+        return btnAsistencia;
+    }
+    
+    public JLabel getBtnPedagogico() {
+        return btnPedagogico;
+    }
+    
 }

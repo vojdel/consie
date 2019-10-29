@@ -108,18 +108,20 @@ public class MAdminEscuela {
         }
     }
 
-    public MAdminEscuela[] selectRecaudo(int id, String frec) throws SQLException {
-        sql = "SELECT * FROM escuela as e INNER JOIN escuela_recaudo AS er ON "
+    public MAdminEscuela[] selectRecaudo(int id, String option) throws SQLException {
+        sql = "SELECT DISTINCT r.id_recaudo, r.nombre_recaudo FROM escuela AS"
+                + " e INNER JOIN escuela_recaudo AS er ON "
                 + "e.id_escuela=er.id_escuela INNER JOIN recaudo AS r ON "
                 + "er.id_recaudo=r.id_recaudo ";
-        if ("Mensual".equals(frec) || "Trimestral".equals(frec) || "Anual".equals(frec)) {
-            sql += "WHERE e.id_escuela=" + id + " AND r.frecuencia_entrega='" + frec + "' ;";
-        } else if("".equals(frec)) {
-            sql += "WHERE e.id_escuela=" + id + ";";
+        if ("Mensual".equals(option) || "Trimestral".equals(option) || "Anual".equals(option)) {
+            sql += "WHERE e.id_escuela=" + id + " AND r.frecuencia_entrega='" + option + "' ;";
+        } else {
+            sql += "WHERE e.id_escuela=" + id + " ORDER BY r.id_recaudo;";
         }
         con.conectar();
         rs = con.consultarBD();
         System.out.println("antes01");
+        System.out.println(sql);
         if (rs != null) {
             System.out.println("despues01");
             rs.last();
@@ -157,7 +159,7 @@ public class MAdminEscuela {
                 + "INNER JOIN estado AS es "
                 + "ON m.id_estado = es.id_estado "
                 + "WHERE e.nombre_escuela LIKE '%" + escuela + "%' and (es.id_estado=" + estado + ""
-                + " or m.id_municipio=" + municipio + " or p.id_parroquia=" + parroquia + ") "
+                + " or m.id_municipio=" + municipio + " or p.id_parroquia=" + parroquia + ")"
                 + "ORDER BY nombre_escuela LIMIT 10;";
         con.conectar();
         rs = con.consultarBD();
@@ -244,12 +246,36 @@ public class MAdminEscuela {
         }
     }
 
+    public int countRecaudo(int id) throws SQLException {
+
+        con.setSql("SELECT CAST(COUNT(*) AS Integer) AS total FROM escuela_recaudo "
+                + "WHERE id_escuela=" + id + ";");
+        con.conectar();
+        rs = con.consultarBD();
+        int datos;
+        rs.next();
+        datos = rs.getInt("total");
+        return datos;
+    }
+
     /* Inserts */
     public void insertEntregaRecaudo() {
         sql = "INSERT INTO entrega_recaudo "
                 + "VALUES"
                 + "(" + escuela.getId() + ", "
                 + "" + fechaEntrega + ")";
+        con.conectar();
+        con.actualizarBD();
+        con.desconectar();
+
+    }
+
+    public void insertRecaudo() {
+        sql = "INSERT INTO escuela_recaudo "
+                + "(id_escuela ,id_recaudo)"
+                + "VALUES"
+                + "(" + escuela.getId() + ", "
+                + "" + recaudo.getId() + ")";
         con.conectar();
         con.actualizarBD();
         con.desconectar();
@@ -298,6 +324,17 @@ public class MAdminEscuela {
     public void deleteAsignarPersonal() {
         sql = "DELETE FROM escuela_personal"
                 + " WHERE id_escuela_personal=" + id + ";";
+        con.conectar();
+        con.actualizarBD();
+        con.desconectar();
+
+    }
+
+    public void deleteRecaudo() {
+        sql = "DELETE FROM escuela_recaudo "
+                + "WHERE id_escuela=" + escuela.getId() + ""
+                + " AND "
+                + "id_recaudo=" + recaudo.getId() + ";";
         con.conectar();
         con.actualizarBD();
         con.desconectar();

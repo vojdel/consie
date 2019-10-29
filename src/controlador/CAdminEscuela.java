@@ -20,7 +20,6 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -30,8 +29,10 @@ import modelo.MEstado;
 import modelo.MMunicipio;
 import modelo.MParroquia;
 import modelo.MPersonal;
+import modelo.MRecaudo;
 import vista.VAdminEscuela;
 import vista.VAsignarPersonal;
+import vista.VAsignarRecaudo;
 import vista.VEntregarRecaudo;
 
 /**
@@ -43,8 +44,10 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
     private VAdminEscuela vista;
     private VEntregarRecaudo vistaRecaudos;
     private VAsignarPersonal vistaPersonal;
+    private VAsignarRecaudo vistaAsignarRecaudo;
     private MAdminEscuela modelo;
     private MPersonal modeloPersonal;
+    private MRecaudo modeloRecaudo;
 
     private DefaultTableModel modeloTabla;
 
@@ -64,9 +67,11 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
         // vista = new VAdminEscuela();
         vista = new VAdminEscuela();
         vistaRecaudos = new VEntregarRecaudo();
+        vistaAsignarRecaudo = new VAsignarRecaudo();
         vistaPersonal = new VAsignarPersonal();
         modelo = new MAdminEscuela();
         modeloPersonal = new MPersonal();
+        modeloRecaudo = new MRecaudo();
 
         modeloParroquia = new MParroquia();
         modeloMunicipio = new MMunicipio();
@@ -99,13 +104,6 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
         vistaPersonal.getCbxParroquia().addItem("Seleccione un municipio");
         vistaPersonal.getCbxParroquia().setEnabled(false);
 
-        ventana.setTitle("Administrar Escuelas");
-        marco.remove(panelPrincipal);
-        vista.setBounds(290, 70, 670, 590);
-        marco.add(vista);
-        panelPrincipal = vista;
-        ventana.repaint();
-        ventana.validate();
         addListener();
     }
 
@@ -123,14 +121,17 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
         vistaRecaudos.getBtnMensual().addActionListener(this);
         vistaRecaudos.getBtnReiniciar().addActionListener(this);
         vistaRecaudos.getBtnTrimestral().addActionListener(this);
-        vistaRecaudos.getBtnEliminar().addActionListener(this);
         vistaRecaudos.getCbxEstado().addItemListener(this);
         vistaRecaudos.getCbxMunicipio().addItemListener(this);
         vistaRecaudos.getCbxParroquia().addItemListener(this);
         vistaRecaudos.getTxtEscuela().addKeyListener(this);
         vistaRecaudos.getTablaEntrega().addMouseListener(this);
         vistaRecaudos.getTablaEscuela().addMouseListener(this);
-        vistaRecaudos.getTablaRecaudo().addMouseListener(this);
+
+        //Asignar Recaudo
+        vistaAsignarRecaudo.getBtnAtras().addActionListener(this);
+        vistaAsignarRecaudo.getBtnAgregar().addActionListener(this);
+        vistaAsignarRecaudo.getBtnEliminar().addActionListener(this);
 
         // Asignar Personal
         vistaPersonal.getBtnAtras().addActionListener(this);
@@ -243,25 +244,77 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
         funciones.ocultarColumnas(tabla, new int[]{0, 4});
     }
 
-    private void actualizarTablaRecaudo(JTable tabla, String columns[], MAdminEscuela[] datos) {
+    private void actualizarTablaSinRecaudo(JTable tabla, String columns[], MRecaudo[] datos) {
+
+        modeloTabla = new DefaultTableModel();
+        for (int i = 0; i < columns.length; i++) {
+            modeloTabla.addColumn(columns[i]);
+        }
+
+        tabla.setModel(modeloTabla);
+
+        if (datos != null) {
+            for (MRecaudo datosX : datos) {
+                modeloRecaudo = datosX;
+                modeloTabla.addRow(
+                        new Object[]{
+                            modeloRecaudo.getId(),
+                            modeloRecaudo.getNombre()
+                        }
+                );
+            }
+            funciones.ocultarColumnas(tabla, new int[]{0});
+            vistaAsignarRecaudo.getTablaRecaudo().setModel(new DefaultTableModel());
+        }
+    }
+
+    private void actualizarTablaRecaudo(JTable tabla, String columns[], MAdminEscuela[] datos, String lugar) throws SQLException {
         modeloTabla = new DefaultTableModel();
         for (int i = 0; i < columns.length; i++) {
             modeloTabla.addColumn(columns[i]);
         }
         tabla.setModel(modeloTabla);
-
         if (datos != null) {
-            for (MAdminEscuela datosX : datos) {
-                modelo = datosX;
-                modeloTabla.addRow(
-                        new Object[]{
-                            modelo.getRecaudo().getId(),
-                            modelo.getRecaudo().getNombre(),}
-                );
+            if (!"Asignar Recaudo".equals(lugar)) {
+                for (MAdminEscuela datosX : datos) {
+                    modelo = datosX;
+                    modeloTabla.addRow(
+                            new Object[]{
+                                modelo.getRecaudo().getId(),
+                                modelo.getRecaudo().getNombre()
+                            }
+                    );
+                }
+            } else {
+
+                MRecaudo[] noRecaudos = modelo.getRecaudo().selecionaTodo();
+                int contador = modelo.getRecaudo().count();
+                String indices[] = new String[contador];
+
+                for (MAdminEscuela datosX : datos) {
+                    modelo = datosX;
+                    for (int i = 0; i < contador; i++) {
+                        if ((int) noRecaudos[i].getId() == (int) modelo.getRecaudo().getId()) {
+                            indices[i] = "si";
+                        }
+                    }
+                }
+
+                for (int j = 0; j < contador; j++) {
+                    if (!"si".equals(indices[j])) {
+                        modeloTabla.addRow(
+                                new Object[]{
+                                    noRecaudos[j].getId(),
+                                    noRecaudos[j].getNombre()
+                                }
+                        );
+                    }
+                }
             }
         }
 
         funciones.ocultarColumnas(tabla, new int[]{0});
+
     }
 
     private void actualizarTablaEntrega(JTable tabla, String columns[], MAdminEscuela[] datos, String tipo) {
@@ -291,7 +344,7 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
                     sportColumn.setCellEditor(new DefaultCellEditor(radioBtn));
                     //sportColumn.setCellRenderer(render);
                 }
-                if (k == 1) {        
+                if (k == 1) {
                     sportColumn.setPreferredWidth(500);
                     sportColumn.setMaxWidth(500);
                     sportColumn.setMinWidth(200);
@@ -354,6 +407,7 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
 
             cbx.setEnabled(true);
             System.out.println("ComboBox Parroquia creado");
+            vistaRecaudos.getTxtEscuela().setEnabled(true);
         }
     }
 
@@ -361,20 +415,26 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
     public void mouseClicked(MouseEvent me) {
         // Entregar Recaudos
         if (me.getSource() == vistaRecaudos.getTablaEscuela()) {
+            String column[] = {
+                "id", "Recaudo",
+                "Ene", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"
+            };
             int filaSeleccionada = vistaRecaudos.getTablaEscuela().getSelectedRow();
-
             if (filaSeleccionada >= 0) {
                 int id;
                 id = Integer.parseInt(vistaRecaudos.getTablaEscuela().getValueAt(filaSeleccionada, 0).toString());
-                String column[] = {"id", "recaudo"};
                 try {
-                    actualizarTablaRecaudo(
-                            vistaRecaudos.getTablaRecaudo(),
+                    actualizarTablaEntrega(
+                            vistaRecaudos.getTablaEntrega(),
                             column,
-                            modelo.selectRecaudo(id, "")
+                            modelo.selectRecaudo(
+                                    id,
+                                    "Mensual"
+                            ),
+                            "Mensual"
                     );
                 } catch (SQLException ex) {
-                    Logger.getLogger(CEscuela.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(CAdminEscuela.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -538,6 +598,154 @@ public class CAdminEscuela implements ActionListener, MouseListener, KeyListener
                     Logger.getLogger(CAdminEscuela.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+        }
+        if (e.getSource() == vistaRecaudos.getBtnAgregar()) {
+
+            cambioVentana("Asignar Recaudo", vistaAsignarRecaudo);
+
+            int filaSeleccionada = vistaRecaudos.getTablaEscuela().getSelectedRow();
+
+            if (filaSeleccionada >= 0) {
+                int id;
+                id = Integer.parseInt(vistaRecaudos.getTablaEscuela().getValueAt(filaSeleccionada, 0).toString());
+                String column[] = {"id", "recaudo"};
+
+                // Tabla donde estan lo recaudos asignados a la escuela
+                try {
+                    if (modelo.countRecaudo(id) != 0) {
+                        try {
+                            actualizarTablaRecaudo(
+                                    vistaAsignarRecaudo.getTablaAsignarRecaudo(),
+                                    column,
+                                    modelo.selectRecaudo(id, ""),
+                                    "Asignar Recaudo"
+                            );
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CEscuela.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } else {
+
+                        actualizarTablaSinRecaudo(
+                                vistaAsignarRecaudo.getTablaAsignarRecaudo(),
+                                column,
+                                modeloRecaudo.selecionaTodo()
+                        );
+
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CAdminEscuela.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                // Tabla donde estan lo recaudos no asignados a la escuela
+                try {
+                    if (modelo.countRecaudo(id) != 0) {
+                        try {
+                            actualizarTablaRecaudo(
+                                    vistaAsignarRecaudo.getTablaRecaudo(),
+                                    column,
+                                    modelo.selectRecaudo(id, ""),
+                                    ""
+                            );
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CEscuela.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CAdminEscuela.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
+
+        // Asginar Recaudo
+        if (e.getSource() == vistaAsignarRecaudo.getBtnAtras()) {
+
+            cambioVentana("Administración Escuelas", vistaRecaudos);
+
+        }
+
+        if (e.getSource() == vistaAsignarRecaudo.getBtnAgregar()) {
+
+            int filaSeleccionadaEscuela = vistaRecaudos.getTablaEscuela().getSelectedRow();
+            int filaSeleccionada = vistaAsignarRecaudo.getTablaAsignarRecaudo().getSelectedRow();
+            System.out.println(filaSeleccionada);
+
+            if (filaSeleccionada >= 0) {
+
+                int id;
+                int idEscuela;
+
+                idEscuela = Integer.parseInt(vistaRecaudos.getTablaEscuela().getValueAt(filaSeleccionadaEscuela, 0).toString());
+
+                id = Integer.parseInt(vistaAsignarRecaudo.getTablaAsignarRecaudo().getValueAt(filaSeleccionada, 0).toString());
+
+                String column[] = {"id", "recaudo"};
+
+                modelo.setEscuela(new MEscuela(idEscuela));
+                modelo.setRecaudo(new MRecaudo(id));
+
+                modelo.insertRecaudo();
+                try {
+                    actualizarTablaRecaudo(
+                            vistaAsignarRecaudo.getTablaAsignarRecaudo(),
+                            column,
+                            modelo.selectRecaudo(idEscuela, ""),
+                            "Asignar Recaudo"
+                    );
+
+                    actualizarTablaRecaudo(
+                            vistaAsignarRecaudo.getTablaRecaudo(),
+                            column,
+                            modelo.selectRecaudo(idEscuela, ""),
+                            ""
+                    );
+                } catch (SQLException ex) {
+                    Logger.getLogger(CEscuela.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
+
+        if (e.getSource() == vistaAsignarRecaudo.getBtnEliminar()) {
+
+            int filaSeleccionadaEscuela = vistaRecaudos.getTablaEscuela().getSelectedRow();
+            int filaSeleccionada = vistaAsignarRecaudo.getTablaRecaudo().getSelectedRow();
+            System.out.println(filaSeleccionada);
+
+            if (filaSeleccionada >= 0) {
+
+                int id;
+                int idEscuela;
+
+                idEscuela = Integer.parseInt(vistaRecaudos.getTablaEscuela().getValueAt(filaSeleccionadaEscuela, 0).toString());
+
+                id = Integer.parseInt(vistaAsignarRecaudo.getTablaRecaudo().getValueAt(filaSeleccionada, 0).toString());
+
+                String column[] = {"id", "recaudo"};
+
+                modelo.setEscuela(new MEscuela(idEscuela));
+                modelo.setRecaudo(new MRecaudo(id));
+
+                modelo.deleteRecaudo();
+                try {
+                    actualizarTablaRecaudo(
+                            vistaAsignarRecaudo.getTablaAsignarRecaudo(),
+                            column,
+                            modelo.selectRecaudo(idEscuela, ""),
+                            "Asignar Recaudo"
+                    );
+
+                    actualizarTablaRecaudo(
+                            vistaAsignarRecaudo.getTablaRecaudo(),
+                            column,
+                            modelo.selectRecaudo(idEscuela, ""),
+                            ""
+                    );
+                } catch (SQLException ex) {
+                    Logger.getLogger(CEscuela.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
         }
 
         // Asignar Personal

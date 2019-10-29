@@ -22,6 +22,10 @@ public class MRecaudo {
     public MRecaudo() {
     }
 
+    public MRecaudo(int id) {
+        this.id = id;
+    }
+
     public MRecaudo(int id, String nombre, String frecuenciaEntrega) {
         this.id = id;
         this.nombre = nombre;
@@ -73,8 +77,43 @@ public class MRecaudo {
         }
     }
 
+    public MRecaudo[] selecionaTodo() throws SQLException {
+        con.setSql("SELECT * FROM recaudo ORDER BY id_recaudo;");
+        con.conectar();
+        rs = con.consultarBD();
+
+        if (rs != null) {
+            rs.last();
+            int contFilas = rs.getRow();
+            rs.beforeFirst();
+
+            MRecaudo[] datos = new MRecaudo[contFilas];
+
+            for (int i = 0; i < contFilas; i++) {
+                rs.next();
+                datos[i] = new MRecaudo(rs.getInt("id_recaudo"), rs.getString("nombre_recaudo"));
+            }
+
+            con.desconectar();
+            return datos;
+        } else {
+            con.desconectar();
+            return null;
+        }
+    }
+
+    public int count() throws SQLException {
+        con.setSql("SELECT CAST(COUNT(id_recaudo) AS Integer) AS total FROM recaudo");
+        con.conectar();
+        rs = con.consultarBD();
+        int datos;
+        rs.next();
+        datos = rs.getInt("total");
+        return datos;
+    }
+
     public MRecaudo[] buscar(String textoBuscar) throws SQLException {
-        con.setSql("SELECT * FROM recaudo WHERE nombre_estado LIKE '%" + textoBuscar + "%' ORDER BY nombre_recaudo");
+        con.setSql("SELECT * FROM recaudo WHERE nombre_recaudo LIKE '%" + textoBuscar + "%' ORDER BY nombre_recaudo");
         con.conectar();
         rs = con.consultarBD();
 
@@ -111,7 +150,7 @@ public class MRecaudo {
                 + "nombre_recaudo='" + nombre + "', "
                 + "frecuencia_entrega='" + frecuenciaEntrega + "' ,"
                 + "num_frecuencia='" + numFrecuencia + "' "
-                        + "WHERE id_recaudo='" + id + "';");
+                + "WHERE id_recaudo='" + id + "';");
         con.conectar();
         con.actualizarBD();
         con.desconectar();

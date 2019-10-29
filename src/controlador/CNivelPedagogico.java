@@ -1,6 +1,8 @@
 package controlador;
 
 import static consie.Consie.ventana;
+import static controlador.CVentana.marco;
+import static controlador.CVentana.panelPrincipal;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import vista.VNivelPedagogico;
@@ -15,10 +17,13 @@ public class CNivelPedagogico implements MouseListener {
     public CNivelPedagogico() {
         vista = new VNivelPedagogico();
         
-        ventana.getContentPane().removeAll();
-        ventana.add(vista);
         ventana.setTitle("Nivel Pedagógico");
-        ventana.pack();
+        marco.remove(panelPrincipal);
+        vista.setBounds(290, 70, 670, 590);
+        marco.add(vista);
+        panelPrincipal = vista;
+        ventana.repaint();
+        ventana.validate();
         addListeners();
     }
 

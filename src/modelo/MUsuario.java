@@ -79,7 +79,7 @@ public class MUsuario {
                 + "ON u.id_usuario = uf.id_usuario "
                 + "INNER JOIN funcion AS f "
                 + "ON uf.id_funcion = f.id_funcion "
-                + "WHERE id_usuario = " + id + ";";
+                + "WHERE u.id_usuario = " + id + ";";
         con.conectar();
         rs = con.consultarBD();
 
@@ -99,7 +99,7 @@ public class MUsuario {
                 + " FROM usuario as u inner join funcionario as f\n"
                 + "on u.funcionario=f.ci_funcionario AND u.usuario LIKE '%" + textoBuscar + "%') as funcionario, contrasenia, p_secreta, respuesta FROM usuario u inner join funcionario as f\n"
                 + "on u.funcionario=f.ci_funcionario\n "
-                + "WHERE usuario LIKE '%" + textoBuscar + "%' ORDER BY id_usuario DESC";
+                + "WHERE u.usuario LIKE '%" + textoBuscar + "%' ORDER BY id_usuario DESC";
         con.conectar();
         rs = con.consultarBD();
 
@@ -156,7 +156,7 @@ public class MUsuario {
                 + "FROM usuario_funcion AS uf "
                 + "INNER JOIN funcion "
                 + "ON uf.id_funcion = funcion.id_funcion "
-                + "WHERE id_usuario = " + id + ";";
+                + "WHERE uf.id_usuario = " + id + ";";
         System.out.println(sql);
         con.conectar();
         rs = con.consultarBD();
